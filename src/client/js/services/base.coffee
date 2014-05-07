@@ -1,0 +1,1 @@
+customServices = angular.module("customServices", [])

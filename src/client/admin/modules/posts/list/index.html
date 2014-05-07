@@ -1,0 +1,51 @@
+<div class="breadcrumbs breadcrumbs-fixed" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="#!/">Home</a>
+        </li>
+        <li class="active">Posts</li>
+    </ul>
+</div>
+
+<div class="page-content">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <td class="width-15">Title</td>
+            <td class="width-20">Author</td>
+            <td class="width-15">Category</td>
+            <td class="width-15">Tags</td>
+            <td class="width-15">Date</td>
+            <td class="width-10">Views</td>
+            <td class="width-10"></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in posts">
+            <td>
+                <a ng-href="#!/posts/{{item._id}}">{{item.Title}}</a>
+            </td>
+            <td>{{item.Author}}</td>
+            <td></td>
+            <td></td>
+            <td>{{item.CreateDate | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td>{{item.Views}}</td>
+            <td>
+                <div class="action-buttons">
+                    <a class="blue" ng-href="/#!/posts/{{item._id}}">
+                        <i class="icon-zoom-in bigger-130"></i>
+                    </a>
+                    <a class="green" ng-href="#!/posts/{{item._id}}">
+                        <i class="icon-pencil bigger-130"></i>
+                    </a>
+                    <a class="red" href="#">
+                        <i class="icon-trash bigger-130"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="#!/posts/new" class="pull-right btn btn-primary btn-sm">New Post</a>
+</div>

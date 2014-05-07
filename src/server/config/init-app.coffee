@@ -1,0 +1,42 @@
+fs = require("fs")
+express = require("express")
+cors = require("cors")
+mongoose = require "mongoose"
+
+
+module.exports = (appPath)->
+  #register mongoose models
+  models_path = appPath + "/models"
+  fs.readdirSync(models_path).forEach (file) ->
+    newPath = models_path + "/" + file
+    stat = fs.statSync(newPath)
+    if stat.isFile()
+      if (/(.*)\.(js$)/.test(file))
+        require(newPath)
+
+  #init express
+  corsOption =
+    exposedHeaders: "meaning-token"
+  app = express()
+  app.configure ->
+    app.use express.urlencoded()
+    app.use express.json()
+    app.use express.methodOverride()
+    app.use cors(corsOption)
+    app.use (err, req, res, next)->
+      res.statusCode = 500
+      res.json
+        Message: err.message
+        #Stack: err.stack
+      res.end()
+
+  #register express routes
+  routes_path = appPath + "/routes"
+  fs.readdirSync(routes_path).forEach (file) ->
+    newPath = routes_path + "/" + file
+    stat = fs.statSync(newPath)
+    if stat.isFile()
+      if (/(.*)\.(js$)/.test(file))
+        require(newPath)(app)
+
+  app

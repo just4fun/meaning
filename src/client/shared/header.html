@@ -1,0 +1,27 @@
+﻿<header class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavCtrl">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">
+                <img src="img/logo.jpg"></img>
+                just4fun
+            </a>
+        </div>
+        <nav class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li ng-class="{active: isActive('/posts')}">
+                    <a href="/#!/posts">Posts</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/admin">{{text}}</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

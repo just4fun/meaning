@@ -1,0 +1,35 @@
+<div>
+    <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Posts</li>
+    </ul>
+
+    <div style="margin-bottom: 50px;"></div>
+    <div ng-repeat="post in posts">
+        <h3>
+            <a ng-href="/#!/posts/{{post._id}}" >
+                {{post.Title}}
+            </a>
+        </h3>
+        <p>{{post.Description}}</p>
+        <p class="pull-right">
+            <i class="icon-tags"></i>
+            <span class="label label-default">example</span>
+        </p>
+        <ul class="list-inline">
+            <li style="padding-left: 0;">
+                <i class="icon-time"></i>
+                {{post.CreateDate | date:'yyyy-MM-dd HH:mm'}}
+            </li>
+            <li>
+                <i class="icon-user"></i>
+                {{post.Author}}
+            </li>
+            <li>
+                <i class="icon-eye-open"></i>
+                {{post.Views}}
+            </li>
+        </ul>
+        <hr ng-hide="$index == posts.length - 1"/>
+    </div>
+</div>

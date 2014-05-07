@@ -1,0 +1,38 @@
+<div>
+    <div class="page-header">
+        <h1>{{post.Title}}</h1>
+        <small>
+            <em class="text-muted">
+                <ul class="list-inline">
+                    <li>
+                        <i class="icon-time"></i>
+                        Posted on {{post.CreateDate | date:'medium'}}
+                    </li>
+                    <li>
+                        <i class="icon-user"></i>
+                        {{post.Author}}
+                    </li>
+                    <li>
+                        <i class="icon-eye-open"></i>
+                        {{post.Views}}
+                    </li>
+                </ul>
+            </em>
+        </small>
+    </div>
+    <div class="pull-right" ng-show="_loginUser && _loginUser.Username == post.Author">
+        <a class="btn btn-primary" ng-href="/admin#!/posts/{{post._id}}">
+            <i class="icon-edit"></i>
+        </a>
+    </div>
+    <p ng-bind-html="post.Content"></p>
+</div>
+
+
+
+<style>
+    .page-header {
+        border-bottom: 3px double #EEE;
+        padding-bottom: 15px;
+    }
+</style>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html ng-cloak ng-app="login-app" class="no-js" ng-controller="LoginCtrl">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Admin - Login</title>
+    <meta name="viewport" content="width=device-width" />
+    <!--STYLES--><!--STYLES END-->
+    <!--SCRIPTS--><!--SCRIPTS END-->
+</head>
+<body class="login-layout">
+<div class="container" id="login-block">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+            <h3>Admin Console</h3>
+            <div class="login-box clearfix">
+                <div class="login-logo">
+                    <a href="#"><img src="/img/icon_self.jpg"></a>
+                </div>
+                <hr>
+                <div class="login-form">
+                    <div class="alert alert-error" ng-show="error">
+                        <button type="button" class="close" ng-click="error=''">×</button>
+                        <h4>Error!</h4>
+                        {{error}}
+                    </div>
+                    <form name="form" ng-submit="login()">
+                        <input type="text" placeholder="Username" required ng-model="user.Username">
+                        <input type="password" placeholder="Password" required ng-model="user.Password">
+                        <button type="submit" class="btn btn-login" ng-disabled="submitting || form.$invalid">
+                            Login
+                        </button>
+                        <p>
+                            <a href="/" title="Are you lost?">← Back to just4fun</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

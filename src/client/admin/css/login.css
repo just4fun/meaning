@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Login Box styles
+   ========================================================================== */
+
+/*Change Backgound image here */
+
+.login-layout{
+    background: url(../../img/login-bg.jpg) no-repeat center center fixed;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+.alert{
+    margin: 20px auto;
+    width: 70%;
+    color: red;
+}
+#login-block{
+    padding-top: 50px;
+    padding-bottom: 25px;
+}
+#login-block h3{
+    color: #FFF;
+    text-align: center;
+    font-size:1.5em;
+    text-shadow: 2px 2px 2px #000;
+    font-weight: normal;
+
+}
+
+.login-box{
+    max-width:480px;
+    /*background: transparent url(../img/login-bg-1.png) repeat;*/
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    padding-bottom: 20px;
+    -webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5), inset 1px 1px 2px rgba(255, 255, 255, 0.5);
+    -moz-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5), inset 1px 1px 2px rgba(255, 255, 255, 0.5);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5), inset 1px 1px 2px rgba(255, 255, 255, 0.5);
+
+}
+
+.login-logo{
+    text-align: center;
+    padding: 15px 0 10px;
+}
+
+.login-logo img{
+    border:0;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+}
+.login-form form p{
+    width:80%;
+    margin: 5px auto 10px;
+    text-align: center;
+    color:#FFF;
+    text-shadow: 1px 1px 2px #000;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.login-box hr{
+    margin:10px auto 20px;
+    width:70%;
+    border-top: 1px solid rgba(119, 118, 118, 0.4);
+    border-bottom: 1px solid rgba(240, 240, 240, 0.4);
+}
+
+/* Login Form */
+.login-form input{
+    display: block;
+    margin:0 auto 15px;
+    width:70%;
+    background: #FFF;
+    border:1px solid #777;
+    color:#6c6c6c;
+    padding: 8px;
+    opacity: .8;
+    -webkit-transition: opacity .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out;
+    -o-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
+}
+.login-form input:focus{
+    opacity:1;
+    border:1px solid #fff;
+}
+
+
+/* Login Button */
+.btn.btn-login {
+    font-weight: bold;
+    font-size: 0.9em;
+    width: 120px;
+    margin: 20px auto 20px;
+    display:block;
+    color: white;
+    text-transform:uppercase ;
+    text-shadow: 1px 1px 2px #000;
+    background: #ffd71d;
+    border: 1px solid #f9be22;
+    -webkit-box-shadow: inset 0 1px 2px #ffed96;
+    -moz-box-shadow: inset 0 1px 2px #ffed96;
+    box-shadow: inset 0 1px 2px #ffed96;
+    -webkit-transition: background .5s ease-in-out;
+    -moz-transition: background .5s ease-in-out;
+    -o-transition: background .5s ease-in-out;
+    transition: background .5s ease-in-out;
+
+}
+.btn.btn-login:hover {
+    background: #f5b406;
+}
+
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers)
+=================================================================== */
+@media only screen and (max-width: 479px) {
+    #login-block{
+        padding-top: 10px;
+        padding-bottom: 25px;
+    }
+
+}
+
+/* Tablet Portrait Size to Tablet Landscape Size (devices and browsers)
+=================================================================== */
+@media only screen and (min-width: 480px) and (max-width: 767px){
+    #login-block {
+        margin: 0 auto;
+        width: 420px;
+    }
+
+}

@@ -1,0 +1,86 @@
+{
+  "commonJs": [
+    "dist/client/js/vendor/modernizr/*.js",
+    "dist/client/js/vendor/jquery/*.js",
+    "dist/client/js/vendor/jquery/lib/*.js",
+    "dist/client/js/vendor/angular/angular.js",
+    "dist/client/js/vendor/angular/lib/*.js",
+    "dist/client/js/vendor/messenger/messenger.js",
+    "dist/client/js/vendor/messenger/lib/*.js",
+    "dist/client/js/vendor/moment/moment.js",
+    "dist/client/js/vendor/moment/lib/*.js",
+    "dist/client/js/vendor/*.js",
+    "!dist/client/js/vendor/back-to-top.js",
+
+    "dist/client/js/directives/**/*.js",
+    "dist/client/js/filters/*.js",
+    "dist/client/js/services/*.js",
+    "dist/client/js/services/**/*.js",
+    "dist/client/js/*.js"
+  ],
+
+  "js": [
+    "dist/client/js/vendor/angulartics/**/*.js",
+    "dist/client/modules/**/*.js",
+    "dist/client/app/app.js",
+
+    "dist/client/js/vendor/back-to-top.js"
+  ],
+
+  "adminJs": [
+    "dist/client/admin/modules/**/*.js",
+    "dist/client/admin/app/admin-app.js",
+
+    "dist/client/plugin/ace_1.2/**/*.js"
+  ],
+
+  "loginJs": [
+    "dist/client/admin/app/login-app.js"
+  ],
+
+  "commonCss": [
+    "dist/client/css/vendor/jquery/**/*.css",
+    "dist/client/css/vendor/messenger/**/*.css",
+    "dist/client/css/vendor/bootstrap.css",
+    "dist/client/css/vendor/font-awesome.css"
+  ],
+
+  "css": [
+    "dist/client/modules/**/*.css",
+    "dist/client/css/style.css",
+
+    "dist/client/css/vendor/back-to-top.css"
+  ],
+
+  "adminCss": [
+    "dist/client/admin/css/style.css",
+    "dist/client/plugin/ace_1.2/**/*.css"
+  ],
+
+  "loginCss": [
+    "dist/client/admin/css/login.css"
+  ],
+
+  "redundant": [
+    "dist/client/*",
+
+    "!dist/client/admin",
+    "dist/client/admin/app",
+    "dist/client/admin/css",
+    "!dist/client/admin/modules",
+    "dist/client/admin/modules/**/*.js",
+    "dist/client/admin/modules/**/*.css",
+
+    "!dist/client/font",
+    "!dist/client/img",
+
+    "!dist/client/modules",
+    "dist/client/modules/**/*.js",
+    "dist/client/modules/**/*.css",
+
+    "!dist/client/plugin",
+    "!dist/client/shared",
+
+    "!dist/client/*.*"
+  ]
+}
