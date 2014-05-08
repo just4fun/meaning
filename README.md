@@ -21,9 +21,8 @@ What is more, make sure the MongoDB is running on the **default port 27017**.
 
 ## Installation
 ```
-$ mkdir ~/meaning
-$ cd ~/meaning
 $ git clone https://github.com/just4fun/meaning.git
+$ cd meaning
 $ npm install
 $ grunt
 ```
