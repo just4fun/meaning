@@ -31,14 +31,24 @@ angular.module("admin-app",
   $routeProvider.otherwise redirectTo: "/"
 ])
 
+#show loading when route change
+.run(["$rootScope", "progress", ($rootScope, progress) ->
+  $rootScope.$on '$routeChangeStart', ->
+    progress.start()
+
+  $rootScope.$on '$routeChangeSuccess', ->
+    progress.complete()
+])
+
+#check login
 .run(["$window", "$rootScope", ($window, $rootScope) ->
   $rootScope._isLogin = !!$.cookie('CurrentUser')
   if !$rootScope._isLogin
     $window.location.href = "/login"
 ])
 
+#init basepath of ckeditor
 .run(["$window", ($window) ->
-  #init basepath of ckeditor
   $window.CKEDITOR_BASEPATH = "/plugin/ckeditor/"
 ])
 

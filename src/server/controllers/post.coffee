@@ -11,7 +11,8 @@ exports.getById = (req, res, next, id) ->
       return next(err)
     if !post
       return next(new Error('Failed to load post ' + id))
-    post.Views++
+    if !req.headers["view-from-admin-console"]
+      post.Views++
     post.save (err) ->
       if err
         next new Error "Update post views failed. #{err}"
@@ -22,8 +23,7 @@ exports.getById = (req, res, next, id) ->
 exports.list = (req, res) ->
   Post.find().sort('-CreateDate').exec (err, posts) ->
     if err
-      res.render 'error',
-        status: 500
+      next new Error "Show post list failed. #{err}"
     else
       res.jsonp posts
 

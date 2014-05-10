@@ -1,7 +1,8 @@
 fs = require("fs")
 express = require("express")
 cors = require("cors")
-mongoose = require "mongoose"
+mongoose = require("mongoose")
+config = require("./config")
 
 
 module.exports = (appPath)->
@@ -23,11 +24,12 @@ module.exports = (appPath)->
     app.use express.json()
     app.use express.methodOverride()
     app.use cors(corsOption)
+    app.use app.router
     app.use (err, req, res, next)->
       res.statusCode = 500
       res.json
         Message: err.message
-        #Stack: err.stack
+        Stack: err.stack if config.debug
       res.end()
 
   #register express routes

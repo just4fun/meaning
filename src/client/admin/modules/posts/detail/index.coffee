@@ -12,7 +12,11 @@ angular.module('admin-posts-detail', [])
     resolve:
       post: ['$q', '$http', "$route", ($q, $http, $route) ->
         deferred = $q.defer()
-        $http.get("#{MEANING.ApiAddress}/posts/#{$route.current.params.id}").success (data) ->
+        $http.get("#{MEANING.ApiAddress}/posts/#{$route.current.params.id}",
+          headers:
+            'view-from-admin-console': true
+        )
+        .success (data) ->
           deferred.resolve data
         deferred.promise
       ])

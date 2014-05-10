@@ -15,5 +15,5 @@ angular.module("login-app", [])
         debugger
         $scope.submitting = false
         $scope.user.Password = ''
-        $scope.error = error
+        $scope.error = error.Message
 ])
