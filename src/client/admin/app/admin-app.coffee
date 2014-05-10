@@ -31,9 +31,9 @@ angular.module("admin-app",
   $routeProvider.otherwise redirectTo: "/"
 ])
 
-.run(["$window", ($window) ->
-  isLogin = !!$.cookie('CurrentUser')
-  if !isLogin
+.run(["$window", "$rootScope", ($window, $rootScope) ->
+  $rootScope._isLogin = !!$.cookie('CurrentUser')
+  if !$rootScope._isLogin
     $window.location.href = "/login"
 ])
 
