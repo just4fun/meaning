@@ -1,0 +1,5 @@
+#directories to ignore
+
+.idea/
+dist/
+node_modules/
