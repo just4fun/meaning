@@ -37,6 +37,12 @@ angular.module("admin-app",
     $window.location.href = "/login"
 ])
 
+.run(["$window", ($window) ->
+  #init basepath of ckeditor
+  $window.CKEDITOR_BASEPATH = "/plugin/ckeditor/"
+])
+
+
 .controller('AdminCtrl',
 ["$scope", "$rootScope", "$http", "$window", "$location",
   ($scope, $rootScope, $http, $window, $location) ->

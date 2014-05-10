@@ -5,30 +5,39 @@ angular.module('admin-posts-detail', [])
   $routeProvider
   .when("/posts/new",
     templateUrl: "/admin/modules/posts/detail/index.html"
-    controller: 'AdminPostsDetailCtrl')
+    controller: 'AdminPostsNewCtrl')
   .when("/posts/:id",
     templateUrl: "/admin/modules/posts/detail/index.html"
-    controller: 'AdminPostsDetailCtrl')
+    controller: 'AdminPostsDetailCtrl'
+    resolve:
+      post: ['$q', '$http', "$route", ($q, $http, $route) ->
+        deferred = $q.defer()
+        $http.get("#{MEANING.ApiAddress}/posts/#{$route.current.params.id}").success (data) ->
+          deferred.resolve data
+        deferred.promise
+      ])
+])
+
+.controller('AdminPostsNewCtrl',
+["$scope", "$http", "$rootScope", "$window",
+  ($scope, $http, $rootScope, $window) ->
+    $scope.submitText = "Publish"
+    $scope.publish = ->
+      $scope.post.Author = $rootScope._loginUser.Username
+      $http.post("#{MEANING.ApiAddress}/posts", $scope.post, {headers:{'meaning-token':$.cookie('meaning-token')}})
+      .success (data) ->
+        $window.location.href = "/#!/posts/#{data._id}"
 ])
 
 .controller('AdminPostsDetailCtrl',
-["$scope", "$http", "$rootScope", "$window", "$routeParams",
-  ($scope, $http, $rootScope, $window, $routeParams) ->
-    isNew = !$routeParams.id
-    if isNew
-      $scope.submitText = "Publish"
-      $scope.publish = ->
-        $scope.post.Author = $rootScope._loginUser.Username
-        $http.post("#{MEANING.ApiAddress}/posts", $scope.post, {headers:{'meaning-token':$.cookie('meaning-token')}})
-          .success (data) ->
-            $window.location.href = "/#!/posts/#{data._id}"
-    else
-      $scope.submitText = "Update"
-      $scope.publish = ->
-        $scope.post.EditUser = $rootScope._loginUser.Username
-        $http.put("#{MEANING.ApiAddress}/posts/#{$routeParams.id}", $scope.post, {headers:{'meaning-token':$.cookie('meaning-token')}})
-          .success (data) ->
-            $window.location.href = "/#!/posts/#{data._id}"
-      $http.get("#{MEANING.ApiAddress}/posts/#{$routeParams.id}").success (data) ->
-        $scope.post = data
+["$scope", "$http", "$rootScope", "$window", "$routeParams", "post",
+  ($scope, $http, $rootScope, $window, $routeParams, post) ->
+    $scope.post = post
+
+    $scope.submitText = "Update"
+    $scope.publish = ->
+      $scope.post.EditUser = $rootScope._loginUser.Username
+      $http.put("#{MEANING.ApiAddress}/posts/#{$routeParams.id}", $scope.post, {headers:{'meaning-token':$.cookie('meaning-token')}})
+      .success (data) ->
+        $window.location.href = "/#!/posts/#{data._id}"
 ])
