@@ -27,7 +27,7 @@ angular.module('admin-posts-detail', [])
   ($scope, $http, $rootScope, $window) ->
     $scope.submitText = "Publish"
     $scope.publish = ->
-      $scope.post.Author = $rootScope._loginUser.Username
+      $scope.post.Author = $rootScope._loginUser._id
       $http.post("#{MEANING.ApiAddress}/posts", $scope.post, {headers:{'meaning-token':$.cookie('meaning-token')}})
       .success (data) ->
         $window.location.href = "/#!/posts/#{data._id}"

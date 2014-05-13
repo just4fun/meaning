@@ -5,6 +5,9 @@
     </ul>
 
     <div style="margin-bottom: 50px;"></div>
+    <h3 ng-hide="isAllList">
+        Author: {{_loginUser.Username}} ({{posts.length}} post(s))
+    </h3>
     <div ng-repeat="post in posts">
         <h3>
             <a ng-href="/#!/posts/{{post._id}}" >
@@ -23,7 +26,7 @@
             </li>
             <li>
                 <i class="icon-user"></i>
-                {{post.Author}}
+                <a href="#!/posts/author/{{post.Author.Username}}">{{post.Author.Username}}</a>
             </li>
             <li>
                 <i class="icon-eye-open"></i>

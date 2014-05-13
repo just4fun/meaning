@@ -18,14 +18,17 @@ angular.module("app",
 ])
 
 .config(["$httpProvider", ($httpProvider) ->
-  $httpProvider.responseInterceptors.push ["$rootScope", "$q", ($rootScope, $q) ->
-    success = (response) ->
-      response
-    error = (response) ->
-      debugger
-      $q.reject(response)
-    (promise) ->
-      promise.then success, error
+  $httpProvider.responseInterceptors.push ["$rootScope", "$q", "$location",
+    ($rootScope, $q, $location) ->
+      success = (response) ->
+        response
+      error = (response) ->
+        debugger
+        if response.status is 404
+          $location.path "#!/404"
+        $q.reject(response)
+      (promise) ->
+        promise.then success, error
   ]
 ])
 

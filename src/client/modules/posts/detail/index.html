@@ -10,7 +10,7 @@
                     </li>
                     <li>
                         <i class="icon-user"></i>
-                        {{post.Author}}
+                        <a href="#!/posts/author/{{post.Author.Username}}">{{post.Author.Username}}</a>
                     </li>
                     <li>
                         <i class="icon-eye-open"></i>
@@ -20,7 +20,7 @@
             </em>
         </small>
     </div>
-    <div class="pull-right" ng-show="_loginUser && _loginUser.Username == post.Author">
+    <div class="pull-right" ng-show="_loginUser && _loginUser.Username == post.Author.Username">
         <a class="btn btn-primary" ng-href="/admin#!/posts/{{post._id}}">
             <i class="icon-edit"></i>
         </a>

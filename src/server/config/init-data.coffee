@@ -13,6 +13,7 @@ module.exports = () ->
         Username: "admin"
         Password: md5("12345")
         Email: "houritsunohikari@gmail.com"
+        Posts: []
       })
       user.save (err) ->
         if err
@@ -20,17 +21,22 @@ module.exports = () ->
         else
           console.log "Init admin successfully!"
 
-  #init other default data
-  Post.find().exec (err, posts) ->
-    if !posts or posts.length is 0
-      post = new Post({
-        Title: "example post"
-        Content: "this is post content."
-        Description: "this is post description."
-        Author: "admin"
-      })
-      post.save (err) ->
-        if err
-          new Error "Init example post failed. #{err}"
-        else
-          console.log "Init example post successfully!"
+          #init other default data
+          Post.find().exec (err, posts) ->
+            if !posts or posts.length is 0
+              post = new Post({
+                Title: "example post"
+                Content: "this is post content."
+                Description: "this is post description."
+                Author: user._id
+              })
+
+              post.save (err) ->
+                if err
+                  new Error "Init example post failed. #{err}"
+                else
+                  console.log "Init example post successfully!"
+                  user.Posts = user.Posts || []
+                  user.Posts.push post
+                  user.save (err) ->
+                    console.log "Update admin successfully!"
