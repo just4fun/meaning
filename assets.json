@@ -47,13 +47,13 @@
 
   "css": [
     "dist/client/modules/**/*.css",
-    "dist/client/css/style.css",
+    "dist/client/css/main.css",
 
     "dist/client/css/vendor/back-to-top.css"
   ],
 
   "adminCss": [
-    "dist/client/admin/css/style.css",
+    "dist/client/admin/css/admin.css",
     "dist/client/plugin/ace_1.2/**/*.css"
   ],
 
