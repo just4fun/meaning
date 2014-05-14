@@ -9,20 +9,22 @@ exports.get = (req, res) ->
 exports.getList = (req, res) ->
   res.jsonp req.posts
 
-exports.getById = (req, res, next, id) ->
-  Post.findById(id).populate('Author', 'Username').exec (err, post) ->
+exports.getByUrl = (req, res, next, url) ->
+  Post.findOne({Url: url}).populate('Author', 'Username').exec (err, post) ->
     if err
       return next(err)
     if !post
-      return next(new Error('Failed to load post ' + id))
-    if !req.headers["view-from-admin-console"]
-      post.Views++
-    post.save (err) ->
-      if err
-        next new Error "Update post views failed. #{err}"
-      else
-        req.post = post
-        next()
+      res.statusCode = 404
+      res.end()
+    else
+      if !req.headers["view-from-admin-console"]
+        post.Views++
+      post.save (err) ->
+        if err
+          next new Error "Update post views failed. #{err}"
+        else
+          req.post = post
+          next()
 
 exports.getListByAuthor = (req, res, next, author) ->
   User.findOne({Username: author}).exec (err, user) ->

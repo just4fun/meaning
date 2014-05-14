@@ -21,6 +21,8 @@ angular.module("admin-app",
       response
     error = (response) ->
       debugger
+      if response.data and response.data.Message
+        alert response.data.Message
       $q.reject(response)
     (promise) ->
       promise.then success, error

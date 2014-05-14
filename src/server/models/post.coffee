@@ -3,6 +3,7 @@ Schema = mongoose.Schema
 
 PostSchema = new Schema
   Title: String
+  Url: String
   Content: String
   Description: String
   Views:

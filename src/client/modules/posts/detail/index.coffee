@@ -3,7 +3,7 @@ angular.module('posts-view', [])
 .config(["$routeProvider",
   ($routeProvider) ->
     $routeProvider
-    .when("/posts/:id",
+    .when("/posts/:url",
       templateUrl: "/modules/posts/detail/index.html"
       controller: 'PostsDetailCtrl')
 ])
@@ -12,7 +12,7 @@ angular.module('posts-view', [])
 ["$scope", "$http", "$window", "progress", "$routeParams", "$sce",
   ($scope, $http, $window, progress, $routeParams, $sce) ->
     progress.start()
-    $http.get("#{MEANING.ApiAddress}/posts/#{$routeParams.id}").success (data) ->
+    $http.get("#{MEANING.ApiAddress}/posts/#{$routeParams.url}").success (data) ->
       data.Content = $sce.trustAsHtml(data.Content)
       $scope.post = data
       progress.complete()

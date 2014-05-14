@@ -1,12 +1,13 @@
 post = require("../controllers/post")
 requireLogin = require("../common/requireLogin")
+checkUrlUnique = require("../common/checkUrlUnique")
 
 module.exports = (app) ->
   app.get "/posts", post.list
-  app.get "/posts/:id", post.get
+  app.get "/posts/:url", post.get
   app.get "/posts/author/:author", post.getList
-  app.post "/posts", requireLogin(), post.create
-  app.put "/posts/:id", requireLogin(), post.update
+  app.post "/posts", requireLogin(), checkUrlUnique(), post.create
+  app.put "/posts/:url", requireLogin(), checkUrlUnique(), post.update
 
-  app.param "id", post.getById
+  app.param "url", post.getByUrl
   app.param "author", post.getListByAuthor
