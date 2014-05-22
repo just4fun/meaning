@@ -12,10 +12,10 @@ module.exports = ->
         #Update
         if req.post
           for post in posts
-            if post.Url is req.body.Url and post._id isnt req.body._id
+            if post.Url is req.body.Url and post._id.toString() isnt req.body._id
               next new Error "This url is already exists."
               return
-          #Create
+        #Create
         else
           for post in posts
             if post.Url is req.body.Url

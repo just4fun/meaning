@@ -18,5 +18,7 @@ PostSchema = new Schema
   Author:
     type: Schema.Types.ObjectId
     ref: 'User'
+  Tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
+
 
 mongoose.model 'Post', PostSchema

@@ -6,7 +6,7 @@
 
     <div style="margin-bottom: 50px;"></div>
     <h3 ng-hide="isAllList">
-        Author: {{_loginUser.Username}} ({{posts.length}} post(s))
+        {{filterText}}: {{filter}} ({{posts.length}} post(s))
     </h3>
     <div ng-repeat="post in posts">
         <h3>
@@ -15,10 +15,6 @@
             </a>
         </h3>
         <p>{{post.Description}}</p>
-        <p class="pull-right">
-            <i class="icon-tags"></i>
-            <span class="label label-default">example</span>
-        </p>
         <ul class="list-inline">
             <li style="padding-left: 0;">
                 <i class="icon-time"></i>
@@ -31,6 +27,13 @@
             <li>
                 <i class="icon-eye-open"></i>
                 {{post.Views}}
+            </li>
+            <li style="display: inline;" ng-show="post.Tags.length > 0">
+                <i class="icon-tags"></i>
+                <a href="#!/posts/tag/{{tag.TagName}}" ng-repeat="tag in post.Tags"
+                        class="label label-default" style="margin: 0 1px;">
+                    {{ tag.TagName }}
+                </a>
             </li>
         </ul>
         <hr ng-hide="$index == posts.length - 1"/>

@@ -22,6 +22,7 @@ angular.module('admin-posts-detail', [])
       ])
 ])
 
+#Create
 .controller('AdminPostsNewCtrl',
 ["$scope", "$http", "$rootScope", "$window",
   ($scope, $http, $rootScope, $window) ->
@@ -33,9 +34,16 @@ angular.module('admin-posts-detail', [])
         $window.location.href = "/#!/posts/#{data.Url}"
 ])
 
+#Update
 .controller('AdminPostsDetailCtrl',
 ["$scope", "$http", "$rootScope", "$window", "$routeParams", "post",
   ($scope, $http, $rootScope, $window, $routeParams, post) ->
+    if post.Tags and post.Tags.length > 0
+      tags = []
+      for t in post.Tags
+        tags.push t.TagName
+      post.Tags = tags.join(",")
+
     $scope.post = post
 
     $scope.submitText = "Update"

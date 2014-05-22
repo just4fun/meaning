@@ -16,6 +16,13 @@
                         <i class="icon-eye-open"></i>
                         {{post.Views}}
                     </li>
+                    <li style="display: inline;" ng-show="post.Tags.length > 0">
+                        <i class="icon-tags"></i>
+                        <a href="#!/posts/tag/{{tag.TagName}}" ng-repeat="tag in post.Tags"
+                                class="label label-default" style="margin: 0 1px;">
+                            {{ tag.TagName }}
+                        </a>
+                    </li>
                 </ul>
             </em>
         </small>
