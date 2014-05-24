@@ -26,6 +26,7 @@ module.exports = () ->
             if !posts or posts.length is 0
               post = new Post({
                 Title: "example post"
+                Url: "just-a-example-post"
                 Content: "this is post content."
                 Description: "this is post description."
                 Author: user._id

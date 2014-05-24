@@ -13,9 +13,9 @@
         <thead>
         <tr>
             <td class="width-15">Title</td>
-            <td class="width-20">Author</td>
+            <td class="width-15">Author</td>
             <td class="width-15">Category</td>
-            <td class="width-15">Tags</td>
+            <td class="width-20">Tags</td>
             <td class="width-15">Date</td>
             <td class="width-10">Views</td>
             <td class="width-10"></td>
@@ -28,7 +28,7 @@
             </td>
             <td>{{item.Author.Username}}</td>
             <td></td>
-            <td></td>
+            <td>{{item.Tags}}</td>
             <td>{{item.CreateDate | date:'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.Views}}</td>
             <td>
@@ -47,5 +47,6 @@
         </tr>
         </tbody>
     </table>
+    <div class="well well-sm" ng-hide="posts">No posts yet.</div>
     <a href="#!/posts/new" class="pull-right btn btn-primary btn-sm">New Post</a>
 </div>

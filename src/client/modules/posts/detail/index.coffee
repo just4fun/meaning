@@ -9,11 +9,10 @@ angular.module('posts-view', [])
 ])
 
 .controller('PostsDetailCtrl',
-["$scope", "$http", "$window", "progress", "$routeParams", "$sce",
-  ($scope, $http, $window, progress, $routeParams, $sce) ->
+["$scope", "$http", "$window", "progress", "$routeParams",
+  ($scope, $http, $window, progress, $routeParams) ->
     progress.start()
     $http.get("#{MEANING.ApiAddress}/posts/#{$routeParams.url}").success (data) ->
-      data.Content = $sce.trustAsHtml(data.Content)
       $scope.post = data
       progress.complete()
 ])

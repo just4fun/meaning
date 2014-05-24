@@ -16,13 +16,13 @@ angular.module("admin-app",
 ])
 
 .config(["$httpProvider", ($httpProvider) ->
-  $httpProvider.responseInterceptors.push ["$rootScope", "$q", ($rootScope, $q) ->
+  $httpProvider.responseInterceptors.push ["$rootScope", "$q", "messenger", ($rootScope, $q, messenger) ->
     success = (response) ->
       response
     error = (response) ->
       debugger
       if response.data and response.data.Message
-        alert response.data.Message
+        messenger.error response.data.Message
       $q.reject(response)
     (promise) ->
       promise.then success, error

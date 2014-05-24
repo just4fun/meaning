@@ -14,7 +14,7 @@
                 {{post.Title}}
             </a>
         </h3>
-        <p>{{post.Description}}</p>
+        <p ng-bind-html="post.Description"></p>
         <ul class="list-inline">
             <li style="padding-left: 0;">
                 <i class="icon-time"></i>
