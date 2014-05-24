@@ -8,6 +8,7 @@ exports.get = (req, res) ->
   res.jsonp req.post
 
 exports.getList = (req, res) ->
+  changePostUrlWithDate(req.posts)
   res.jsonp req.posts
 
 exports.getByUrl = (req, res, next, url) ->
@@ -22,7 +23,7 @@ exports.getByUrl = (req, res, next, url) ->
         post.Views++
       post.save (err) ->
         if err
-          next new Error "Update post views failed. #{err}"
+          next new Error "Update post views failed: #{err}"
         else
           req.post = post
           next()
@@ -70,11 +71,11 @@ exports.list = (req, res, next) ->
     if err
       next new Error "Show post list failed: #{err}"
     else
+      changePostUrlWithDate(posts)
       res.jsonp posts
 
 exports.create = (req, res, next) ->
-  req.body.Views = 0
-
+  #handle tags
   newTags = getValidTags(req.body.Tags || "")
   req.body.Tags = []
 
@@ -83,6 +84,7 @@ exports.create = (req, res, next) ->
   savePostWithTags(req, res, next, post, newTags)
 
 exports.update = (req, res, next) ->
+  #handle tags
   newTags = getValidTags(req.body.Tags || "")
   req.body.Tags = []
 
@@ -94,6 +96,7 @@ exports.update = (req, res, next) ->
     if err
       next new Error "Remove post tags failed: #{err}"
     else
+      post.EditDate = new Date()
       #update post
       savePostWithTags(req, res, next, post, newTags)
 
@@ -134,9 +137,24 @@ savePostWithTags =  (req, res, next, post, newTags) ->
               if err
                 next new Error "Update post failed: #{err}"
               else
+                tempPosts = []
+                tempPosts.push(post)
+                changePostUrlWithDate(tempPosts)
                 res.jsonp post
       else
+        tempPosts = []
+        tempPosts.push(post)
+        changePostUrlWithDate(tempPosts)
         res.jsonp post
+
+changePostUrlWithDate = (posts) ->
+  return if !posts or posts.length is 0
+  for p in posts
+    date = new Date(p.CreateDate)
+    year = date.getFullYear()
+    month = date.getMonth() + 1
+    day = date.getDate()
+    p.Url = "#{year}/#{month}/#{day}/#{p.Url}"
 
 #remove duplicate items from array
 Array::unique = ->

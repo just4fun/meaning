@@ -13,10 +13,11 @@
         <thead>
         <tr>
             <td class="width-15">Title</td>
-            <td class="width-15">Author</td>
+            <td class="width-10">Author</td>
             <td class="width-15">Category</td>
             <td class="width-20">Tags</td>
-            <td class="width-15">Date</td>
+            <td class="width-10">CreateDate</td>
+            <td class="width-10">EditDate</td>
             <td class="width-10">Views</td>
             <td class="width-10"></td>
         </tr>
@@ -24,19 +25,20 @@
         <tbody>
         <tr ng-repeat="item in posts">
             <td>
-                <a ng-href="#!/posts/{{item.Url}}">{{item.Title}}</a>
+                <a ng-href="#!/posts/{{item.Url.substring(item.Url.lastIndexOf('/') + 1)}}">{{item.Title}}</a>
             </td>
             <td>{{item.Author.Username}}</td>
             <td></td>
             <td>{{item.Tags}}</td>
             <td>{{item.CreateDate | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td>{{item.EditDate | date:'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.Views}}</td>
             <td>
                 <div class="action-buttons">
                     <a class="blue" ng-href="/#!/posts/{{item.Url}}">
                         <i class="icon-zoom-in bigger-130"></i>
                     </a>
-                    <a class="green" ng-href="#!/posts/{{item.Url}}">
+                    <a class="green" ng-href="#!/posts/{{item.Url.substring(item.Url.lastIndexOf('/') + 1)}}">
                         <i class="icon-pencil bigger-130"></i>
                     </a>
                     <a class="red" href="javascript:void(0);">
