@@ -28,7 +28,7 @@
                 <a ng-href="#!/posts/{{item.Url.substring(item.Url.lastIndexOf('/') + 1)}}">{{item.Title}}</a>
             </td>
             <td>{{item.Author.Username}}</td>
-            <td></td>
+            <td>{{item.Category.CategoryName}}</td>
             <td>{{item.Tags}}</td>
             <td>{{item.CreateDate | date:'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.EditDate | date:'yyyy-MM-dd HH:mm'}}</td>
@@ -50,5 +50,5 @@
         </tbody>
     </table>
     <div class="well well-sm" ng-hide="posts">No posts yet.</div>
-    <a href="#!/posts/new" class="pull-right btn btn-primary btn-sm">New Post</a>
+    <a href="#!/posts/new" class="pull-left btn btn-primary btn-sm">New Post</a>
 </div>

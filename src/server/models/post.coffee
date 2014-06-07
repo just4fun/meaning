@@ -18,6 +18,9 @@ PostSchema = new Schema
   Author:
     type: Schema.Types.ObjectId
     ref: 'User'
+  Category:
+    type: Schema.Types.ObjectId
+    ref: 'Category'
   Tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
 
 

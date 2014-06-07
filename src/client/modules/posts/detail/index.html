@@ -16,6 +16,10 @@
                         <i class="icon-eye-open"></i>
                         {{post.Views}}
                     </li>
+                    <li>
+                        <i class="icon-bookmark"></i>
+                        <a href="#!/posts/category/{{post.Category.CategoryName}}">{{post.Category.CategoryName}}</a>
+                    </li>
                     <li style="display: inline;" ng-show="post.Tags.length > 0">
                         <i class="icon-tags"></i>
                         <a href="#!/posts/tag/{{tag.TagName}}" ng-repeat="tag in post.Tags"

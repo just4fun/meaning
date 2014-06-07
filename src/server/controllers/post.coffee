@@ -2,6 +2,7 @@ mongoose = require "mongoose"
 Post = mongoose.model "Post"
 User = mongoose.model "User"
 Tag = mongoose.model "Tag"
+Category = mongoose.model "Category"
 _ = require "lodash"
 
 exports.get = (req, res) ->
@@ -12,7 +13,11 @@ exports.getList = (req, res) ->
   res.jsonp req.posts
 
 exports.getByUrl = (req, res, next, url) ->
-  Post.findOne({Url: url}).populate('Author', 'Username').populate('Tags', 'TagName').exec (err, post) ->
+  Post.findOne({Url: url})
+  .populate('Author', 'Username')
+  .populate('Tags', 'TagName')
+  .populate('Category', 'CategoryName')
+  .exec (err, post) ->
     if err
       return next(err)
     if !post
@@ -36,7 +41,12 @@ exports.getListByAuthor = (req, res, next, author) ->
       res.statusCode = 404
       res.end()
     else
-      Post.find({Author: user._id}).populate('Author', 'Username').populate('Tags', 'TagName').sort('-CreateDate').exec (err, posts) ->
+      Post.find({Author: user._id})
+      .populate('Author', 'Username')
+      .populate('Tags', 'TagName')
+      .populate('Category', 'CategoryName')
+      .sort('-CreateDate')
+      .exec (err, posts) ->
         if err
           return next(err)
         if !posts
@@ -52,7 +62,12 @@ exports.getListByTag = (req, res, next, tagName) ->
       res.statusCode = 404
       res.end()
     else
-      Post.find().populate('Author', 'Username').populate('Tags', 'TagName').sort('-CreateDate').exec (err, posts) ->
+      Post.find()
+      .populate('Author', 'Username')
+      .populate('Tags', 'TagName')
+      .populate('Category', 'CategoryName')
+      .sort('-CreateDate')
+      .exec (err, posts) ->
         if err
           return next(err)
         if !posts
@@ -66,8 +81,34 @@ exports.getListByTag = (req, res, next, tagName) ->
         req.posts = filter
         next()
 
+exports.getListByCategory = (req, res, next, categoryName) ->
+  Category.findOne({CategoryName: categoryName}).exec (err, category) ->
+    if err
+      return next(err)
+    if !category
+      res.statusCode = 404
+      res.end()
+    else
+      Post.find({Category: category._id})
+      .populate('Author', 'Username')
+      .populate('Tags', 'TagName')
+      .populate('Category', 'CategoryName')
+      .sort('-CreateDate')
+      .exec (err, posts) ->
+        if err
+          return next(err)
+        if !posts
+          return next(new Error('Failed to load posts of author: ' + author))
+        req.posts = posts
+        next()
+
 exports.list = (req, res, next) ->
-  Post.find().populate('Author', 'Username').populate('Tags', 'TagName').sort('-CreateDate').exec (err, posts) ->
+  Post.find()
+  .populate('Author', 'Username')
+  .populate('Tags', 'TagName')
+  .populate('Category', 'CategoryName')
+  .sort('-CreateDate')
+  .exec (err, posts) ->
     if err
       next new Error "Show post list failed: #{err}"
     else
