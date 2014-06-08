@@ -16,7 +16,7 @@
                         <i class="icon-eye-open"></i>
                         {{post.Views}}
                     </li>
-                    <li>
+                    <li ng-show="post.Category">
                         <i class="icon-bookmark"></i>
                         <a href="#!/posts/category/{{post.Category.CategoryName}}">{{post.Category.CategoryName}}</a>
                     </li>
