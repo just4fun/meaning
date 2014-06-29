@@ -13,15 +13,15 @@ angular.module('posts-list', [])
       templateUrl: "/modules/posts/list/index.html"
       controller: 'TagPostsListCtrl')
     .when("/posts/category/:category",
-        templateUrl: "/modules/posts/list/index.html"
-        controller: 'CategoryPostsListCtrl')
+      templateUrl: "/modules/posts/list/index.html"
+      controller: 'CategoryPostsListCtrl')
 ])
 
 .controller('PostsListCtrl',
 ["$scope", "$http", "progress", ($scope, $http, progress) ->
   $scope.isAllList = true
   progress.start()
-  $http.get("#{MEANING.ApiAddress}/posts").success (data) ->
+  $http.get("#{MEANING.ApiAddress}/posts/list/Published").success (data) ->
     $scope.posts = data
     progress.complete()
 ])

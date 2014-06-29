@@ -41,6 +41,7 @@ module.exports = () ->
             Url: "just-a-example-post"
             Content: "this is post content."
             Description: "this is post description."
+            Status: "Published"
             Author: user._id
           )
           post.save (err) ->

@@ -13,7 +13,12 @@ exports.getList = (req, res) ->
   res.jsonp req.posts
 
 exports.getByUrl = (req, res, next, url) ->
-  Post.findOne({Url: url})
+  param =
+    Url: url
+  if !req.headers["from-admin-console"]
+    param.Status = "Published"
+
+  Post.findOne(param)
   .populate('Author', 'Username')
   .populate('Tags', 'TagName')
   .populate('Category', 'CategoryName')
@@ -24,7 +29,7 @@ exports.getByUrl = (req, res, next, url) ->
       res.statusCode = 404
       res.end()
     else
-      if !req.headers["view-from-admin-console"]
+      if !req.headers["from-admin-console"]
         post.Views++
       post.save (err) ->
         if err
@@ -41,7 +46,7 @@ exports.getListByAuthor = (req, res, next, author) ->
       res.statusCode = 404
       res.end()
     else
-      Post.find({Author: user._id})
+      Post.find({Author: user._id, Status: "Published"})
       .populate('Author', 'Username')
       .populate('Tags', 'TagName')
       .populate('Category', 'CategoryName')
@@ -62,7 +67,7 @@ exports.getListByTag = (req, res, next, tagName) ->
       res.statusCode = 404
       res.end()
     else
-      Post.find()
+      Post.find({Status: "Published"})
       .populate('Author', 'Username')
       .populate('Tags', 'TagName')
       .populate('Category', 'CategoryName')
@@ -89,7 +94,7 @@ exports.getListByCategory = (req, res, next, categoryName) ->
       res.statusCode = 404
       res.end()
     else
-      Post.find({Category: category._id})
+      Post.find({Category: category._id, Status: "Published"})
       .populate('Author', 'Username')
       .populate('Tags', 'TagName')
       .populate('Category', 'CategoryName')
@@ -98,9 +103,23 @@ exports.getListByCategory = (req, res, next, categoryName) ->
         if err
           return next(err)
         if !posts
-          return next(new Error('Failed to load posts of author: ' + author))
+          return next(new Error('Failed to load posts of category: ' + categoryName))
         req.posts = posts
         next()
+
+exports.getListByStatus = (req, res, next, status) ->
+  Post.find({Status: status})
+  .populate('Author', 'Username')
+  .populate('Tags', 'TagName')
+  .populate('Category', 'CategoryName')
+  .sort('-CreateDate')
+  .exec (err, posts) ->
+      if err
+        return next(err)
+      if !posts
+        return next(new Error('Failed to load posts of status: ' + status))
+      req.posts = posts
+      next()
 
 exports.list = (req, res, next) ->
   Post.find()

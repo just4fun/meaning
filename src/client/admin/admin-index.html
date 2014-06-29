@@ -63,7 +63,7 @@
                         <span class="menu-text">Dashboard</span>
                     </a>
                 </li>
-                <li ng-class="{active: isActive('/posts')}">
+                <li ng-class="{active: isActive('/posts') || isActive('/posts/list/published') || isActive('/posts/list/draft')}">
                     <a href="#!/posts">
                         <i class="icon-pencil"></i>
                         <span class="menu-text">Posts</span>

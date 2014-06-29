@@ -11,7 +11,7 @@
 </div>
 
 <div class="page-content">
-    <form name="form" ng-submit="publish()">
+    <form name="form">
         <div class="form-group">
             <label class="control-label">Title</label>
             <div>
@@ -27,8 +27,11 @@
         <div class="form-group">
             <label class="control-label">Category</label>
             <div>
-                <select class="form-control" ng-model="post.Category._id" required>
+                <!--<select class="form-control" ng-model="post.Category._id" required>
                     <option value="{{category._id}}" ng-repeat="category in categories">{{category.CategoryName}}</option>
+                </select>-->
+                <select class="form-control" ng-model="post.Category._id" required
+                        ng-options="category._id as category.CategoryName for category in categories">
                 </select>
             </div>
         </div>
@@ -50,6 +53,10 @@
                 <input class="form-control" type="text" placeholder="Tags" ng-model="post.Tags">
             </div>
         </div>
-        <button class="btn btn-primary btn-sm" ng-disabled="submitting || form.$invalid">{{submitText}}</button>
+        <button class="btn btn-primary btn-sm"
+                ng-disabled="submitting || form.$invalid" ng-click="publish()">{{submitText}}</button>
+        <button class="btn btn-success btn-sm pull-right" ng-hide="post.Status=='Published'"
+                ng-disabled="submitting || form.$invalid" ng-click="saveDraft()">Save Draft</button>
+        <div class="clearfix"></div>
     </form>
 </div>

@@ -9,6 +9,10 @@ PostSchema = new Schema
   Views:
     type: Number
     default: 0
+  Status:
+    type: String
+    enum: ["Published", "Draft"]
+
   CreateDate:
     type: Date
     default: Date.now
