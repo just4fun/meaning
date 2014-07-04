@@ -10,10 +10,7 @@ module.exports = (appPath)->
   models_path = appPath + "/models"
   fs.readdirSync(models_path).forEach (file) ->
     newPath = models_path + "/" + file
-    stat = fs.statSync(newPath)
-    if stat.isFile()
-      if (/(.*)\.(js$)/.test(file))
-        require(newPath)
+    require(newPath)
 
   #init express
   corsOption =
@@ -36,9 +33,6 @@ module.exports = (appPath)->
   routes_path = appPath + "/routes"
   fs.readdirSync(routes_path).forEach (file) ->
     newPath = routes_path + "/" + file
-    stat = fs.statSync(newPath)
-    if stat.isFile()
-      if (/(.*)\.(js$)/.test(file))
-        require(newPath)(app)
+    require(newPath)(app)
 
   app

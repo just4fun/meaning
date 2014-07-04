@@ -4,6 +4,7 @@ User = mongoose.model "User"
 Tag = mongoose.model "Tag"
 Category = mongoose.model "Category"
 _ = require "lodash"
+async = require("async")
 
 exports.get = (req, res) ->
   res.jsonp req.post
@@ -60,30 +61,26 @@ exports.getListByAuthor = (req, res, next, author) ->
         next()
 
 exports.getListByTag = (req, res, next, tagName) ->
-  Tag.findOne({TagName: tagName}).exec (err, tag) ->
+  Tag.find({TagName: tagName})
+  .populate("Post")
+  .exec (err, tags) ->
     if err
       return next(err)
-    if !tag
+    if !tags or tags.length is 0
       res.statusCode = 404
       res.end()
     else
-      Post.find({Status: "Published"})
-      .populate('Author', 'Username')
-      .populate('Tags', 'TagName')
-      .populate('Category', 'CategoryName')
-      .sort('-CreateDate')
-      .exec (err, posts) ->
+      #populate the field of populated doc
+      async.map tags, ((tag, callback) ->
+        tag.Post.populate "Author Category Tags", "Username CategoryName TagName", (err, post) ->
+          if err
+            callback err
+          else
+            callback null, post
+      ), (err, posts) ->
         if err
           return next(err)
-        if !posts
-          return next(new Error('Failed to load posts of tag: ' + tagName))
-        #todo: change filter after find() to find with filter
-        filter = []
-        for p in posts
-          for t in p.Tags when t.TagName is tagName
-            filter.push p
-            break;
-        req.posts = filter
+        req.posts = posts
         next()
 
 exports.getListByCategory = (req, res, next, categoryName) ->
