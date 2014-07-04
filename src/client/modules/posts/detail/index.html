@@ -1,49 +1,38 @@
-<div>
-    <div class="page-header">
-        <h1>{{post.Title}}</h1>
-        <small>
-            <em class="text-muted">
-                <ul class="list-inline">
-                    <li style="padding-left: 0;">
-                        <i class="icon-time"></i>
-                        Posted on {{post.CreateDate | date:'medium'}}
-                    </li>
-                    <li>
-                        <i class="icon-user"></i>
-                        <a href="#!/posts/author/{{post.Author.Username}}">{{post.Author.Username}}</a>
-                    </li>
-                    <li>
-                        <i class="icon-eye-open"></i>
-                        {{post.Views}}
-                    </li>
-                    <li ng-show="post.Category">
-                        <i class="icon-bookmark"></i>
-                        <a href="#!/posts/category/{{post.Category.CategoryName}}">{{post.Category.CategoryName}}</a>
-                    </li>
-                    <li style="display: inline;" ng-show="post.Tags.length > 0">
-                        <i class="icon-tags"></i>
-                        <a href="#!/posts/tag/{{tag.TagName}}" ng-repeat="tag in post.Tags"
-                                class="label label-default" style="margin: 0 1px;">
-                            {{ tag.TagName }}
-                        </a>
-                    </li>
-                </ul>
-            </em>
-        </small>
-    </div>
-    <div class="pull-right" ng-show="_loginUser && _loginUser.Username == post.Author.Username">
-        <a class="btn btn-primary" ng-href="/admin#!/posts/{{post.Url}}">
-            <i class="icon-edit"></i>
-        </a>
-    </div>
-    <p ng-bind-html="post.Content"></p>
+<div class="page-header">
+    <h1>{{post.Title}}</h1>
+    <small>
+        <em class="text-muted">
+            <ul class="list-inline">
+                <li style="padding-left: 0;">
+                    <i class="icon-time"></i>
+                    Posted on {{post.CreateDate | date:'medium'}}
+                </li>
+                <li>
+                    <i class="icon-user"></i>
+                    <a href="#!/posts/author/{{post.Author.Username}}">{{post.Author.Username}}</a>
+                </li>
+                <li>
+                    <i class="icon-eye-open"></i>
+                    {{post.Views}}
+                </li>
+                <li ng-show="post.Category">
+                    <i class="icon-bookmark"></i>
+                    <a href="#!/posts/category/{{post.Category.CategoryName}}">{{post.Category.CategoryName}}</a>
+                </li>
+                <li style="display: inline;" ng-show="post.Tags.length > 0">
+                    <i class="icon-tags"></i>
+                    <a href="#!/posts/tag/{{tag.TagName}}" ng-repeat="tag in post.Tags"
+                            class="label label-default" style="margin: 0 1px;">
+                        {{ tag.TagName }}
+                    </a>
+                </li>
+            </ul>
+        </em>
+    </small>
 </div>
-
-
-
-<style>
-    .page-header {
-        border-bottom: 3px double #EEE;
-        padding-bottom: 15px;
-    }
-</style>
+<div class="pull-right" ng-show="_loginUser && _loginUser.Username == post.Author.Username">
+    <a class="btn btn-primary" ng-href="/admin#!/posts/{{post.Url}}">
+        <i class="icon-edit"></i>
+    </a>
+</div>
+<p ng-bind-html="post.Content"></p>
