@@ -11,7 +11,5 @@ CategorySchema = new Schema
   EditDate: Date
   EditUser: String
 
-  Posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
-
 
 mongoose.model 'Category', CategorySchema

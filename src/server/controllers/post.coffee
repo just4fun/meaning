@@ -70,6 +70,10 @@ exports.getListByTag = (req, res, next, tagName) ->
       res.statusCode = 404
       res.end()
     else
+      #remove tag whose post is draft
+      for t, index in tags
+        if t.Post.Status isnt "Published"
+          tags.splice(index, 1)
       #populate the field of populated doc
       async.map tags, ((tag, callback) ->
         tag.Post.populate "Author Category Tags", "Username CategoryName TagName", (err, post) ->

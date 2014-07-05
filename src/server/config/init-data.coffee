@@ -14,8 +14,8 @@ module.exports = () ->
   at first, create an example post
 
   then, run the task of
-    1.creating admin user with post(s)
-    2.creating an example category with post(s)
+    1.creating admin user -- × with post(s)
+    2.creating an example category -- × with post(s)
     3.creating an example tag with postId
   in parallel
 
@@ -51,7 +51,7 @@ module.exports = () ->
     (post, callback) ->
       async.parallel
 
-        #create admin user with postId
+        #create admin user -- × with post(s)
         admin : (callback) ->
           User.find().exec (err, users) ->
             if err
@@ -61,8 +61,8 @@ module.exports = () ->
                 Username : "admin"
                 Password : md5("12345")
                 Email : "houritsunohikari@gmail.com"
-              user.Posts = []
-              user.Posts.push post
+              #user.Posts = []
+              #user.Posts.push post
               user.save (err) ->
                 if err
                   callback "Create admin user failed: #{err}"
@@ -70,7 +70,7 @@ module.exports = () ->
                   console.log "Create admin user successfully!"
                   callback null, user
 
-        #create an example category with post(s)
+        #create an example category -- × with post(s)
         category : (callback) ->
           Category.find().exec (err, categories) ->
             if err
@@ -79,8 +79,8 @@ module.exports = () ->
               category = new Category
                 CategoryName : "example_category"
                 Description : "this is category description."
-              category.Posts = []
-              category.Posts.push post
+              #category.Posts = []
+              #category.Posts.push post
               category.save (err) ->
                 if err
                   callback "Create example category failed: #{err}"

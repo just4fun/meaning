@@ -10,6 +10,4 @@ UserSchema = new Schema
     default: Date.now
   EditDate: Date
 
-  Posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
-
 mongoose.model 'User', UserSchema
