@@ -1,6 +1,8 @@
 mongoose = require "mongoose"
 Category = mongoose.model "Category"
+Post = mongoose.model "Post"
 _ = require "lodash"
+async = require "async"
 
 exports.get = (req, res) ->
   res.jsonp req.category
@@ -8,14 +10,14 @@ exports.get = (req, res) ->
 exports.getById = (req, res, next, id) ->
   Category.findOne({_id: id})
   .exec (err, category) ->
-      if err
-        next new Error "Find category(#{id}) failed: #{err}"
-      else if !category
-        res.statusCode = 404
-        res.end()
-      else
-        req.category = category
-        next()
+    if err
+      next new Error "Find category(#{id}) failed: #{err}"
+    else if !category
+      res.statusCode = 404
+      res.end()
+    else
+      req.category = category
+      next()
 
 exports.list = (req, res, next) ->
   Category.find()
@@ -42,3 +44,30 @@ exports.update = (req, res, next) ->
       next new Error "Update category(#{category._id}) failed: #{err}"
     else
       res.jsonp category
+
+exports.delete = (req, res, next) ->
+  category = req.category
+
+  async.waterfall [
+    (callback) ->
+      Post.find({Category: category._id})
+      .exec (err, posts) ->
+        if err
+          callback err
+        else if posts and posts.length > 0
+          callback "There are posts under this category, please delete these posts first."
+        else
+          callback null, category
+    (category, callback) ->
+      Category.remove({_id: category._id})
+      .exec (err) ->
+        if err
+          callback err
+        else
+          callback null, category
+
+  ], (err, result) ->
+    if err
+      next new Error err
+    else
+      res.jsonp "Delete category successfully!"

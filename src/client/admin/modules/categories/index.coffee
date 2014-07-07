@@ -31,13 +31,31 @@ angular.module('admin-categories', [])
       $scope.modalTitle = "Update"
       $scope.iconDialog = true
 
+    $scope.del = (category) ->
+      messenger.confirm ->
+        progress.start();
+        $http.delete("#{MEANING.ApiAddress}/category/#{category._id}",
+          headers:
+            'meaning-token': $.cookie('meaning-token')
+        )
+        .success (data) ->
+          $scope.categories.splice($scope.categories.indexOf(category), 1)
+          messenger.success "Delete category successfully!"
+          progress.complete();
+        .error (err) ->
+          progress.complete();
+
     $scope.save = ->
       progress.start()
       #Update
       if $scope.entity._id
         $scope.entity.EditUser = $rootScope._loginUser.Username
         $scope.entity.EditDate = new Date()
-        $http.put("#{MEANING.ApiAddress}/category/#{$scope.entity._id}", $scope.entity, {headers:{'meaning-token':$.cookie('meaning-token')}})
+        $http.put("#{MEANING.ApiAddress}/category/#{$scope.entity._id}",
+          $scope.entity,
+          headers:
+            'meaning-token': $.cookie('meaning-token')
+        )
         .success (data) ->
           messenger.success "Update category successfully!"
           $scope.close()
@@ -47,7 +65,11 @@ angular.module('admin-categories', [])
       #Create
       else
         $scope.entity.CreateUser = $rootScope._loginUser.Username
-        $http.post("#{MEANING.ApiAddress}/category", $scope.entity, {headers:{'meaning-token':$.cookie('meaning-token')}})
+        $http.post("#{MEANING.ApiAddress}/category",
+          $scope.entity,
+          headers:
+            'meaning-token': $.cookie('meaning-token')
+        )
         .success (data) ->
           messenger.success "Create category successfully!"
           $scope.close()
