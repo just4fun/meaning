@@ -25,8 +25,8 @@ exports.getByUrl = (req, res, next, url) ->
   .populate('Category', 'CategoryName')
   .exec (err, post) ->
     if err
-      return next(err)
-    if !post
+      next new Error "Find post(#{url}) failed: #{err}"
+    else if !post
       res.statusCode = 404
       res.end()
     else
@@ -42,8 +42,8 @@ exports.getByUrl = (req, res, next, url) ->
 exports.getListByAuthor = (req, res, next, author) ->
   User.findOne({Username: author}).exec (err, user) ->
     if err
-      return next(err)
-    if !user
+      next new Error "Find user(#{author}) failed: #{err}"
+    else if !user
       res.statusCode = 404
       res.end()
     else
@@ -54,19 +54,18 @@ exports.getListByAuthor = (req, res, next, author) ->
       .sort('-CreateDate')
       .exec (err, posts) ->
         if err
-          return next(err)
-        if !posts
-          return next(new Error('Failed to load posts of author: ' + author))
-        req.posts = posts
-        next()
+          next new Error "Failed to load posts of author(#{author}): #{err}"
+        else
+          req.posts = posts
+          next()
 
 exports.getListByTag = (req, res, next, tagName) ->
   Tag.find({TagName: tagName})
   .populate("Post")
   .exec (err, tags) ->
     if err
-      return next(err)
-    if !tags or tags.length is 0
+      next new Error "Find tag(#{tagName}) failed: #{err}"
+    else if !tags or tags.length is 0
       res.statusCode = 404
       res.end()
     else
@@ -83,15 +82,16 @@ exports.getListByTag = (req, res, next, tagName) ->
             callback null, post
       ), (err, posts) ->
         if err
-          return next(err)
-        req.posts = posts
-        next()
+          next(err)
+        else
+          req.posts = posts
+          next()
 
 exports.getListByCategory = (req, res, next, categoryName) ->
   Category.findOne({CategoryName: categoryName}).exec (err, category) ->
     if err
-      return next(err)
-    if !category
+      next new Error "Find category(#{categoryName}) failed: #{err}"
+    else if !category
       res.statusCode = 404
       res.end()
     else
@@ -102,11 +102,10 @@ exports.getListByCategory = (req, res, next, categoryName) ->
       .sort('-CreateDate')
       .exec (err, posts) ->
         if err
-          return next(err)
-        if !posts
-          return next(new Error('Failed to load posts of category: ' + categoryName))
-        req.posts = posts
-        next()
+          next new Error "Failed to load posts of category(#{categoryName}): #{err}"
+        else
+          req.posts = posts
+          next()
 
 exports.getListByStatus = (req, res, next, status) ->
   Post.find({Status: status})
@@ -115,10 +114,9 @@ exports.getListByStatus = (req, res, next, status) ->
   .populate('Category', 'CategoryName')
   .sort('-CreateDate')
   .exec (err, posts) ->
-      if err
-        return next(err)
-      if !posts
-        return next(new Error('Failed to load posts of status: ' + status))
+    if err
+      next new Error "Failed to load posts of status(#{status}): #{err}"
+    else
       req.posts = posts
       next()
 
@@ -174,7 +172,7 @@ getValidTags = (tagStr) ->
 savePostWithTags =  (req, res, next, post, newTags) ->
   post.save (err) ->
     if err
-      next new Error "Save post failed: #{err}"
+      next new Error "Save post(#{post._id}) failed: #{err}"
     else
       #create tags
       if newTags.length > 0
@@ -196,7 +194,7 @@ savePostWithTags =  (req, res, next, post, newTags) ->
 
             post.save (err) ->
               if err
-                next new Error "Update post failed: #{err}"
+                next new Error "Update post(#{post._id}) failed: #{err}"
               else
                 tempPosts = []
                 tempPosts.push(post)
