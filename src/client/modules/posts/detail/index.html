@@ -1,3 +1,10 @@
+<style>
+    .post-content {
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eeeeee;
+    }
+</style>
+
 <div class="page-header">
     <h1>{{post.Title}}</h1>
     <small>
@@ -35,4 +42,4 @@
         <i class="icon-edit"></i>
     </a>
 </div>
-<p ng-bind-html="post.Content"></p>
+<p class="post-content" ng-bind-html="post.Content"></p>
