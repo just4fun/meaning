@@ -2,8 +2,9 @@ module.exports = (grunt) ->
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
   isdebug = grunt.option("release") isnt true
   LIVERELOAD_PORT = 35729
-  minjs = 'dist/client/min.js'
-  mincss = 'dist/client/min.css'
+
+  minJs = 'dist/client/min.js'
+  minCss = 'dist/client/min.css'
   minAdminJs = 'dist/client/min-admin.js'
   minAdminCss = 'dist/client/min-admin.css'
   minLoginJs = 'dist/client/min-login.js'
@@ -124,7 +125,7 @@ module.exports = (grunt) ->
       }
       js:
         src: ["<%= assets.commonJs %>", "<%= assets.js %>"]
-        dest: minjs
+        dest: minJs
       loginJs:
         src: ["<%= assets.commonJs %>", "<%= assets.loginJs %>"]
         dest: minLoginJs
@@ -135,7 +136,7 @@ module.exports = (grunt) ->
     cssmin:
       css:
         src: ["<%= assets.commonCss %>", "<%= assets.css %>"]
-        dest: mincss
+        dest: minCss
       loginCss:
         src: ["<%= assets.commonCss %>", "<%= assets.loginCss %>"]
         dest: minLoginCss
@@ -151,9 +152,12 @@ module.exports = (grunt) ->
           fileTmpl: "<script src='/%s\'></" + "script>\r\n"
           appRoot: "dist/client/"
         files:
-          "dist/client/index.html": if isdebug then ["<%= assets.commonJs %>", "<%= assets.js %>"] else minjs
-          "dist/client/admin/admin-login.html": if isdebug then ["<%= assets.commonJs %>", "<%= assets.loginJs %>"] else minLoginJs
-          "dist/client/admin/admin-index.html": if isdebug then ["<%= assets.commonJs %>", "<%= assets.adminJs %>"] else minAdminJs
+          "dist/client/index.html":
+            if isdebug then ["<%= assets.configJs %>", "<%= assets.commonJs %>", "<%= assets.js %>"] else ["<%= assets.configJs %>", minJs]
+          "dist/client/admin/admin-login.html":
+            if isdebug then ["<%= assets.configJs %>", "<%= assets.commonJs %>", "<%= assets.loginJs %>"] else ["<%= assets.configJs %>", minLoginJs]
+          "dist/client/admin/admin-index.html":
+            if isdebug then ["<%= assets.configJs %>", "<%= assets.commonJs %>", "<%= assets.adminJs %>"] else ["<%= assets.configJs %>", minAdminJs]
 
       css:
         options:
@@ -162,7 +166,7 @@ module.exports = (grunt) ->
           fileTmpl: "<link href='/%s' rel='stylesheet' />\r\n"
           appRoot: "dist/client/"
         files:
-          "dist/client/index.html": if isdebug then ["<%= assets.commonCss %>", "<%= assets.css %>"] else mincss
+          "dist/client/index.html": if isdebug then ["<%= assets.commonCss %>", "<%= assets.css %>"] else minCss
           "dist/client/admin/admin-login.html": if isdebug then ["<%= assets.commonCss %>", "<%= assets.loginCss %>"] else minLoginCss
           "dist/client/admin/admin-index.html": if isdebug then ["<%= assets.commonCss %>", "<%= assets.adminCss %>"] else minAdminCss
 

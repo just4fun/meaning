@@ -15,8 +15,7 @@
     "dist/client/js/directives/**/*.js",
     "dist/client/js/filters/*.js",
     "dist/client/js/services/*.js",
-    "dist/client/js/services/**/*.js",
-    "dist/client/js/*.js"
+    "dist/client/js/services/**/*.js"
   ],
 
   "js": [
@@ -36,6 +35,10 @@
 
   "loginJs": [
     "dist/client/admin/app/login-app.js"
+  ],
+
+  "configJs": [
+    "dist/client/js/config.js"
   ],
 
   "commonCss": [
@@ -73,6 +76,12 @@
 
     "!dist/client/font",
     "!dist/client/img",
+
+    "!dist/client/js",
+    "dist/client/js/directives",
+    "dist/client/js/filters",
+    "dist/client/js/services",
+    "dist/client/js/vendor",
 
     "!dist/client/modules",
     "dist/client/modules/**/*.js",
