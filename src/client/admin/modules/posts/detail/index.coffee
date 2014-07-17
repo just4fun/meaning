@@ -13,7 +13,8 @@ angular.module('admin-posts-detail', [])
         .success (data) ->
           deferred.resolve data
         deferred.promise
-      ])
+      ]
+  )
   .when("/posts/:url",
     templateUrl: "/admin/modules/posts/detail/index.html"
     controller: 'AdminPostsDetailCtrl'
@@ -34,12 +35,13 @@ angular.module('admin-posts-detail', [])
         .success (data) ->
           deferred.resolve data
         deferred.promise
-      ])
+      ]
+  )
 ])
 
 #Create
 .controller('AdminPostsNewCtrl',
-["$scope", "$http", "$rootScope", "$window", "messenger", "categories", "$location"
+["$scope", "$http", "$rootScope", "$window", "messenger", "categories", "$location",
   ($scope, $http, $rootScope, $window, messenger, categories, $location) ->
     $scope.categories = categories
     $scope.submitText = "Publish"
@@ -51,23 +53,28 @@ angular.module('admin-posts-detail', [])
       save("Draft")
 
     save = (status) ->
-      if !$scope.post.Content
+      #to prevent Two-Way Binding
+      tempPost = angular.copy $scope.post
+
+      if tempPost.Url.toLowerCase() is "count"
+        messenger.error "The post url can not be 'count'."
+        return
+      if !tempPost.Content
         messenger.error "Post content is required."
         return
-      $scope.post.Status = status
-      $scope.post.Category = $scope.post.Category._id
-      $scope.post.Author = $rootScope._loginUser._id
+
+      tempPost.Status = status
+      tempPost.Category = tempPost.Category._id
+      tempPost.Author = $rootScope._loginUser._id
 
       $scope.submitting = true
       $http.post("#{MEANING.ApiAddress}/posts",
-        $scope.post,
+        tempPost,
         headers:
           "meaning-token": $.cookie('meaning-token')
       )
       .success (data) ->
         $scope.submitting = false
-        $scope.post.Category =
-          _id: $scope.post.Category
 
         if status is "Published"
           $window.location.href = "/#!/posts/#{data.Url}"
@@ -75,7 +82,7 @@ angular.module('admin-posts-detail', [])
           messenger.success "Save draft successfully!"
           #change url to edit mode, otherwise it will create again when press
           #save draft button twice.
-          $location.path "/posts/#{$scope.post.Url}"
+          $location.path "/posts/#{tempPost.Url}"
 ])
 
 #Update
@@ -94,6 +101,8 @@ angular.module('admin-posts-detail', [])
     $scope.post = post
     $scope.submitText = "Published"
     $scope.submitText = "Update" if post.Status is "Published"
+    $scope.operateText = "Move to Trash"
+    $scope.operateText = "Restore" if post.Status is "Trash"
 
     $scope.publish = ->
       save("Published")
@@ -101,18 +110,31 @@ angular.module('admin-posts-detail', [])
     $scope.saveDraft = ->
       save("Draft")
 
+    $scope.moveToTrash = () ->
+      messenger.confirm ->
+        if post.Status is "Published"
+          save("Trash")
+        else
+          save("Published")
+
     save = (status) ->
-      if !$scope.post.Content
+      #to prevent Two-Way Binding
+      tempPost = angular.copy $scope.post
+
+      if tempPost.Url.toLowerCase() is "count"
+        messenger.error "The post url can not be 'count'."
+        return
+      if !tempPost.Content
         messenger.error "Post content is required."
         return
 
-      $scope.post.Status = status
-      $scope.post.Category = $scope.post.Category._id
-      $scope.post.EditUser = $rootScope._loginUser.Username
+      tempPost.Status = status
+      tempPost.Category = tempPost.Category._id
+      tempPost.EditUser = $rootScope._loginUser.Username
 
       $scope.submitting = true
       $http.put("#{MEANING.ApiAddress}/posts/#{$routeParams.url}",
-        $scope.post,
+        tempPost,
         headers:
           "meaning-token": $.cookie('meaning-token')
           #without below param, the getByUrl() in node.js will return 404
@@ -120,11 +142,11 @@ angular.module('admin-posts-detail', [])
       )
       .success (data) ->
         $scope.submitting = false
-        $scope.post.Category =
-          _id: $scope.post.Category
 
         if status is "Published"
           $window.location.href = "/#!/posts/#{data.Url}"
+        else if status is "Trash"
+          $window.location.href = "#!/posts/list/trash"
         else
           messenger.success "Save draft successfully!"
 ])

@@ -11,28 +11,31 @@
 <div class="page-content">
     <ul class="nav nav-tabs">
         <li ng-class="{active: isActive('/posts')}">
-            <a href="#!/posts">All</a>
+            <a href="#!/posts">All({{ postCounts.all }})</a>
         </li>
         <li ng-class="{active: isActive('/posts/list/published')}">
-            <a href="#!/posts/list/published">Published</a>
+            <a href="#!/posts/list/published">Published({{ postCounts.published }})</a>
         </li>
         <li ng-class="{active: isActive('/posts/list/draft')}">
-            <a href="#!/posts/list/draft">Drafts</a>
+            <a href="#!/posts/list/draft">Drafts({{ postCounts.draft }})</a>
+        </li>
+        <li ng-class="{active: isActive('/posts/list/trash')}">
+            <a href="#!/posts/list/trash">Trash({{ postCounts.trash }})</a>
         </li>
     </ul>
 
     <table class="table table-striped table-bordered table-hover" ng-show="posts">
         <thead>
         <tr>
-            <td class="width-15">Title</td>
-            <td class="width-10">Author</td>
-            <td class="width-15">Category</td>
-            <td class="width-20">Tags</td>
-            <td class="width-10">CreateDate</td>
-            <td class="width-10">EditDate</td>
-            <td class="width-10">Views</td>
-            <td class="width-10">Status</td>
-            <td class="width-10"></td>
+            <td style="width: 10%;">Title</td>
+            <td style="width: 8%;">Author</td>
+            <td style="width: 15%;">Category</td>
+            <td style="width: 15%;">Tags</td>
+            <td style="width: 13%;">CreateDate</td>
+            <td style="width: 13%;">EditDate</td>
+            <td style="width: 5%;">Views</td>
+            <td style="width: 8%;">Status</td>
+            <td style="width: 13%;"></td>
         </tr>
         </thead>
         <tbody>
@@ -46,18 +49,28 @@
             <td>{{item.CreateDate | date:'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.EditDate | date:'yyyy-MM-dd HH:mm'}}</td>
             <td>{{item.Views}}</td>
-            <td>{{item.Status}}</td>
+            <td>
+                <span class="label label-sm label-success" ng-show="item.Status == 'Published'">{{item.Status}}</span>
+                <span class="label label-sm label-grey arrowed-in" ng-show="item.Status == 'Draft'">{{item.Status}}</span>
+                <span class="label label-sm label-important arrowed-in" ng-show="item.Status == 'Trash'">{{item.Status}}</span>
+            </td>
             <td>
                 <div class="action-buttons">
-                    <a class="blue" ng-href="/#!/posts/{{item.Url}}">
+                    <a class="blue" ng-href="/#!/posts/{{item.Url}}" ng-show="item.Status == 'Published'" title="preview">
                         <i class="icon-zoom-in bigger-130"></i>
                     </a>
-                    <a class="green" ng-href="#!/posts/{{item.Url.substring(item.Url.lastIndexOf('/') + 1)}}">
+                    <a class="green" ng-href="#!/posts/{{item.Url.substring(item.Url.lastIndexOf('/') + 1)}}" title="edit">
                         <i class="icon-pencil bigger-130"></i>
                     </a>
-                    <a class="red" href="javascript:void(0);">
+                    <!--<a class="red" href="javascript:void(0);" ng-show="item.Status == 'Published'" title="move to trash">
                         <i class="icon-trash bigger-130"></i>
                     </a>
+                    <a class="red" href="javascript:void(0);" ng-show="item.Status == 'Trash'" title="restore">
+                        <i class="icon-reply bigger-130"></i>
+                    </a>
+                    <a class="red" href="javascript:void(0);" title="delete permanently">
+                        <i class="icon-remove bigger-130"></i>
+                    </a>-->
                 </div>
             </td>
         </tr>

@@ -13,6 +13,34 @@ exports.getList = (req, res) ->
   changePostUrlWithDate(req.posts)
   res.jsonp req.posts
 
+exports.getCount = (req, res) ->
+  getCount = (status, callback) ->
+    Post.count({Status: status}).exec (err, count) ->
+      if err
+        callback "Get #{status} posts count failed: #{err}"
+      else
+        callback null, count
+
+  async.parallel
+    publishedCount: (callback) ->
+      getCount("Published", callback)
+    draftCount: (callback) ->
+      getCount("Draft", callback)
+    trashCount: (callback) ->
+      getCount("Trash", callback)
+  , (err, results) ->
+    if err
+      next new Error err
+    else
+      postCounts = {
+        published: results.publishedCount
+        draft: results.draftCount
+        trash: results.trashCount
+        all: results.publishedCount + results.draftCount + results.trashCount
+      }
+      res.jsonp postCounts
+
+
 exports.getByUrl = (req, res, next, url) ->
   param =
     Url: url

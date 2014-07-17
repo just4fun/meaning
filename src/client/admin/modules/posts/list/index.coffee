@@ -5,15 +5,34 @@ angular.module('admin-posts-list', [])
   $routeProvider
   .when("/posts",
     templateUrl: "/admin/modules/posts/list/index.html"
-    controller: 'AdminPostsListCtrl')
+    controller: 'AdminPostsListCtrl'
+    resolve:
+      postCounts: ['$q', '$http', ($q, $http) ->
+        deferred = $q.defer()
+        $http.get("#{MEANING.ApiAddress}/posts/count")
+        .success (data) ->
+          deferred.resolve data
+        deferred.promise
+      ]
+  )
   .when("/posts/list/:status",
     templateUrl: "/admin/modules/posts/list/index.html"
-    controller: 'AdminPostsListCtrl')
+    controller: 'AdminPostsListCtrl'
+    resolve:
+      postCounts: ['$q', '$http', ($q, $http) ->
+        deferred = $q.defer()
+        $http.get("#{MEANING.ApiAddress}/posts/count")
+        .success (data) ->
+          deferred.resolve data
+        deferred.promise
+      ]
+  )
 ])
 
 .controller('AdminPostsListCtrl',
-["$scope", "$http", "$rootScope", "$routeParams", "progress",
-  ($scope, $http, $rootScope, $routeParams, progress) ->
+["$scope", "$http", "$rootScope", "$routeParams", "progress", "postCounts",
+  ($scope, $http, $rootScope, $routeParams, progress, postCounts) ->
+    $scope.postCounts = postCounts
     url = "#{MEANING.ApiAddress}/posts"
     status = $routeParams.status
     initialToUpper = (str) ->

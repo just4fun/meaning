@@ -64,6 +64,10 @@ angular.module("admin-app",
     $scope.isActive = (path) ->
       path is $location.path()
 
+    $scope.isPostActive = () ->
+      $location.path() is "/posts" or
+      $location.path().indexOf("/posts/") > -1
+
     $scope.logout = ->
       $.removeCookie('CurrentUser')
       $.removeCookie('meaning-token')

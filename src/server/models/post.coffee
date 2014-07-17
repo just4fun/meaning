@@ -11,7 +11,7 @@ PostSchema = new Schema
     default: 0
   Status:
     type: String
-    enum: ["Published", "Draft"]
+    enum: ["Published", "Draft", "Trash"]
 
   CreateDate:
     type: Date
@@ -25,7 +25,10 @@ PostSchema = new Schema
   Category:
     type: Schema.Types.ObjectId
     ref: 'Category'
-  Tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }]
+  Tags: [
+    type: Schema.Types.ObjectId
+    ref: 'Tag'
+  ]
 
 
 mongoose.model 'Post', PostSchema
