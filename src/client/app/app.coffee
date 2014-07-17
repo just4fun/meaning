@@ -25,7 +25,7 @@ angular.module("app",
       error = (response) ->
         debugger
         if response.status is 404
-          $location.path "#!/404"
+          $location.path "/404"
         $q.reject(response)
       (promise) ->
         promise.then success, error

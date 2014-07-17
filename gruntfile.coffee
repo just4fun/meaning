@@ -28,6 +28,7 @@ module.exports = (grunt) ->
                 '^/admin$ /admin/admin-index.html'
                 '^/login$ /admin/admin-login.html'
                 '^/\\w+$ /index.html'
+                '^/admin/\\w+$ /admin/admin-index.html'
               ])
               require('connect-livereload')
                 port:LIVERELOAD_PORT

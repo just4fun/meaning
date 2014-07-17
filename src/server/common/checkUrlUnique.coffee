@@ -5,6 +5,9 @@ module.exports = ->
   (req, res, next) ->
     if !req.body.Url
       return next new Error "No url."
+    #to avoid "/posts/count" route being fired
+    if req.body.Url.toLowerCase() is "count"
+      return next new Error "The post url can not be 'count'."
     Post.find().exec (err, posts) ->
       if err
         next new Error "Show post list failed. #{err}"

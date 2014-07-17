@@ -13,7 +13,7 @@ angular.module('posts-view', [])
   ($scope, $http, $window, progress, $routeParams, $location) ->
     #to avoid "/posts/count" route being fired
     if $routeParams.url.toLowerCase() is "count"
-      $location.path "#!/404"
+      $location.path "/404"
       return
 
     progress.start()
@@ -28,7 +28,7 @@ angular.module('posts-view', [])
       if $routeParams.year isnt year.toString() or
       $routeParams.month isnt month.toString() or
       $routeParams.day isnt day.toString()
-        $location.path "#!/404"
+        $location.path "/404"
         return###
 
       $scope.post = data

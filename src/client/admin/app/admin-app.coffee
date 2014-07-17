@@ -16,13 +16,15 @@ angular.module("admin-app",
 ])
 
 .config(["$httpProvider", ($httpProvider) ->
-  $httpProvider.responseInterceptors.push ["$rootScope", "$q", "messenger",
-    ($rootScope, $q, messenger) ->
+  $httpProvider.responseInterceptors.push ["$rootScope", "$q", "messenger", "$location",
+    ($rootScope, $q, messenger, $location) ->
       success = (response) ->
         response
       error = (response) ->
         debugger
-        if response.data and response.data.Message
+        if response.status is 404
+          $location.path "/404"
+        else if response.data and response.data.Message
           messenger.error response.data.Message
         $q.reject(response)
       (promise) ->
@@ -31,7 +33,7 @@ angular.module("admin-app",
 ])
 
 .config(["$routeProvider", ($routeProvider) ->
-  $routeProvider.otherwise redirectTo: "/"
+  $routeProvider.otherwise redirectTo: "/404"
 ])
 
 #show loading when route change

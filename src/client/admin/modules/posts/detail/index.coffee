@@ -87,8 +87,13 @@ angular.module('admin-posts-detail', [])
 
 #Update
 .controller('AdminPostsDetailCtrl',
-["$scope", "$http", "$rootScope", "$window", "$routeParams", "post", "messenger", "categories",
-  ($scope, $http, $rootScope, $window, $routeParams, post, messenger, categories) ->
+["$scope", "$http", "$rootScope", "$window", "$routeParams", "post", "messenger", "categories", "$location",
+  ($scope, $http, $rootScope, $window, $routeParams, post, messenger, categories, $location) ->
+    #to avoid "/posts/count" route being fired
+    if $routeParams.url.toLowerCase() is "count"
+      $location.path "/404"
+      return
+
     if post.Tags and post.Tags.length > 0
       tags = []
       for t in post.Tags
