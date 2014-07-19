@@ -71,8 +71,8 @@ angular.module("admin-app",
       $location.path().indexOf("/posts/") > -1
 
     $scope.logout = ->
-      $.removeCookie('CurrentUser')
-      $.removeCookie('meaning-token')
+      $.removeCookie('CurrentUser', { path: '/' });
+      $.removeCookie('meaning-token', { path: '/' });
       $rootScope._loginUser = undefined
       $window.location.href = '/login'
 ])
