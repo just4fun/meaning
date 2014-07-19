@@ -17,3 +17,10 @@ angular.module("login-app", [])
         $scope.user.Password = ''
         $scope.error = error.Message
 ])
+
+#check login
+.run(["$window", "$rootScope", ($window, $rootScope) ->
+    $rootScope._isLogin = !!$.cookie('CurrentUser')
+    if $rootScope._isLogin
+      $window.location.href = "/admin"
+])
