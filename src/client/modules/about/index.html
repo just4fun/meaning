@@ -1,19 +1,15 @@
 <style>
-    .about-page {
-        font-size: 16px;
+    .about {
+        position: absolute;
+        right: 40px;
+        bottom: 40px;
+        padding: 10px;
     }
-    .about-page div,
-    .about-page p {
+    .self-info p {
         text-align: center;
+        color: black;
+        font-weight: bold;
     }
-    .about-page > div {
-        margin-bottom: 20px;
-    }
-    .about-page div img {
-        width: 320px;
-        border-radius: 4px;
-    }
-
     .social-media a {
         text-decoration: none;
         margin-left: 8px;
@@ -35,33 +31,30 @@
         color: #4E433C;
     }
 
-    .well {
-        width: 320px;
-        margin: 0 auto 20px;
+    body {
+        padding-top: 50px;
+    }
+    body #main-container {
+        background: url(/img/marathon.jpg) no-repeat center center fixed;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+        position: relative;
     }
 </style>
 
-<div>
-    <ul class="breadcrumb">
-        <li><a href="/">Home</a></li>
-        <li class="active">About</li>
-    </ul>
+<div class="about">
+<div class="self-info">
+    <p>26</p>
+    <p>182</p>
+    <p>runner</p>
 </div>
-
-<div class="about-page">
-    <div>
-        <img src="/img/runner.jpg">
-    </div>
-    <p class="social-media well">
-        <a href="https://www.facebook.com/houritsunohikari" target="_blank"><i class="icon-facebook-sign icon-3"></i></a>
-        <a href="https://twitter.com/houritsu_hikari" target="_blank"><i class="icon-twitter icon-3"></i></a>
-        <a href="https://github.com/just4fun" target="_blank"><i class="icon-github icon-3"></i></a>
-        <a href="http://pinsta.me/houritsunohikari" target="_blank"><i class="icon-instagram icon-3"></i></a>
-        <a href="http://weibo.com/houritsunohikari" target="_blank"><i class="icon-weibo icon-3"></i></a>
-    </p>
-    <div class="well">
-        <p>26</p>
-        <p>182</p>
-        <p>runner</p>
-    </div>
+<p class="social-media">
+    <a href="https://www.facebook.com/houritsunohikari" target="_blank"><i class="icon-facebook-sign icon-3"></i></a>
+    <a href="https://twitter.com/houritsu_hikari" target="_blank"><i class="icon-twitter icon-3"></i></a>
+    <a href="https://github.com/just4fun" target="_blank"><i class="icon-github icon-3"></i></a>
+    <a href="http://pinsta.me/houritsunohikari" target="_blank"><i class="icon-instagram icon-3"></i></a>
+    <a href="http://weibo.com/houritsunohikari" target="_blank"><i class="icon-weibo icon-3"></i></a>
+</p>
 </div>
