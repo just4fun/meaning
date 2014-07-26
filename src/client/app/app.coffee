@@ -52,8 +52,6 @@ angular.module("app",
 .controller('NavCtrl',
 ["$scope", "$http", "$location", "$rootScope",
   ($scope, $http, $location, $rootScope) ->
-    $scope.text = if $rootScope._loginUser then "Hello, #{$rootScope._loginUser.Username}" else "Login"
-
     $scope.isActive = (path) ->
       path is $location.path()
 ])

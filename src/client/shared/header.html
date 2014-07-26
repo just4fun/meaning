@@ -21,8 +21,11 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="/admin">{{text}}</a>
+                <li ng-hide="_loginUser">
+                    <a href="/login">Login</a>
+                </li>
+                <li ng-show="_loginUser">
+                    <a href="/admin">Hello, {{_loginUser.Username}}</a>
                 </li>
             </ul>
         </nav>
