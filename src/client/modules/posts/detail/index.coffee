@@ -5,32 +5,38 @@ angular.module('posts-view', [])
     $routeProvider
     .when("/posts/:year/:month/:day/:url",
       templateUrl: "/modules/posts/detail/index.html"
-      controller: 'PostsDetailCtrl')
+      controller: "PostsDetailCtrl"
+      resolve:
+        post: ["$q", "$http", "$route", "$location", "$rootScope",
+          ($q, $http, $route, $location, $rootScope) ->
+            url = $route.current.params.url
+
+            #to avoid "/posts/count" route being fired
+            if url.toLowerCase() is "count"
+              $location.path "/404"
+              return
+
+            deferred = $q.defer()
+            $http.get("#{MEANING.ApiAddress}/posts/#{url}")
+            .success (data) ->
+              deferred.resolve data
+            deferred.promise
+        ]
+    )
 ])
 
-.controller('PostsDetailCtrl',
-["$scope", "$http", "$window", "progress", "$routeParams", "$location",
-  ($scope, $http, $window, progress, $routeParams, $location) ->
-    #to avoid "/posts/count" route being fired
-    if $routeParams.url.toLowerCase() is "count"
-      $location.path "/404"
-      return
+.controller("PostsDetailCtrl",
+["$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "post",
+  ($scope, $http, $window, progress, $routeParams, $location, $rootScope, post) ->
+    $scope.post = post
 
-    progress.start()
-    $http.get("#{MEANING.ApiAddress}/posts/#{$routeParams.url}").success (data) ->
-      #comment below code tentatively because of time zone issue
+    $scope.canEdit = () ->
+      currentUser = $rootScope._loginUser
 
-      #check route
-      ###date = new Date(data.CreateDate)
-      year = date.getFullYear()
-      month = date.getMonth() + 1
-      day = date.getDate()
-      if $routeParams.year isnt year.toString() or
-      $routeParams.month isnt month.toString() or
-      $routeParams.day isnt day.toString()
-        $location.path "/404"
-        return###
+      if !currentUser
+        return false
+      if currentUser.Role isnt "Admin" and currentUser.UserName isnt post.Author.UserName
+        return false
 
-      $scope.post = data
-      progress.complete()
+      return true
 ])

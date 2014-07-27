@@ -5,10 +5,17 @@ angular.module('admin-categories', [])
   $routeProvider
   .when("/categories",
     templateUrl: "/admin/modules/categories/index.html"
-    controller: 'AdminCategoriesCtrl')
+    controller: "AdminCategoriesCtrl"
+    resolve:
+      check: ["$q", "$http", "$rootScope", "$location",
+        ($q, $http, $rootScope, $location) ->
+          if $rootScope._loginUser.Role isnt "Admin"
+            $location.path "/"
+      ]
+  )
 ])
 
-.controller('AdminCategoriesCtrl',
+.controller("AdminCategoriesCtrl"
 ["$scope", "$http", "$rootScope", "messenger", "progress",
   ($scope, $http, $rootScope, messenger, progress) ->
     getCategoryList = ->
@@ -49,7 +56,7 @@ angular.module('admin-categories', [])
       progress.start()
       #Update
       if $scope.entity._id
-        $scope.entity.EditUser = $rootScope._loginUser.Username
+        $scope.entity.EditUser = $rootScope._loginUser.UserName
         $scope.entity.EditDate = new Date()
         $http.put("#{MEANING.ApiAddress}/category/#{$scope.entity._id}",
           $scope.entity,
@@ -64,7 +71,7 @@ angular.module('admin-categories', [])
           progress.complete();
       #Create
       else
-        $scope.entity.CreateUser = $rootScope._loginUser.Username
+        $scope.entity.CreateUser = $rootScope._loginUser.UserName
         $http.post("#{MEANING.ApiAddress}/category",
           $scope.entity,
           headers:

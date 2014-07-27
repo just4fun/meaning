@@ -1,32 +1,63 @@
 mongoose = require "mongoose"
 User = mongoose.model "User"
+Post = mongoose.model "Post"
 Token = mongoose.model "Token"
 md5 = require "MD5"
+_ = require "lodash"
+async = require "async"
 
 exports.login = (req, res, next) ->
   User.findOne(
-    Username: req.body.Username
+    UserName: req.body.UserName
     Password: md5(req.body.Password)
-  ).select("_id Username Email").exec (err, user) ->
+  ).select("_id UserName Email Role").exec (err, user) ->
     if err
       next new Error "Login failed. #{err}"
     else if !user
-      next new Error "Username or Password is incorrect."
+      next new Error "UserName or Password is incorrect."
     else
       #create token
-      token = md5(user.Username + new Date())
-      tokenInfo = new Token({
-        Username: user.Username
+      token = md5(user.UserName + new Date())
+      tokenInfo = new Token
+        UserName: user.UserName
         Token: token
         LoginDate: new Date()
-      })
+
       tokenInfo.save (err) ->
         if err
           next new Error "Create token failed. #{err}"
-      res.setHeader "meaning-token", token
-      res.jsonp user
+        else
+          res.setHeader "meaning-token", token
+          res.jsonp user
 
-exports.create = (req, res) ->
+
+#-------------------------------------------------------------
+
+exports.get = (req, res) ->
+  res.jsonp req.user
+
+exports.getById = (req, res, next, userId) ->
+  User.findOne({_id: userId})
+  .exec (err, user) ->
+    if err
+      next new Error "Find user(#{userId}) failed: #{err}"
+    else if !user
+      res.statusCode = 404
+      res.end()
+    else
+      req.user = user
+      next()
+
+exports.list = (req, res, next) ->
+  User.find()
+  .sort('-CreateDate')
+  .exec (err, users) ->
+    if err
+      next new Error "Show user list failed: #{err}"
+    else
+      res.jsonp users
+
+exports.create = (req, res, next) ->
   req.body.Password = md5(req.body.Password)
   user = new User(req.body)
   user.save (err) ->
@@ -34,3 +65,46 @@ exports.create = (req, res) ->
       next new Error "Create user failed. #{err}"
     else
       res.jsonp user
+
+exports.update = (req, res, next) ->
+  oldUser = req.user
+  newUser = req.body
+
+  if !newUser.Password
+    newUser.Password = oldUser.Password
+  else
+    newUser.Password = md5(newUser.Password)
+
+  user = _.extend(oldUser, newUser)
+  user.save (err) ->
+    if err
+      next new Error "Update user(#{user._id}) failed: #{err}"
+    else
+      res.jsonp user
+
+exports.delete = (req, res, next) ->
+  user = req.user
+
+  async.waterfall [
+    (callback) ->
+      Post.find({Author: user._id})
+      .exec (err, posts) ->
+        if err
+          callback err
+        else if posts and posts.length > 0
+          callback "There are posts created by this user, please delete these posts first."
+        else
+          callback null, user
+    (user, callback) ->
+      User.remove({_id: user._id})
+      .exec (err) ->
+        if err
+          callback err
+        else
+          callback null
+
+  ], (err, result) ->
+    if err
+      next new Error err
+    else
+      res.jsonp "Delete user successfully!"

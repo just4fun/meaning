@@ -2,12 +2,16 @@ mongoose = require('mongoose')
 Schema = mongoose.Schema
 
 UserSchema = new Schema
-  Username: String
+  UserName: String
   Email: String
   Password: String
+  Role:
+    type: String
+    enum: ["Admin", "Author"]
   CreateDate:
     type: Date
     default: Date.now
   EditDate: Date
+  EditUser: String
 
 mongoose.model 'User', UserSchema

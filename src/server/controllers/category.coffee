@@ -7,11 +7,11 @@ async = require "async"
 exports.get = (req, res) ->
   res.jsonp req.category
 
-exports.getById = (req, res, next, id) ->
-  Category.findOne({_id: id})
+exports.getById = (req, res, next, categoryId) ->
+  Category.findOne({_id: categoryId})
   .exec (err, category) ->
     if err
-      next new Error "Find category(#{id}) failed: #{err}"
+      next new Error "Find category(#{categoryId}) failed: #{err}"
     else if !category
       res.statusCode = 404
       res.end()
@@ -64,7 +64,7 @@ exports.delete = (req, res, next) ->
         if err
           callback err
         else
-          callback null, category
+          callback null
 
   ], (err, result) ->
     if err

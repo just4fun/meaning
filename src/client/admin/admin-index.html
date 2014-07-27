@@ -14,7 +14,7 @@
         <div class="navbar-header pull-left">
             <a class="navbar-brand" href="#!/">
                 <small>
-                    <img src="/img/logo.jpg"></img>
+                    <img src="/img/logo.jpg"/>
                     Admin Console
                 </small>
             </a>
@@ -69,10 +69,16 @@
                         <span class="menu-text">Posts</span>
                     </a>
                 </li>
-                <li ng-class="{active: isActive('/categories')}">
+                <li ng-class="{active: isActive('/categories')}" ng-show="_loginUser.Role == 'Admin'">
                     <a href="#!/categories">
                         <i class="icon-bookmark"></i>
                         <span class="menu-text">Categories</span>
+                    </a>
+                </li>
+                <li ng-class="{active: isActive('/users')}" ng-show="_loginUser.Role == 'Admin'">
+                    <a href="#!/users">
+                        <i class="icon-user"></i>
+                        <span class="menu-text">Users</span>
                     </a>
                 </li>
             </ul>

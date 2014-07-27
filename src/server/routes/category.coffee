@@ -4,9 +4,10 @@ checkCategoryNameUnique = require("../common/checkCategoryNameUnique")
 
 module.exports = (app) ->
   app.get "/categories", category.list
-  app.get "/category/:id", category.get
-  app.post "/category", requireLogin(), checkCategoryNameUnique(), category.create
-  app.put "/category/:id", requireLogin(), checkCategoryNameUnique(), category.update
-  app.delete "/category/:id", requireLogin(), category.delete
+  app.get "/category/:categoryId", category.get
 
-  app.param "id", category.getById
+  app.post "/category", requireLogin(), checkCategoryNameUnique(), category.create
+  app.put "/category/:categoryId", requireLogin(), checkCategoryNameUnique(), category.update
+  app.delete "/category/:categoryId", requireLogin(), category.delete
+
+  app.param "categoryId", category.getById

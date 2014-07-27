@@ -1,0 +1,106 @@
+<div class="breadcrumbs breadcrumbs-fixed" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="#!/">Home</a>
+        </li>
+        <li class="active">Users</li>
+    </ul>
+</div>
+
+<div class="page-content">
+    <table class="table table-striped table-bordered table-hover" ng-show="users">
+        <thead>
+        <tr>
+            <td style="width: 25%">UserName</td>
+            <td style="width: 25%">Email</td>
+            <td style="width: 10%">Role</td>
+            <td style="width: 15%">CreateDate</td>
+            <td style="width: 15%">EditDate</td>
+            <td style="width: 10%"></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in users">
+            <td>{{item.UserName}}</td>
+            <td>{{item.Email}}</td>
+            <td>
+                <span class="label label-sm label-important" ng-show="item.Role == 'Admin'">
+                    {{item.Role}}
+                </span>
+                <span class="label label-sm label-success" ng-show="item.Role == 'Author'">
+                    {{item.Role}}
+                </span>
+            </td>
+            <td>{{item.CreateDate | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td>{{item.EditDate | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td>
+                <div class="action-buttons">
+                    <a class="green" href="javascript:void(0);" ng-click="edit(item)" title="edit">
+                        <i class="icon-pencil bigger-130"></i>
+                    </a>
+                    <a class="red" href="javascript:void(0);" ng-click="del(item)" title="delete permanently">
+                        <i class="icon-remove bigger-130"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="well well-sm" ng-hide="users">No users yet.</div>
+    <a href="javascript:void(0);" ng-click="create();" ng-disabled="loading" class="pull-left btn btn-primary btn-sm">New User</a>
+</div>
+
+<div modal="iconDialog" close="close()" options="{backdrop: true,dialogFade:true}">
+    <div class="modal-dialog">
+        <form name="form" class="modal-content" ng-submit="save()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="close()">&times;</button>
+                    <h4 class="modal-title">{{ modalTitle }}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">UserName</label>
+                            <div class="col-lg-9">
+                                <input type="text" placeholder="UserName" class="form-control" ng-model="entity.UserName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Email</label>
+                            <div class="col-lg-9">
+                                <input type="text" placeholder="Email" class="form-control" ng-model="entity.Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Password</label>
+                            <div class="col-lg-9">
+                                <input type="password" placeholder="Password" class="form-control" ng-model="entity.NewPassword">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Confirm</label>
+                            <div class="col-lg-9">
+                                <input type="password" placeholder="Confirm Password" class="form-control" ng-model="entity.RePassword">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Role</label>
+                            <div class="col-lg-9">
+                                <select class="form-control" ng-model="entity.Role" required>
+                                    <option value=""></option>
+                                    <option value="Admin">Admin (full power over the site)</option>
+                                    <option value="Author">Author (can CRUD only their own posts)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-sm" ng-disabled="loading || form.$invalid">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

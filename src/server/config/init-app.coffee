@@ -14,7 +14,10 @@ module.exports = (appPath)->
 
   #init express
   corsOption =
-    exposedHeaders: "meaning-token"
+    exposedHeaders: [
+      "meaning-token"
+      "login-user"
+    ]
   app = express()
   app.configure ->
     app.use express.urlencoded()

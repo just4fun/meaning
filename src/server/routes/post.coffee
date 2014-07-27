@@ -15,7 +15,6 @@ module.exports = (app) ->
   app.get "/posts/category/:category", post.getList
   app.get "/posts/list/:status", post.getList
 
-
   app.post "/posts", requireLogin(), checkUrlUnique(), post.create
   app.put "/posts/:url", requireLogin(), checkUrlUnique(), post.update
 

@@ -4,7 +4,7 @@ User = mongoose.model "User"
 Tag = mongoose.model "Tag"
 Category = mongoose.model "Category"
 _ = require "lodash"
-async = require("async")
+async = require "async"
 
 exports.get = (req, res) ->
   res.jsonp req.post
@@ -15,7 +15,16 @@ exports.getList = (req, res) ->
 
 exports.getCount = (req, res) ->
   getCount = (status, callback) ->
-    Post.count({Status: status}).exec (err, count) ->
+    filter = {
+      Status: status
+    }
+    #check user role
+    if req.headers["login-user"]
+      loginUser = JSON.parse(req.headers["login-user"])
+      if loginUser and loginUser.Role isnt "Admin"
+        filter.Author = loginUser._id
+
+    Post.count(filter).exec (err, count) ->
       if err
         callback "Get #{status} posts count failed: #{err}"
       else
@@ -48,7 +57,7 @@ exports.getByUrl = (req, res, next, url) ->
     param.Status = "Published"
 
   Post.findOne(param)
-  .populate('Author', 'Username')
+  .populate('Author', 'UserName')
   .populate('Tags', 'TagName')
   .populate('Category', 'CategoryName')
   .exec (err, post) ->
@@ -68,7 +77,7 @@ exports.getByUrl = (req, res, next, url) ->
           next()
 
 exports.getListByAuthor = (req, res, next, author) ->
-  User.findOne({Username: author}).exec (err, user) ->
+  User.findOne({UserName: author}).exec (err, user) ->
     if err
       next new Error "Find user(#{author}) failed: #{err}"
     else if !user
@@ -76,7 +85,7 @@ exports.getListByAuthor = (req, res, next, author) ->
       res.end()
     else
       Post.find({Author: user._id, Status: "Published"})
-      .populate('Author', 'Username')
+      .populate('Author', 'UserName')
       .populate('Tags', 'TagName')
       .populate('Category', 'CategoryName')
       .sort('-CreateDate')
@@ -103,7 +112,7 @@ exports.getListByTag = (req, res, next, tagName) ->
           tags.splice(index, 1)
       #populate the field of populated doc
       async.map tags, ((tag, callback) ->
-        tag.Post.populate "Author Category Tags", "Username CategoryName TagName", (err, post) ->
+        tag.Post.populate "Author Category Tags", "UserName CategoryName TagName", (err, post) ->
           if err
             callback err
           else
@@ -124,7 +133,7 @@ exports.getListByCategory = (req, res, next, categoryName) ->
       res.end()
     else
       Post.find({Category: category._id, Status: "Published"})
-      .populate('Author', 'Username')
+      .populate('Author', 'UserName')
       .populate('Tags', 'TagName')
       .populate('Category', 'CategoryName')
       .sort('-CreateDate')
@@ -136,8 +145,17 @@ exports.getListByCategory = (req, res, next, categoryName) ->
           next()
 
 exports.getListByStatus = (req, res, next, status) ->
-  Post.find({Status: status})
-  .populate('Author', 'Username')
+  filter = {
+    Status: status
+  }
+  #check user role
+  if req.headers["login-user"]
+    loginUser = JSON.parse(req.headers["login-user"])
+    if loginUser and loginUser.Role isnt "Admin"
+      filter.Author = loginUser._id
+
+  Post.find(filter)
+  .populate('Author', 'UserName')
   .populate('Tags', 'TagName')
   .populate('Category', 'CategoryName')
   .sort('-CreateDate')
@@ -149,8 +167,15 @@ exports.getListByStatus = (req, res, next, status) ->
       next()
 
 exports.list = (req, res, next) ->
-  Post.find()
-  .populate('Author', 'Username')
+  filter = {}
+  #check user role
+  if req.headers["login-user"]
+    loginUser = JSON.parse(req.headers["login-user"])
+    if loginUser and loginUser.Role isnt "Admin"
+      filter.Author = loginUser._id
+
+  Post.find(filter)
+  .populate('Author', 'UserName')
   .populate('Tags', 'TagName')
   .populate('Category', 'CategoryName')
   .sort('-CreateDate')

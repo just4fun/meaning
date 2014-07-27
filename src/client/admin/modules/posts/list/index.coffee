@@ -9,7 +9,10 @@ angular.module('admin-posts-list', [])
     resolve:
       postCounts: ['$q', '$http', ($q, $http) ->
         deferred = $q.defer()
-        $http.get("#{MEANING.ApiAddress}/posts/count")
+        $http.get("#{MEANING.ApiAddress}/posts/count",
+          headers:
+            "login-user": $.cookie("CurrentUser")
+        )
         .success (data) ->
           deferred.resolve data
         deferred.promise
@@ -21,7 +24,10 @@ angular.module('admin-posts-list', [])
     resolve:
       postCounts: ['$q', '$http', ($q, $http) ->
         deferred = $q.defer()
-        $http.get("#{MEANING.ApiAddress}/posts/count")
+        $http.get("#{MEANING.ApiAddress}/posts/count",
+          headers:
+            "login-user": $.cookie("CurrentUser")
+        )
         .success (data) ->
           deferred.resolve data
         deferred.promise
@@ -43,7 +49,10 @@ angular.module('admin-posts-list', [])
       url += "/list/#{status}"
 
     progress.start()
-    $http.get(url).success (data) ->
+    $http.get(url,
+      headers:
+        "login-user": $.cookie("CurrentUser")
+    ).success (data) ->
       for p in data
         if p.Tags and p.Tags.length > 0
           tags = []

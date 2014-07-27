@@ -58,9 +58,10 @@ module.exports = () ->
               callback "Find all users failed: #{err}"
             else if !users or users.length is 0
               user = new User
-                Username : "admin"
+                UserName : "admin"
                 Password : md5("12345")
                 Email : "houritsunohikari@gmail.com"
+                Role: "Admin"
               #user.Posts = []
               #user.Posts.push post
               user.save (err) ->

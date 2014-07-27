@@ -5,36 +5,45 @@ angular.module('admin-posts-detail', [])
   $routeProvider
   .when("/posts/new",
     templateUrl: "/admin/modules/posts/detail/index.html"
-    controller: 'AdminPostsNewCtrl'
+    controller: "AdminPostsNewCtrl"
     resolve:
-      categories: ['$q', '$http', ($q, $http) ->
-        deferred = $q.defer()
-        $http.get("#{MEANING.ApiAddress}/categories")
-        .success (data) ->
-          deferred.resolve data
-        deferred.promise
+      categories: ["$q", "$http",
+        ($q, $http) ->
+          deferred = $q.defer()
+          $http.get("#{MEANING.ApiAddress}/categories")
+          .success (data) ->
+            deferred.resolve data
+          deferred.promise
       ]
   )
   .when("/posts/:url",
     templateUrl: "/admin/modules/posts/detail/index.html"
-    controller: 'AdminPostsDetailCtrl'
+    controller: "AdminPostsDetailCtrl"
     resolve:
-      categories: ['$q', '$http', ($q, $http) ->
-        deferred = $q.defer()
-        $http.get("#{MEANING.ApiAddress}/categories")
-        .success (data) ->
-          deferred.resolve data
-        deferred.promise
+      categories: ["$q", "$http",
+        ($q, $http) ->
+          deferred = $q.defer()
+          $http.get("#{MEANING.ApiAddress}/categories")
+          .success (data) ->
+            deferred.resolve data
+          deferred.promise
       ]
-      post: ['$q', '$http', "$route", ($q, $http, $route) ->
-        deferred = $q.defer()
-        $http.get("#{MEANING.ApiAddress}/posts/#{$route.current.params.url}",
-          headers:
-            "from-admin-console": true
-        )
-        .success (data) ->
-          deferred.resolve data
-        deferred.promise
+      post: ["$q", "$http", "$route", "$rootScope", "$location",
+        ($q, $http, $route, $rootScope, $location) ->
+          deferred = $q.defer()
+          $http.get("#{MEANING.ApiAddress}/posts/#{$route.current.params.url}",
+            headers:
+              "from-admin-console": true
+          )
+          .success (data) ->
+            #check user role
+            currentUser = $rootScope._loginUser
+            if currentUser.Role isnt "Admin" and currentUser.UserName isnt data.Author.UserName
+              $location.path "/"
+              return
+
+            deferred.resolve data
+          deferred.promise
       ]
   )
 ])
@@ -135,7 +144,7 @@ angular.module('admin-posts-detail', [])
 
       tempPost.Status = status
       tempPost.Category = tempPost.Category._id
-      tempPost.EditUser = $rootScope._loginUser.Username
+      tempPost.EditUser = $rootScope._loginUser.UserName
 
       $scope.submitting = true
       $http.put("#{MEANING.ApiAddress}/posts/#{$routeParams.url}",
