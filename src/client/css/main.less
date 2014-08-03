@@ -1,7 +1,5 @@
 /* color variable  */
 
-@purple-color: #563d7c;
-@active-color: #463265;
 @white-color: #fff;
 @selection-color: #d9edf7;
 
@@ -13,21 +11,14 @@ body {
 }
 
 body {
-  padding-top: 60px;
+  font-family: "open sans";
 }
 
 ::-moz-selection {background: @selection-color;}
 ::selection {background: @selection-color;}
 ::-webkit-selection {background: @selection-color;}
 
-a {
-  color: @purple-color;
-}
-a:hover,
-a:focus {
-  color: @purple-color;
-  text-decoration: underline;
-}
+
 
 #main-container {
   min-height:100%;
@@ -37,7 +28,7 @@ a:focus {
 }
 
 .container .content {
-  margin: 0px auto 60px;
+  margin: 0 auto 60px;
   color: #666;
 }
 
@@ -46,27 +37,36 @@ footer {
   position: absolute;
   bottom: 0;
   height: 40px;
-  line-height: 40px;
   width: 100%;
-  background-color: #f5f5f5;
 }
 
 /* breadcrumb */
 
 .breadcrumb {
   padding-left: 10px;
-  border-left: @purple-color 20px solid;
+  border-left: 20px solid #428bca;
   border-radius: 0;
 }
 
 /* navbar */
 
 .navbar-inverse {
-  background-color: @purple-color;
-  border-color: @active-color;
+  background-color: transparent;
+  border-color: transparent;
   .navbar-brand {
     padding: 5px 20px 5px;
     color: @white-color;
+    img {
+      border-radius: 50%;
+      -webkit-transition: -webkit-transform 0.4s ease-out;
+      -moz-transition: -moz-transform 0.4s ease-out;
+      transition: transform 0.4s ease-out;
+    }
+    img:hover {
+      -webkit-transform: rotateZ(360deg);
+      -moz-transform: rotateZ(360deg);
+      transform: rotateZ(360deg);
+    }
   }
   .navbar-nav {
     > .active {
@@ -74,12 +74,7 @@ footer {
       > a:hover,
       > a:focus {
         color: @white-color;
-        background-color: @active-color;
-      }
-    }
-    > li {
-      > a {
-        color: #cdbfe3;
+        background-color: transparent;
       }
     }
   }

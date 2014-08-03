@@ -1,4 +1,4 @@
-﻿<header class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavCtrl">
+﻿<header class="navbar navbar-inverse" ng-controller="NavCtrl">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -12,15 +12,13 @@
             </a>
         </div>
         <nav class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
                 <li ng-class="{active: isActive('/posts')}">
                     <a href="/#!/posts">Posts</a>
                 </li>
                 <li ng-class="{active: isActive('/about')}">
                     <a href="/#!/about">About</a>
                 </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
                 <li ng-hide="_loginUser">
                     <a href="/login">Login</a>
                 </li>
