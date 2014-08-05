@@ -80,7 +80,7 @@ angular.module("admin-app",
 
     $scope.changeProfile = () ->
       $scope.entity = angular.copy $rootScope._loginUser
-      $scope.iconDialog = true
+      $scope.profileDialog = true
 
     $scope.save = () ->
       if $scope.entity.NewPassword and !$scope.entity.RePassword
@@ -118,6 +118,6 @@ angular.module("admin-app",
         progress.complete();
 
     $scope.close = ->
-      $scope.iconDialog = false
+      $scope.profileDialog = false
       $scope.entity = null
 ])
