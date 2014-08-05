@@ -76,6 +76,17 @@ angular.module('admin-users', [])
             'meaning-token': $.cookie('meaning-token')
         )
         .success (data) ->
+          #update cookie and global variable
+          if $scope.entity._id is $rootScope._loginUser._id
+            user = angular.fromJson($.cookie('CurrentUser'));
+            user.UserName = $scope.entity.UserName
+            user.Email = $scope.entity.Email
+            #if update role here, a user from admin to author will own no right immediately
+            #user.Role = $scope.entity.Role
+            $.cookie('CurrentUser', angular.toJson(user), {expires: 180, path: '/'})
+            #update global variable
+            $rootScope._loginUser = angular.fromJson($.cookie('CurrentUser'))
+
           messenger.success "Update user successfully!"
           $scope.close()
           getUserList()
