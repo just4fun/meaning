@@ -20,17 +20,37 @@
             </a>
         </div>
     </div>
-    <div class="navbar-header pull-right" role="navigation">
+    <div class="navbar-header pull-right" role="navigation" style="margin-right: 13px!important;">
         <ul class="nav ace-nav">
-            <li class="purple">
+            <li class="red">
                 <a href="/" title="Visit Site">
                     <i class="icon-home"></i>
                 </a>
             </li>
-            <li class="red">
-                <a href="javascript:void(0)" title="Log Out" ng-click="logout()">
-                    <i class="icon-signout"></i>
+            <li class="light-blue">
+                <a data-toggle="dropdown" href="javascript:void(0)" class="dropdown-toggle">
+                    <img class="nav-user-photo" ng-src="/img/avatar.png" width="40px">
+                    <span class="user-info">
+                        <small>Welcome,</small>
+                        {{ _loginUser.UserName }}
+                    </span>
+                    <i class="ace-icon icon-caret-down"></i>
                 </a>
+                <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                    <li>
+                        <a href="javascript:void(0)" title="Change Profile" ng-click="changeProfile()">
+                            <i class="ace-icon fa icon-user"></i>
+                            Profile
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="javascript:void(0)" title="Log Out" ng-click="logout()">
+                            <i class="ace-icon fa icon-power-off"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
@@ -88,6 +108,50 @@
     <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="icon-double-angle-up icon-only bigger-110"></i>
     </a>
+</div>
+
+<div modal="iconDialog" close="close()" options="{backdrop: true,dialogFade:true}">
+    <div class="modal-dialog">
+        <form name="form" class="modal-content" ng-submit="save()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="close()">&times;</button>
+                    <h4 class="modal-title">Change Profile</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">UserName</label>
+                            <div class="col-lg-9">
+                                <input type="text" placeholder="UserName" class="form-control" ng-model="entity.UserName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Email</label>
+                            <div class="col-lg-9">
+                                <input type="text" placeholder="Email" class="form-control" ng-model="entity.Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Password</label>
+                            <div class="col-lg-9">
+                                <input type="password" placeholder="Password" class="form-control" ng-model="entity.NewPassword">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Confirm</label>
+                            <div class="col-lg-9">
+                                <input type="password" placeholder="Confirm Password" class="form-control" ng-model="entity.RePassword">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-sm" ng-disabled="loading || form.$invalid">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>

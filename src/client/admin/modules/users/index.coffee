@@ -59,7 +59,7 @@ angular.module('admin-users', [])
         if $scope.entity.NewPassword and !$scope.entity.RePassword
           messenger.error "Please confirm Password."
           return
-        if !$scope.entity.NewPassword and !$scope.entity.RePassword and
+        if $scope.entity.NewPassword and $scope.entity.RePassword and
         $scope.entity.NewPassword isnt $scope.entity.RePassword
           messenger.error "The RePassword mismatch Password."
           return
