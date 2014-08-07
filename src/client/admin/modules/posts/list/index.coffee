@@ -36,8 +36,8 @@ angular.module('admin-posts-list', [])
 ])
 
 .controller('AdminPostsListCtrl',
-["$scope", "$http", "$rootScope", "$routeParams", "progress", "postCounts",
-  ($scope, $http, $rootScope, $routeParams, progress, postCounts) ->
+["$scope", "$http", "$rootScope", "$routeParams", "progress", "postCounts", "messenger",
+  ($scope, $http, $rootScope, $routeParams, progress, postCounts, messenger) ->
     $scope.postCounts = postCounts
     url = "#{MEANING.ApiAddress}/posts"
     status = $routeParams.status
@@ -64,4 +64,28 @@ angular.module('admin-posts-list', [])
 
       $scope.posts = data
       progress.complete()
+
+    $scope.del = (post) ->
+      messenger.confirm ->
+        progress.start();
+        url = post.Url.substring(post.Url.lastIndexOf('/') + 1)
+        $http.delete("#{MEANING.ApiAddress}/posts/#{url}",
+          headers:
+            "meaning-token": $.cookie('meaning-token')
+            "from-admin-console": true
+        )
+        .success (data) ->
+          $scope.posts.splice($scope.posts.indexOf(post), 1)
+          #change count
+          $http.get("#{MEANING.ApiAddress}/posts/count",
+            headers:
+              "login-user": $.cookie("CurrentUser")
+          )
+          .success (data) ->
+            $scope.postCounts = data
+
+          messenger.success "Delete post successfully!"
+          progress.complete();
+        .error (err) ->
+          progress.complete();
 ])

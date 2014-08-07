@@ -17,6 +17,7 @@ module.exports = (app) ->
 
   app.post "/posts", requireLogin(), checkUrlUnique(), post.create
   app.put "/posts/:url", requireLogin(), checkUrlUnique(), post.update
+  app.delete "/posts/:url", requireLogin(), post.delete
 
   app.param "url", post.getByUrl
   app.param "author", post.getListByAuthor

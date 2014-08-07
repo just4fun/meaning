@@ -67,15 +67,16 @@
                     </a>
                     <a class="red" href="javascript:void(0);" ng-show="item.Status == 'Trash'" title="restore">
                         <i class="icon-reply bigger-130"></i>
-                    </a>
-                    <a class="red" href="javascript:void(0);" title="delete permanently">
-                        <i class="icon-remove bigger-130"></i>
                     </a>-->
+                    <a class="red" href="javascript:void(0);" ng-show="item.Status == 'Trash'"
+                            ng-click="del(item)" title="delete permanently">
+                        <i class="icon-remove bigger-130"></i>
+                    </a>
                 </div>
             </td>
         </tr>
         </tbody>
     </table>
-    <div class="well well-sm" ng-hide="posts">No posts yet.</div>
+    <div class="well well-sm" ng-hide="posts || posts.length > 0">No posts yet.</div>
     <a href="#!/posts/new" class="pull-left btn btn-primary btn-sm">New Post</a>
 </div>

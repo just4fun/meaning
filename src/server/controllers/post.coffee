@@ -212,6 +212,33 @@ exports.update = (req, res, next) ->
       #update post
       savePostWithTags(req, res, next, post, newTags)
 
+exports.delete = (req, res, next) ->
+  post = req.post
+  if post.Status isnt "Trash"
+    return next new Error "You can only delete trash post."
+
+  async.waterfall [
+    #delete tags first
+    (callback) ->
+      Tag.remove({Post: post._id}).exec (err) ->
+        if err
+          callback "Remove post tags failed: #{err}"
+        else
+          callback null
+    #then delete post
+    (callback) ->
+      Post.remove({_id: post._id}).exec (err) ->
+        if err
+          callback "Delete post failed: #{err}"
+        else
+          callback null
+
+  ], (err, result) ->
+    if err
+      next new Error err
+    else
+      res.jsonp "Delete post successfully!"
+
 getValidTags = (tagStr) ->
   return [] if !tagStr
   newTags = []
