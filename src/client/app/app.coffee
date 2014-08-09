@@ -54,4 +54,8 @@ angular.module("app",
   ($scope, $http, $location, $rootScope) ->
     $scope.isActive = (path) ->
       path is $location.path()
+
+    $scope.isPostActive = () ->
+      $location.path() is "/posts" or
+      $location.path().indexOf("/posts/") > -1
 ])
