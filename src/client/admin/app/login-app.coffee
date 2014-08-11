@@ -1,21 +1,24 @@
-angular.module("login-app", [])
+angular.module("login-app",
+["customServices"
+])
 
 .controller('LoginCtrl',
-["$scope", "$http", "$window", ($scope, $http, $window) ->
-  $scope.login = ->
-    $scope.submitting = true
-    $scope.error = ''
-    $http.post("#{MEANING.ApiAddress}/login", $scope.user)
-      .success (user, status, headers, config)->
-        $.cookie('CurrentUser', angular.toJson(user), {expires: 180, path: '/'})
-        $.cookie('meaning-token', headers('meaning-token'), {expires: 180, path: '/'})
-        $scope.submitting = false
-        $window.location.href = "/admin"
-      .error (error) ->
-        debugger
-        $scope.submitting = false
-        $scope.user.Password = ''
-        $scope.error = error.Message
+["$scope", "$http", "$window", "progress",
+  ($scope, $http, $window, progress) ->
+    $scope.login = ->
+      progress.start()
+      $scope.error = ''
+      $http.post("#{MEANING.ApiAddress}/login", $scope.user)
+        .success (user, status, headers, config)->
+          progress.complete()
+          $.cookie('CurrentUser', angular.toJson(user), {expires: 180, path: '/'})
+          $.cookie('meaning-token', headers('meaning-token'), {expires: 180, path: '/'})
+          $window.location.href = "/admin"
+        .error (error) ->
+          debugger
+          progress.complete()
+          $scope.user.Password = ''
+          $scope.error = error.Message
 ])
 
 #check login

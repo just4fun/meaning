@@ -71,8 +71,8 @@ angular.module("admin-app",
       $location.path().indexOf("/posts/") > -1
 
     $scope.logout = ->
-      $.removeCookie('CurrentUser', { path: '/' });
-      $.removeCookie('meaning-token', { path: '/' });
+      $.removeCookie('CurrentUser', { path: '/' })
+      $.removeCookie('meaning-token', { path: '/' })
       $rootScope._loginUser = undefined
       $window.location.href = '/login'
 
@@ -103,8 +103,9 @@ angular.module("admin-app",
           'meaning-token': $.cookie('meaning-token')
       )
       .success (data) ->
+        progress.complete()
         #update cookie
-        user = angular.fromJson($.cookie('CurrentUser'));
+        user = angular.fromJson($.cookie('CurrentUser'))
         user.UserName = $scope.entity.UserName
         user.Email = $scope.entity.Email
         $.cookie('CurrentUser', angular.toJson(user), {expires: 180, path: '/'})
@@ -113,9 +114,8 @@ angular.module("admin-app",
 
         messenger.success "Change profile successfully!"
         $scope.close()
-        progress.complete();
       .error (err) ->
-        progress.complete();
+        progress.complete()
 
     $scope.close = ->
       $scope.profileDialog = false

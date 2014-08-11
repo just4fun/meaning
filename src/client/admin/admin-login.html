@@ -27,7 +27,7 @@
                     <form name="form" ng-submit="login()">
                         <input type="text" placeholder="Username" required ng-model="user.UserName">
                         <input type="password" placeholder="Password" required ng-model="user.Password">
-                        <button type="submit" class="btn btn-login" ng-disabled="submitting || form.$invalid">
+                        <button type="submit" class="btn btn-login" ng-disabled="loading || form.$invalid">
                             Login
                         </button>
                         <p>

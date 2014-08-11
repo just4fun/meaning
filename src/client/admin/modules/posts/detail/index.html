@@ -55,11 +55,11 @@
             </div>
         </div>
         <button class="btn btn-primary btn-sm" ng-hide="post.Status=='Trash'"
-                ng-disabled="submitting || form.$invalid" ng-click="publish()">{{ submitText }}</button>
+                ng-disabled="loading || form.$invalid" ng-click="publish()">{{ submitText }}</button>
         <button class="btn btn-danger btn-sm" ng-show="post.Status=='Published' || post.Status == 'Trash'"
-                ng-click="moveToTrash()">{{ operateText }}</button>
+                ng-disabled="loading || form.$invalid" ng-click="moveToTrash()">{{ operateText }}</button>
         <button class="btn btn-success btn-sm pull-right" ng-hide="post.Status=='Published' || post.Status=='Trash'"
-                ng-disabled="submitting || form.$invalid" ng-click="saveDraft()">Save Draft</button>
+                ng-disabled="loading || form.$invalid" ng-click="saveDraft()">Save Draft</button>
         <div class="clearfix"></div>
     </form>
 </div>

@@ -19,11 +19,11 @@ angular.module('admin-categories', [])
 ["$scope", "$http", "$rootScope", "messenger", "progress",
   ($scope, $http, $rootScope, messenger, progress) ->
     getCategoryList = ->
-      progress.start();
+      progress.start()
       $http.get("#{MEANING.ApiAddress}/categories")
       .success (data) ->
         $scope.categories = data
-        progress.complete();
+        progress.complete()
 
     $scope.create = ->
       $scope.modalTitle = "Create"
@@ -40,7 +40,7 @@ angular.module('admin-categories', [])
 
     $scope.del = (category) ->
       messenger.confirm ->
-        progress.start();
+        progress.start()
         $http.delete("#{MEANING.ApiAddress}/category/#{category._id}",
           headers:
             'meaning-token': $.cookie('meaning-token')
@@ -48,9 +48,9 @@ angular.module('admin-categories', [])
         .success (data) ->
           $scope.categories.splice($scope.categories.indexOf(category), 1)
           messenger.success "Delete category successfully!"
-          progress.complete();
+          progress.complete()
         .error (err) ->
-          progress.complete();
+          progress.complete()
 
     $scope.save = ->
       progress.start()
@@ -68,7 +68,7 @@ angular.module('admin-categories', [])
           $scope.close()
           getCategoryList()
         .error (err) ->
-          progress.complete();
+          progress.complete()
       #Create
       else
         $scope.entity.CreateUser = $rootScope._loginUser.UserName
@@ -82,7 +82,7 @@ angular.module('admin-categories', [])
           $scope.close()
           getCategoryList()
         .error (err) ->
-          progress.complete();
+          progress.complete()
 
     getCategoryList()
 ])

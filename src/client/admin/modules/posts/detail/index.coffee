@@ -50,8 +50,8 @@ angular.module('admin-posts-detail', [])
 
 #Create
 .controller('AdminPostsNewCtrl',
-["$scope", "$http", "$rootScope", "$window", "messenger", "categories", "$location",
-  ($scope, $http, $rootScope, $window, messenger, categories, $location) ->
+["$scope", "$http", "$rootScope", "$window", "messenger", "categories", "$location", "progress",
+  ($scope, $http, $rootScope, $window, messenger, categories, $location, progress) ->
     $scope.categories = categories
     $scope.submitText = "Publish"
 
@@ -76,14 +76,14 @@ angular.module('admin-posts-detail', [])
       tempPost.Category = tempPost.Category._id
       tempPost.Author = $rootScope._loginUser._id
 
-      $scope.submitting = true
+      progress.start()
       $http.post("#{MEANING.ApiAddress}/posts",
         tempPost,
         headers:
           "meaning-token": $.cookie('meaning-token')
       )
       .success (data) ->
-        $scope.submitting = false
+        progress.complete()
 
         if status is "Published"
           $window.location.href = "/#!/posts/#{data.Url}"
@@ -92,12 +92,14 @@ angular.module('admin-posts-detail', [])
           #change url to edit mode, otherwise it will create again when press
           #save draft button twice.
           $location.path "/posts/#{tempPost.Url}"
+      .error (err) ->
+        progress.complete()
 ])
 
 #Update
 .controller('AdminPostsDetailCtrl',
-["$scope", "$http", "$rootScope", "$window", "$routeParams", "post", "messenger", "categories", "$location",
-  ($scope, $http, $rootScope, $window, $routeParams, post, messenger, categories, $location) ->
+["$scope", "$http", "$rootScope", "$window", "$routeParams", "post", "messenger", "categories", "$location", "progress",
+  ($scope, $http, $rootScope, $window, $routeParams, post, messenger, categories, $location, progress) ->
     #to avoid "/posts/count" route being fired
     if $routeParams.url.toLowerCase() is "count"
       $location.path "/404"
@@ -146,7 +148,7 @@ angular.module('admin-posts-detail', [])
       tempPost.Category = tempPost.Category._id
       tempPost.EditUser = $rootScope._loginUser.UserName
 
-      $scope.submitting = true
+      progress.start()
       $http.put("#{MEANING.ApiAddress}/posts/#{$routeParams.url}",
         tempPost,
         headers:
@@ -155,7 +157,7 @@ angular.module('admin-posts-detail', [])
           "from-admin-console": true
       )
       .success (data) ->
-        $scope.submitting = false
+        progress.complete()
 
         if status is "Published"
           $window.location.href = "/#!/posts/#{data.Url}"
@@ -163,4 +165,6 @@ angular.module('admin-posts-detail', [])
           $window.location.href = "#!/posts/list/trash"
         else
           messenger.success "Save draft successfully!"
+      .error (err) ->
+        progress.complete()
 ])

@@ -19,11 +19,11 @@ angular.module('admin-users', [])
 ["$scope", "$http", "$rootScope", "messenger", "progress",
   ($scope, $http, $rootScope, messenger, progress) ->
     getUserList = ->
-      progress.start();
+      progress.start()
       $http.get("#{MEANING.ApiAddress}/users")
       .success (data) ->
         $scope.users = data
-        progress.complete();
+        progress.complete()
 
     $scope.create = ->
       $scope.modalTitle = "Create"
@@ -40,7 +40,7 @@ angular.module('admin-users', [])
 
     $scope.del = (user) ->
       messenger.confirm ->
-        progress.start();
+        progress.start()
         $http.delete("#{MEANING.ApiAddress}/user/#{user._id}",
           headers:
             'meaning-token': $.cookie('meaning-token')
@@ -48,12 +48,11 @@ angular.module('admin-users', [])
         .success (data) ->
           $scope.users.splice($scope.users.indexOf(user), 1)
           messenger.success "Delete user successfully!"
-          progress.complete();
+          progress.complete()
         .error (err) ->
-          progress.complete();
+          progress.complete()
 
     $scope.save = ->
-
       #Update
       if $scope.entity._id
         if $scope.entity.NewPassword and !$scope.entity.RePassword
@@ -78,7 +77,7 @@ angular.module('admin-users', [])
         .success (data) ->
           #update cookie and global variable
           if $scope.entity._id is $rootScope._loginUser._id
-            user = angular.fromJson($.cookie('CurrentUser'));
+            user = angular.fromJson($.cookie('CurrentUser'))
             user.UserName = $scope.entity.UserName
             user.Email = $scope.entity.Email
             #if update role here, a user from admin to author will own no right immediately
@@ -91,7 +90,7 @@ angular.module('admin-users', [])
           $scope.close()
           getUserList()
         .error (err) ->
-          progress.complete();
+          progress.complete()
       #Create
       else
         if !$scope.entity.NewPassword
@@ -118,7 +117,7 @@ angular.module('admin-users', [])
           $scope.close()
           getUserList()
         .error (err) ->
-          progress.complete();
+          progress.complete()
 
     getUserList()
 ])
