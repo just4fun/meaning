@@ -1,11 +1,14 @@
 angular.module("ckEditor",[])
 
 .directive "ckEditor", ->
-  require: '?ngModel'
+  require: "?ngModel"
   link: (scope, elm, attr, ngModel)->
-    ck = CKEDITOR.replace elm[0], { toolbar: 'Main' }
+    ck = CKEDITOR.replace elm[0], {
+      toolbar: "Main"
+      extraPlugins: "codesnippet"
+    }
     unless ngModel then return
-    ck.on 'pasteState', ->
+    ck.on "pasteState", ->
       scope.$apply ->
         ngModel.$setViewValue ck.getData()
     ngModel.$render = (value) ->
