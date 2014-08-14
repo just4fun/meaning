@@ -6,6 +6,7 @@ angular.module("ckEditor",[])
     ck = CKEDITOR.replace elm[0], {
       toolbar: "Main"
       extraPlugins: "codesnippet"
+      codeSnippet_theme: "github"
     }
     unless ngModel then return
     ck.on "pasteState", ->
