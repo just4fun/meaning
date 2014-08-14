@@ -32,7 +32,7 @@
 
 <div class="page-header">
     <h1>{{post.Title}}</h1>
-    <small>
+    <small class="pull-left" style="margin-top: 10px;">
         <em class="text-muted">
             <ul class="list-inline">
                 <li style="padding-left: 0;">
@@ -61,10 +61,12 @@
             </ul>
         </em>
     </small>
+    <div class="pull-right" ng-show="canEdit()">
+        <a class="btn btn-primary" ng-href="/admin#!/posts/{{post.Url}}">
+            <i class="icon-edit"></i>
+        </a>
+    </div>
+    <div class="clearfix"></div>
 </div>
-<div class="pull-right" ng-show="canEdit()">
-    <a class="btn btn-primary" ng-href="/admin#!/posts/{{post.Url}}">
-        <i class="icon-edit"></i>
-    </a>
-</div>
+
 <p class="post-content" ng-bind-html="post.Content"></p>
