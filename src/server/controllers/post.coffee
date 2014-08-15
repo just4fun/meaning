@@ -189,6 +189,14 @@ exports.list = (req, res, next) ->
 exports.create = (req, res, next) ->
   #handle tags
   newTags = getValidTags(req.body.Tags || "")
+
+  #limit tags count to FIVE
+  if newTags.length > 5
+    return next new Error "The maximum of tags count is FIVE."
+  #limit length of each tag to FIVE
+  for t in newTags when t.length > 5
+    return next new Error "The maximum of tag length is FIVE."
+
   req.body.Tags = []
 
   post = new Post(req.body)
@@ -198,6 +206,14 @@ exports.create = (req, res, next) ->
 exports.update = (req, res, next) ->
   #handle tags
   newTags = getValidTags(req.body.Tags || "")
+
+  #limit tags count to FIVE
+  if newTags.length > 5
+    return next new Error "The maximum of tags count is FIVE."
+  #limit length of each tag to FIVE
+  for t in newTags when t.length > 5
+    return next new Error "The maximum of tag length is FIVE."
+
   req.body.Tags = []
 
   post = req.post
