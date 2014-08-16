@@ -5,11 +5,28 @@
         bottom: 40px;
         padding: 10px;
     }
-    .self-info p {
-        text-align: center;
+
+    .self-info {
+        list-style: none;
+        font-size: 20px;
+        font-family: fantasy;
+        padding: 0;
         color: black;
         font-weight: bold;
+
     }
+    .social-media a i:hover,
+    .self-info li {
+        text-align: center;
+        -webkit-transition: 1s;
+        -moz-transition: 1s;
+        transition: 1s;
+    }
+    .self-info li:hover {
+        font-size: 30px;
+        color: #fff;
+    }
+
     .social-media a {
         text-decoration: none;
         margin-left: 8px;
@@ -23,6 +40,9 @@
     }
     .icon-twitter:hover {
         color: #00a0d1;
+    }
+    .icon-github:hover {
+        color: #fff;
     }
     .icon-weibo:hover {
         color: red;
@@ -42,11 +62,11 @@
 </style>
 
 <div class="about">
-<div class="self-info">
-    <p>26</p>
-    <p>182</p>
-    <p>runner</p>
-</div>
+<ul class="self-info">
+    <li>26</li>
+    <li>182</li>
+    <li>runner</li>
+</ul>
 <p class="social-media">
     <a href="https://www.facebook.com/houritsunohikari" target="_blank"><i class="icon-facebook-sign icon-3"></i></a>
     <a href="https://twitter.com/houritsu_hikari" target="_blank"><i class="icon-twitter icon-3"></i></a>
