@@ -22,6 +22,10 @@
     .navbar-inverse .navbar-nav > li > a:focus {
         color: #428bca;
     }
+
+    .hljs {
+        background-color: #f5f5f5;
+    }
 </style>
 
 <ul class="breadcrumb">
@@ -70,3 +74,9 @@
 </div>
 
 <p class="post-content" ng-bind-html="post.Content"></p>
+
+<script>
+    setTimeout(function () {
+        hljs.initHighlighting();
+    }, 1000);
+</script>

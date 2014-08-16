@@ -29,8 +29,6 @@ angular.module('posts-view', [])
 ["$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "post",
   ($scope, $http, $window, progress, $routeParams, $location, $rootScope, post) ->
     $scope.post = post
-    #fire highlight.js
-    hljs.initHighlightingOnLoad()
 
     $scope.canEdit = () ->
       currentUser = $rootScope._loginUser
