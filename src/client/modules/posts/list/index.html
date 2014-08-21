@@ -19,13 +19,20 @@
 
 <ul class="breadcrumb">
     <li><a href="/">Home</a></li>
-    <li class="active">Posts</li>
+    <li class="active" ng-hide="filter">Posts</li>
+    <li class="active" ng-show="filter"><a href="/#!/posts">Posts</a></li>
+    <li class="active" ng-show="filter">filter by {{filterText}}</li>
 </ul>
 
 <div>
-    <h3 ng-hide="isAllList">
-        {{filterText}}: {{filter}} ({{posts.length}} post(s))
-    </h3>
+    <div ng-hide="isAllList">
+        <h3 ng-show="posts.length == 1">
+            {{filterText}}: {{filter}} ({{posts.length}} post)
+        </h3>
+        <h3 ng-show="posts.length > 1">
+            {{filterText}}: {{filter}} ({{posts.length}} posts)
+        </h3>
+    </div>
     <div ng-repeat="post in posts">
         <h3>
             <a ng-href="/#!/posts/{{post.Url}}" >
