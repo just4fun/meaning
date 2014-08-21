@@ -10,26 +10,51 @@ exports.login = (req, res, next) ->
   User.findOne(
     UserName: req.body.UserName
     Password: md5(req.body.Password)
-  ).select("_id UserName Email Role").exec (err, user) ->
+  ).exec (err, user) ->
     if err
       next new Error "Login failed. #{err}"
     else if !user
       next new Error "UserName or Password is incorrect."
     else
-      #create token
-      token = md5(user.UserName + new Date())
-      tokenInfo = new Token
-        UserName: user.UserName
-        Token: token
-        LoginDate: new Date()
+      async.waterfall [
 
-      tokenInfo.save (err) ->
-        if err
-          next new Error "Create token failed. #{err}"
-        else
-          res.setHeader "meaning-token", token
-          res.jsonp user
+        #create token
+        (callback) ->
+          token = md5(user.UserName + new Date())
+          tokenInfo = new Token
+            UserName: user.UserName
+            Token: token
+            LoginDate: new Date()
+          tokenInfo.save (err) ->
+            if err
+              callback "Create token failed. #{err}"
+            else
+              callback null, tokenInfo
 
+        #update login time
+        (token, callback) ->
+          user.LastLoginDate = token.LoginDate
+          user.save (err) ->
+            if err
+              callback "Update LastLoginDate failed. #{err}"
+            else
+              result = {
+                token: token.Token
+                user: user
+              }
+              callback null, result
+
+      ], (err, result) ->
+        res.setHeader "meaning-token", result.token
+
+        user = result.user
+        user = {
+          _id: user._id
+          UserName: user.UserName
+          Email: user.Email
+          Role: user.Role
+        }
+        res.jsonp user
 
 #-------------------------------------------------------------
 

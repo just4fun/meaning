@@ -13,5 +13,6 @@ UserSchema = new Schema
     default: Date.now
   EditDate: Date
   EditUser: String
+  LastLoginDate: Date
 
 mongoose.model 'User', UserSchema
