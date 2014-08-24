@@ -1,1 +1,4 @@
-customServices = angular.module("customServices", [])
+angular.module("customServices", [
+  "messenger"
+  "progress"
+])

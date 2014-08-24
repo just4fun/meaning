@@ -1,6 +1,6 @@
-user = require("../controllers/user")
-requireLogin = require("../common/requireLogin")
-checkUserNameUnique = require("../common/checkUserNameUnique")
+user = require "../controllers/user"
+requireLogin = require "../common/requireLogin"
+checkUserNameUnique = require "../common/checkUserNameUnique"
 
 module.exports = (app) ->
   app.get "/users", user.list

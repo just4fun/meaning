@@ -1,4 +1,4 @@
-mongoose = require('mongoose')
+mongoose = require "mongoose"
 
 TokenSchema = new mongoose.Schema
   Username: String

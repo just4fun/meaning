@@ -1,6 +1,6 @@
-category = require("../controllers/category")
-requireLogin = require("../common/requireLogin")
-checkCategoryNameUnique = require("../common/checkCategoryNameUnique")
+category = require "../controllers/category"
+requireLogin = require "../common/requireLogin"
+checkCategoryNameUnique = require "../common/checkCategoryNameUnique"
 
 module.exports = (app) ->
   app.get "/categories", category.list

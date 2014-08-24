@@ -1,8 +1,8 @@
-fs = require("fs")
-express = require("express")
-cors = require("cors")
-mongoose = require("mongoose")
-config = require("./config")
+fs = require "fs"
+express = require "express"
+cors = require "cors"
+mongoose = require "mongoose"
+config = require "./config"
 
 
 module.exports = (appPath)->

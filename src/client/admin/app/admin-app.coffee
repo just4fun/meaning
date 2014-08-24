@@ -1,18 +1,18 @@
-angular.module("admin-app",
-['ngRoute'
- 'ngSanitize'
- 'ngAnimate'
- 'ngCookies'
+angular.module("admin-app", [
+  "ngRoute"
+  "ngSanitize"
+  "ngAnimate"
+  "ngCookies"
 
- 'customDirectives'
- 'customFilters'
- 'customServices'
+  "customDirectives"
+  "customFilters"
+  "customServices"
 
- 'admin-modules'
+  "admin-modules"
 ])
 
 .config(["$locationProvider", ($locationProvider) ->
-  $locationProvider.html5Mode(false).hashPrefix('!')
+  $locationProvider.html5Mode(false).hashPrefix("!")
 ])
 
 .config(["$httpProvider", ($httpProvider) ->
@@ -38,16 +38,16 @@ angular.module("admin-app",
 
 #show loading when route change
 .run(["$rootScope", "progress", ($rootScope, progress) ->
-  $rootScope.$on '$routeChangeStart', ->
+  $rootScope.$on "$routeChangeStart", ->
     progress.start()
 
-  $rootScope.$on '$routeChangeSuccess', ->
+  $rootScope.$on "$routeChangeSuccess", ->
     progress.complete()
 ])
 
 #check login
 .run(["$window", "$rootScope", ($window, $rootScope) ->
-  $rootScope._isLogin = !!$.cookie('CurrentUser')
+  $rootScope._isLogin = !!$.cookie("CurrentUser")
   if !$rootScope._isLogin
     $window.location.href = "/login"
 ])
@@ -58,10 +58,10 @@ angular.module("admin-app",
 ])
 
 
-.controller('AdminCtrl',
+.controller("AdminCtrl",
 ["$scope", "$rootScope", "$http", "$window", "$location", "progress", "messenger",
   ($scope, $rootScope, $http, $window, $location, progress, messenger) ->
-    $rootScope._loginUser = angular.fromJson($.cookie('CurrentUser'))
+    $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"))
 
     $scope.isActive = (path) ->
       path is $location.path()
@@ -71,10 +71,10 @@ angular.module("admin-app",
       $location.path().indexOf("/posts/") > -1
 
     $scope.logout = ->
-      $.removeCookie('CurrentUser', { path: '/' })
-      $.removeCookie('meaning-token', { path: '/' })
+      $.removeCookie("CurrentUser", { path: "/" })
+      $.removeCookie("meaning-token", { path: "/" })
       $rootScope._loginUser = undefined
-      $window.location.href = '/login'
+      $window.location.href = "/login"
 
     #------------change profile------------
 
@@ -100,17 +100,17 @@ angular.module("admin-app",
       $http.put("#{MEANING.ApiAddress}/user/#{$scope.entity._id}",
         $scope.entity,
         headers:
-          'meaning-token': $.cookie('meaning-token')
+          "meaning-token": $.cookie("meaning-token")
       )
       .success (data) ->
         progress.complete()
         #update cookie
-        user = angular.fromJson($.cookie('CurrentUser'))
+        user = angular.fromJson($.cookie("CurrentUser"))
         user.UserName = $scope.entity.UserName
         user.Email = $scope.entity.Email
-        $.cookie('CurrentUser', angular.toJson(user), {expires: 180, path: '/'})
+        $.cookie("CurrentUser", angular.toJson(user), {expires: 180, path: "/"})
         #update global variable
-        $rootScope._loginUser = angular.fromJson($.cookie('CurrentUser'))
+        $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"))
 
         messenger.success "Change profile successfully!"
         $scope.close()

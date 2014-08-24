@@ -1,13 +1,13 @@
-mongoose = require("mongoose")
-md5 = require("MD5")
-async = require("async")
+mongoose = require "mongoose"
+md5 = require "MD5"
+async = require "async"
 
 
 module.exports = () ->
-  User = mongoose.model("User")
-  Post = mongoose.model("Post")
-  Category = mongoose.model("Category")
-  Tag = mongoose.model("Tag")
+  User = mongoose.model "User"
+  Post = mongoose.model "Post"
+  Category = mongoose.model "Category"
+  Tag = mongoose.model "Tag"
 
   ###
 

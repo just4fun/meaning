@@ -1,4 +1,4 @@
-mongoose = require('mongoose')
+mongoose = require "mongoose"
 Schema = mongoose.Schema
 
 UserSchema = new Schema
@@ -15,4 +15,4 @@ UserSchema = new Schema
   EditUser: String
   LastLoginDate: Date
 
-mongoose.model 'User', UserSchema
+mongoose.model "User", UserSchema

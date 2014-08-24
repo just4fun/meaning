@@ -21,7 +21,7 @@ exports.getById = (req, res, next, categoryId) ->
 
 exports.list = (req, res, next) ->
   Category.find()
-  .sort('-CreateDate')
+  .sort("-CreateDate")
   .exec (err, categories) ->
     if err
       next new Error "Show category list failed: #{err}"

@@ -1,6 +1,6 @@
-post = require("../controllers/post")
-requireLogin = require("../common/requireLogin")
-checkUrlUnique = require("../common/checkUrlUnique")
+post = require "../controllers/post"
+requireLogin = require "../common/requireLogin"
+checkUrlUnique = require "../common/checkUrlUnique"
 
 module.exports = (app) ->
   app.get "/posts", post.list

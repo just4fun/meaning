@@ -1,4 +1,4 @@
-angular.module('admin-categories', [])
+angular.module("admin-categories", [])
 
 .config(["$routeProvider",
 ($routeProvider) ->
@@ -43,7 +43,7 @@ angular.module('admin-categories', [])
         progress.start()
         $http.delete("#{MEANING.ApiAddress}/category/#{category._id}",
           headers:
-            'meaning-token': $.cookie('meaning-token')
+            "meaning-token": $.cookie("meaning-token")
         )
         .success (data) ->
           $scope.categories.splice($scope.categories.indexOf(category), 1)
@@ -61,7 +61,7 @@ angular.module('admin-categories', [])
         $http.put("#{MEANING.ApiAddress}/category/#{$scope.entity._id}",
           $scope.entity,
           headers:
-            'meaning-token': $.cookie('meaning-token')
+            "meaning-token": $.cookie("meaning-token")
         )
         .success (data) ->
           messenger.success "Update category successfully!"
@@ -75,7 +75,7 @@ angular.module('admin-categories', [])
         $http.post("#{MEANING.ApiAddress}/category",
           $scope.entity,
           headers:
-            'meaning-token': $.cookie('meaning-token')
+            "meaning-token": $.cookie("meaning-token")
         )
         .success (data) ->
           messenger.success "Create category successfully!"

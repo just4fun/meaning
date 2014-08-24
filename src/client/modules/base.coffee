@@ -1,8 +1,8 @@
-angular.module("customModules",
-['home'
- 'posts-list'
- 'posts-view'
- 'about'
+angular.module("customModules", [
+  "home"
+  "posts-list"
+  "posts-view"
+  "about"
 
- '404'
+  "404"
 ])

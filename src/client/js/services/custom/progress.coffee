@@ -1,4 +1,6 @@
-customServices.provider "progress", ->
+angular.module("progress", [])
+
+.provider "progress", ->
   @$get = [
     "$document"
     "$window"

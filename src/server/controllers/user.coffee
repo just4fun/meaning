@@ -75,7 +75,7 @@ exports.getById = (req, res, next, userId) ->
 
 exports.list = (req, res, next) ->
   User.find()
-  .sort('-CreateDate')
+  .sort("-CreateDate")
   .exec (err, users) ->
     if err
       next new Error "Show user list failed: #{err}"

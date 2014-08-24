@@ -1,20 +1,20 @@
-angular.module("app",
-['ngRoute'
- 'ngSanitize'
- 'ngAnimate'
- 'ngCookies'
+angular.module("app", [
+  "ngRoute"
+  "ngSanitize"
+  "ngAnimate"
+  "ngCookies"
 
- 'angulartics'
- 'angulartics.google.analytics'
+  "angulartics"
+  "angulartics.google.analytics"
 
- 'customDirectives'
- 'customFilters'
- 'customServices'
- 'customModules'
+  "customDirectives"
+  "customFilters"
+  "customServices"
+  "customModules"
 ])
 
 .config(["$locationProvider", ($locationProvider) ->
-  $locationProvider.html5Mode(false).hashPrefix('!')
+  $locationProvider.html5Mode(false).hashPrefix("!")
 ])
 
 .config(["$httpProvider", ($httpProvider) ->
@@ -38,18 +38,18 @@ angular.module("app",
 
 #show loading when route change
 .run(["$rootScope", "progress", ($rootScope, progress) ->
-  $rootScope.$on '$routeChangeStart', ->
+  $rootScope.$on "$routeChangeStart", ->
     progress.start()
 
-  $rootScope.$on '$routeChangeSuccess', ->
+  $rootScope.$on "$routeChangeSuccess", ->
     progress.complete()
 ])
 
 .run(["$rootScope", ($rootScope) ->
-  $rootScope._loginUser = angular.fromJson($.cookie('CurrentUser'))
+  $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"))
 ])
 
-.controller('NavCtrl',
+.controller("NavCtrl",
 ["$scope", "$http", "$location", "$rootScope",
   ($scope, $http, $location, $rootScope) ->
     $scope.isActive = (path) ->

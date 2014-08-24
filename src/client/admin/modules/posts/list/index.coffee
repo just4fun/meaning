@@ -1,13 +1,13 @@
-angular.module('admin-posts-list', [])
+angular.module("admin-posts-list", [])
 
 .config(["$routeProvider",
 ($routeProvider) ->
   $routeProvider
   .when("/posts",
     templateUrl: "/admin/modules/posts/list/index.html"
-    controller: 'AdminPostsListCtrl'
+    controller: "AdminPostsListCtrl"
     resolve:
-      postCounts: ['$q', '$http', ($q, $http) ->
+      postCounts: ["$q", "$http", ($q, $http) ->
         deferred = $q.defer()
         $http.get("#{MEANING.ApiAddress}/posts/count",
           headers:
@@ -20,9 +20,9 @@ angular.module('admin-posts-list', [])
   )
   .when("/posts/list/:status",
     templateUrl: "/admin/modules/posts/list/index.html"
-    controller: 'AdminPostsListCtrl'
+    controller: "AdminPostsListCtrl"
     resolve:
-      postCounts: ['$q', '$http', ($q, $http) ->
+      postCounts: ["$q", "$http", ($q, $http) ->
         deferred = $q.defer()
         $http.get("#{MEANING.ApiAddress}/posts/count",
           headers:
@@ -35,7 +35,7 @@ angular.module('admin-posts-list', [])
   )
 ])
 
-.controller('AdminPostsListCtrl',
+.controller("AdminPostsListCtrl",
 ["$scope", "$http", "$rootScope", "$routeParams", "progress", "postCounts", "messenger",
   ($scope, $http, $rootScope, $routeParams, progress, postCounts, messenger) ->
     $scope.postCounts = postCounts
@@ -68,10 +68,10 @@ angular.module('admin-posts-list', [])
     $scope.del = (post) ->
       messenger.confirm ->
         progress.start();
-        url = post.Url.substring(post.Url.lastIndexOf('/') + 1)
+        url = post.Url.substring(post.Url.lastIndexOf("/") + 1)
         $http.delete("#{MEANING.ApiAddress}/posts/#{url}",
           headers:
-            "meaning-token": $.cookie('meaning-token')
+            "meaning-token": $.cookie("meaning-token")
             "from-admin-console": true
         )
         .success (data) ->

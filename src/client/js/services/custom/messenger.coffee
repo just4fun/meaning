@@ -1,14 +1,16 @@
-customServices.factory "messenger", ->
+angular.module("messenger", [])
+
+.factory "messenger", ->
   success : (msg) ->
     Messenger().post
       message : msg
-      type : 'success'
+      type : "success"
       showCloseButton : true
 
   error : (msg) ->
     Messenger().post
       message : msg
-      type : 'error'
+      type : "error"
       showCloseButton : true
 
   confirm : (callback, msg) ->

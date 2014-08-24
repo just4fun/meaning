@@ -57,9 +57,9 @@ exports.getByUrl = (req, res, next, url) ->
     param.Status = "Published"
 
   Post.findOne(param)
-  .populate('Author', 'UserName')
-  .populate('Tags', 'TagName')
-  .populate('Category', 'CategoryName')
+  .populate("Author", "UserName")
+  .populate("Tags", "TagName")
+  .populate("Category", "CategoryName")
   .exec (err, post) ->
     if err
       next new Error "Find post(#{url}) failed: #{err}"
@@ -85,10 +85,10 @@ exports.getListByAuthor = (req, res, next, author) ->
       res.end()
     else
       Post.find({Author: user._id, Status: "Published"})
-      .populate('Author', 'UserName')
-      .populate('Tags', 'TagName')
-      .populate('Category', 'CategoryName')
-      .sort('-CreateDate')
+      .populate("Author", "UserName")
+      .populate("Tags", "TagName")
+      .populate("Category", "CategoryName")
+      .sort("-CreateDate")
       .exec (err, posts) ->
         if err
           next new Error "Failed to load posts of author(#{author}): #{err}"
@@ -133,10 +133,10 @@ exports.getListByCategory = (req, res, next, categoryName) ->
       res.end()
     else
       Post.find({Category: category._id, Status: "Published"})
-      .populate('Author', 'UserName')
-      .populate('Tags', 'TagName')
-      .populate('Category', 'CategoryName')
-      .sort('-CreateDate')
+      .populate("Author", "UserName")
+      .populate("Tags", "TagName")
+      .populate("Category", "CategoryName")
+      .sort("-CreateDate")
       .exec (err, posts) ->
         if err
           next new Error "Failed to load posts of category(#{categoryName}): #{err}"
@@ -155,10 +155,10 @@ exports.getListByStatus = (req, res, next, status) ->
       filter.Author = loginUser._id
 
   Post.find(filter)
-  .populate('Author', 'UserName')
-  .populate('Tags', 'TagName')
-  .populate('Category', 'CategoryName')
-  .sort('-CreateDate')
+  .populate("Author", "UserName")
+  .populate("Tags", "TagName")
+  .populate("Category", "CategoryName")
+  .sort("-CreateDate")
   .exec (err, posts) ->
     if err
       next new Error "Failed to load posts of status(#{status}): #{err}"
@@ -175,10 +175,10 @@ exports.list = (req, res, next) ->
       filter.Author = loginUser._id
 
   Post.find(filter)
-  .populate('Author', 'UserName')
-  .populate('Tags', 'TagName')
-  .populate('Category', 'CategoryName')
-  .sort('-CreateDate')
+  .populate("Author", "UserName")
+  .populate("Tags", "TagName")
+  .populate("Category", "CategoryName")
+  .sort("-CreateDate")
   .exec (err, posts) ->
     if err
       next new Error "Show post list failed: #{err}"

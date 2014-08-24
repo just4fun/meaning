@@ -1,4 +1,4 @@
-mongoose = require('mongoose')
+mongoose = require "mongoose"
 Schema = mongoose.Schema
 
 CategorySchema = new Schema
@@ -12,4 +12,4 @@ CategorySchema = new Schema
   EditUser: String
 
 
-mongoose.model 'Category', CategorySchema
+mongoose.model "Category", CategorySchema

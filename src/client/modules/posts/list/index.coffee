@@ -1,23 +1,23 @@
-angular.module('posts-list', [])
+angular.module("posts-list", [])
 
 .config(["$routeProvider",
   ($routeProvider) ->
     $routeProvider
     .when("/posts",
       templateUrl: "/modules/posts/list/index.html"
-      controller: 'PostsListCtrl')
+      controller: "PostsListCtrl")
     .when("/posts/author/:author",
       templateUrl: "/modules/posts/list/index.html"
-      controller: 'AuthorPostsListCtrl')
+      controller: "AuthorPostsListCtrl")
     .when("/posts/tag/:tag",
       templateUrl: "/modules/posts/list/index.html"
-      controller: 'TagPostsListCtrl')
+      controller: "TagPostsListCtrl")
     .when("/posts/category/:category",
       templateUrl: "/modules/posts/list/index.html"
-      controller: 'CategoryPostsListCtrl')
+      controller: "CategoryPostsListCtrl")
 ])
 
-.controller('PostsListCtrl',
+.controller("PostsListCtrl",
 ["$scope", "$http", "progress", ($scope, $http, progress) ->
   $scope.isAllList = true
   progress.start()
@@ -26,7 +26,7 @@ angular.module('posts-list', [])
     progress.complete()
 ])
 
-.controller('AuthorPostsListCtrl',
+.controller("AuthorPostsListCtrl",
 ["$scope", "$http", "$rootScope", "$routeParams", "progress",
   ($scope, $http, $rootScope, $routeParams, progress) ->
     $scope.isAllList = false
@@ -38,7 +38,7 @@ angular.module('posts-list', [])
       progress.complete()
 ])
 
-.controller('TagPostsListCtrl',
+.controller("TagPostsListCtrl",
 ["$scope", "$http", "$rootScope", "$routeParams", "progress",
   ($scope, $http, $rootScope, $routeParams, progress) ->
     $scope.isAllList = false
@@ -50,7 +50,7 @@ angular.module('posts-list', [])
       progress.complete()
 ])
 
-.controller('CategoryPostsListCtrl',
+.controller("CategoryPostsListCtrl",
 ["$scope", "$http", "$rootScope", "$routeParams", "progress",
   ($scope, $http, $rootScope, $routeParams, progress) ->
     $scope.isAllList = false

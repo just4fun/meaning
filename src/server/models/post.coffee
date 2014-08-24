@@ -1,4 +1,4 @@
-mongoose = require('mongoose')
+mongoose = require "mongoose"
 Schema = mongoose.Schema
 
 PostSchema = new Schema
@@ -21,14 +21,14 @@ PostSchema = new Schema
 
   Author:
     type: Schema.Types.ObjectId
-    ref: 'User'
+    ref: "User"
   Category:
     type: Schema.Types.ObjectId
-    ref: 'Category'
+    ref: "Category"
   Tags: [
     type: Schema.Types.ObjectId
-    ref: 'Tag'
+    ref: "Tag"
   ]
 
 
-mongoose.model 'Post', PostSchema
+mongoose.model "Post", PostSchema

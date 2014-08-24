@@ -1,8 +1,7 @@
-config = require("./config/config")
-initApp = require("./config/init-app")
-initData = require("./config/init-data")
-mongoose = require("mongoose")
-
+config = require "./config/config"
+initApp = require "./config/init-app"
+initData = require "./config/init-data"
+mongoose = require "mongoose"
 
 app = initApp(__dirname)
 

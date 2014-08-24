@@ -1,8 +1,8 @@
-﻿angular.module("customDirectives",
-['ui.utils'
- 'ui.bootstrap'
- 'ui.select2'
- 'ngModal'
+﻿angular.module("customDirectives", [
+  "ui.utils"
+  "ui.bootstrap"
+  "ui.select2"
+  "ngModal"
 
- 'ckEditor'
+  "ckEditor"
 ])

@@ -1,4 +1,4 @@
-angular.module('posts-view', [])
+angular.module("posts-view", [])
 
 .config(["$routeProvider",
   ($routeProvider) ->

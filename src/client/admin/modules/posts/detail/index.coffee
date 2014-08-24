@@ -1,4 +1,4 @@
-angular.module('admin-posts-detail', [])
+angular.module("admin-posts-detail", [])
 
 .config(["$routeProvider",
 ($routeProvider) ->
@@ -49,7 +49,7 @@ angular.module('admin-posts-detail', [])
 ])
 
 #Create
-.controller('AdminPostsNewCtrl',
+.controller("AdminPostsNewCtrl",
 ["$scope", "$http", "$rootScope", "$window", "messenger", "categories", "$location", "progress",
   ($scope, $http, $rootScope, $window, messenger, categories, $location, progress) ->
     $scope.categories = categories
@@ -80,7 +80,7 @@ angular.module('admin-posts-detail', [])
       $http.post("#{MEANING.ApiAddress}/posts",
         tempPost,
         headers:
-          "meaning-token": $.cookie('meaning-token')
+          "meaning-token": $.cookie("meaning-token")
       )
       .success (data) ->
         progress.complete()
@@ -97,7 +97,7 @@ angular.module('admin-posts-detail', [])
 ])
 
 #Update
-.controller('AdminPostsDetailCtrl',
+.controller("AdminPostsDetailCtrl",
 ["$scope", "$http", "$rootScope", "$window", "$routeParams", "post", "messenger", "categories", "$location", "progress",
   ($scope, $http, $rootScope, $window, $routeParams, post, messenger, categories, $location, progress) ->
     #to avoid "/posts/count" route being fired
@@ -152,7 +152,7 @@ angular.module('admin-posts-detail', [])
       $http.put("#{MEANING.ApiAddress}/posts/#{$routeParams.url}",
         tempPost,
         headers:
-          "meaning-token": $.cookie('meaning-token')
+          "meaning-token": $.cookie("meaning-token")
           #without below param, the getByUrl() in node.js will return 404
           "from-admin-console": true
       )
