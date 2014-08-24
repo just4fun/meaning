@@ -8,11 +8,13 @@ UserSchema = new Schema
   Role:
     type: String
     enum: ["Admin", "Author"]
+  Token: String
+  LastLoginDate: Date
+
   CreateDate:
     type: Date
     default: Date.now
   EditDate: Date
   EditUser: String
-  LastLoginDate: Date
 
 mongoose.model "User", UserSchema

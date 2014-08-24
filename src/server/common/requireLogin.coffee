@@ -1,5 +1,5 @@
 mongoose = require "mongoose"
-Token = mongoose.model "Token"
+User = mongoose.model "User"
 
 module.exports = ->
   (req, res, next) ->
@@ -7,8 +7,8 @@ module.exports = ->
     if !token?
       next new Error "User is not logged in."
     else
-      Token.findOne
-        Token: req.headers["meaning-token"]
+      User.findOne
+        Token: token
       , (err, tok) ->
         if err
           next new Error "Find token failed: #{err}"

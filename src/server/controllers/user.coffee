@@ -1,7 +1,6 @@
 mongoose = require "mongoose"
 User = mongoose.model "User"
 Post = mongoose.model "Post"
-Token = mongoose.model "Token"
 md5 = require "MD5"
 _ = require "lodash"
 async = require "async"
@@ -16,45 +15,23 @@ exports.login = (req, res, next) ->
     else if !user
       next new Error "UserName or Password is incorrect."
     else
-      async.waterfall [
+      #update token and last login date
+      now = new Date()
+      token = md5(user.UserName + now)
 
-        #create token
-        (callback) ->
-          token = md5(user.UserName + new Date())
-          tokenInfo = new Token
+      user.Token = token
+      user.LastLoginDate = now
+      user.save (err) ->
+        if err
+          next new Error "Update token and last login date failed: #{err}"
+        else
+          res.setHeader "meaning-token", token
+          res.jsonp {
+            _id: user._id
             UserName: user.UserName
-            Token: token
-            LoginDate: new Date()
-          tokenInfo.save (err) ->
-            if err
-              callback "Create token failed: #{err}"
-            else
-              callback null, tokenInfo
-
-        #update login time
-        (token, callback) ->
-          user.LastLoginDate = token.LoginDate
-          user.save (err) ->
-            if err
-              callback "Update LastLoginDate failed: #{err}"
-            else
-              result = {
-                token: token.Token
-                user: user
-              }
-              callback null, result
-
-      ], (err, result) ->
-        res.setHeader "meaning-token", result.token
-
-        user = result.user
-        user = {
-          _id: user._id
-          UserName: user.UserName
-          Email: user.Email
-          Role: user.Role
-        }
-        res.jsonp user
+            Email: user.Email
+            Role: user.Role
+          }
 
 #-------------------------------------------------------------
 
