@@ -1,7 +1,7 @@
 meaning
 =======
 
-A mini blogging platform inspired by [MEAN.JS](http://meanjs.org).
+A mini blogging platform inspired by [MEAN.JS](http://meanjs.org).   
 The name of this repo means that I'm still learning MEAN.JS and falling in love with it.  
 
 ###[Live Demo](http://talent-is.me)
@@ -28,6 +28,34 @@ $ cd meaning
 $ npm install
 $ grunt
 ```
+
+## Grunt Commands
+```
+$ grunt
+```
+```Default command```, which will build application without minification and uglificaion, then run it.
+```
+$ grunt -release
+```
+Build application with minification and uglificaion, then run it.
+```
+$ grunt build
+```
+Build application without minification and uglificaion.
+```
+$ grunt build -release
+```
+Build application with minification and uglificaion.
+```
+$ grunt build-server
+```
+Only build server code.
+```
+$ grunt run
+```
+Run application immediately.   
+This command is always executed after ```$ grunt build (-release)```
+
 
 ## Default User
 Account: ```admin```    
