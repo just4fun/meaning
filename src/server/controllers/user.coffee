@@ -12,7 +12,7 @@ exports.login = (req, res, next) ->
     Password: md5(req.body.Password)
   ).exec (err, user) ->
     if err
-      next new Error "Login failed. #{err}"
+      next new Error "Login failed: #{err}"
     else if !user
       next new Error "UserName or Password is incorrect."
     else
@@ -27,7 +27,7 @@ exports.login = (req, res, next) ->
             LoginDate: new Date()
           tokenInfo.save (err) ->
             if err
-              callback "Create token failed. #{err}"
+              callback "Create token failed: #{err}"
             else
               callback null, tokenInfo
 
@@ -36,7 +36,7 @@ exports.login = (req, res, next) ->
           user.LastLoginDate = token.LoginDate
           user.save (err) ->
             if err
-              callback "Update LastLoginDate failed. #{err}"
+              callback "Update LastLoginDate failed: #{err}"
             else
               result = {
                 token: token.Token
@@ -87,7 +87,7 @@ exports.create = (req, res, next) ->
   user = new User(req.body)
   user.save (err) ->
     if err
-      next new Error "Create user failed. #{err}"
+      next new Error "Create user failed: #{err}"
     else
       res.jsonp user
 

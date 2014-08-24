@@ -11,7 +11,7 @@ module.exports = ->
         Token: req.headers["meaning-token"]
       , (err, tok) ->
         if err
-          next new Error "Find token failed. #{err}"
+          next new Error "Find token failed: #{err}"
         else if !tok
           next new Error "Token is incorrect."
         else

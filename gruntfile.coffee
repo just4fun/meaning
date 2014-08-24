@@ -1,14 +1,14 @@
 module.exports = (grunt) ->
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
+  require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks)
   isdebug = grunt.option("release") isnt true
   LIVERELOAD_PORT = 35729
 
-  minJs = 'dist/client/min.js'
-  minCss = 'dist/client/min.css'
-  minAdminJs = 'dist/client/min-admin.js'
-  minAdminCss = 'dist/client/min-admin.css'
-  minLoginJs = 'dist/client/min-login.js'
-  minLoginCss = 'dist/client/min-login.css'
+  minJs = "dist/client/min.js"
+  minCss = "dist/client/min.css"
+  minAdminJs = "dist/client/min-admin.js"
+  minAdminCss = "dist/client/min-admin.css"
+  minLoginJs = "dist/client/min-login.js"
+  minLoginCss = "dist/client/min-login.css"
 
 
   #------------------------------------------------------------
@@ -19,61 +19,61 @@ module.exports = (grunt) ->
     connect:
       options:
         port: 9000
-        hostname: 'localhost'
+        hostname: "localhost"
       livereload:
         options:
           middleware: (connect) ->
             return [
-              require('connect-modrewrite')([
-                '^/admin$ /admin/admin-index.html'
-                '^/login$ /admin/admin-login.html'
-                '^/\\w+$ /index.html'
-                '^/admin/\\w+$ /admin/admin-index.html'
+              require("connect-modrewrite")([
+                "^/admin$ /admin/admin-index.html"
+                "^/login$ /admin/admin-login.html"
+                "^/\\w+$ /index.html"
+                "^/admin/\\w+$ /admin/admin-index.html"
               ])
-              require('connect-livereload')
+              require("connect-livereload")
                 port:LIVERELOAD_PORT
-              connect.static(require('path').resolve('dist/client'))
+              connect.static(require("path").resolve("dist/client"))
             ]
 
     open:
       server:
-        url:'http://localhost:9000'
+        url:"http://localhost:9000"
 
     watch:
       normalFile:
         files: [
-          'src/client/**/*'
+          "src/client/**/*"
           #except files which have no need for watching
-          '!src/client/plugin/**/*'
-          '!src/client/**/*.coffee'
-          '!src/client/**/*.less'
+          "!src/client/plugin/**/*"
+          "!src/client/**/*.coffee"
+          "!src/client/**/*.less"
         ]
         tasks: [
-          'newer:copy'
-          'scriptlinker'
+          "newer:copy"
+          "scriptlinker"
         ]
       coffee:
         files: [
-          'src/client/**/*.coffee'
+          "src/client/**/*.coffee"
         ]
         tasks: [
-          'newer:coffee'
-          'scriptlinker'
+          "newer:coffee"
+          "scriptlinker"
         ]
       less:
         files: [
-          'src/client/**/*.less'
+          "src/client/**/*.less"
         ]
         tasks: [
-          'newer:less'
-          'scriptlinker'
+          "newer:less"
+          "scriptlinker"
         ]
       server:
         files: [
-          'src/server/**/*.coffee'
+          "src/server/**/*.coffee"
         ]
         tasks:[
-          'newer:coffee:server'
+          "newer:coffee:server"
         ]
       livereload:
         options:
@@ -82,7 +82,7 @@ module.exports = (grunt) ->
         files: [
           "dist/client/**/*"
           #except files which have no need for watching
-          '!dist/client/plugin/**/*'
+          "!dist/client/plugin/**/*"
         ]
 
     coffee:
@@ -92,29 +92,29 @@ module.exports = (grunt) ->
       all:
         files: [
           expand: true
-          cwd: 'src/'
-          src: ['**/*.coffee']
-          dest: 'dist/'
-          ext: '.js'
+          cwd: "src/"
+          src: ["**/*.coffee"]
+          dest: "dist/"
+          ext: ".js"
         ]
       #only compile server coffee files
       server:
         files: [
           expand: true
-          cwd: 'src/server'
-          src: ['**/*.coffee']
-          dest: 'dist/server'
-          ext: '.js'
+          cwd: "src/server"
+          src: ["**/*.coffee"]
+          dest: "dist/server"
+          ext: ".js"
         ]
 
     less:
       compile:
         files: [
           expand: true
-          cwd: 'src/client/'
-          src: ['**/*.less']
-          dest: 'dist/client'
-          ext: '.css'
+          cwd: "src/client/"
+          src: ["**/*.less"]
+          dest: "dist/client"
+          ext: ".css"
         ]
 
     uglify:
@@ -185,24 +185,24 @@ module.exports = (grunt) ->
       all:
         files: [
           expand: true
-          cwd: 'src/client/'
+          cwd: "src/client/"
           src: [
-            '**/*'
-            '!**/*.coffee'
-            '!**/*.less'
+            "**/*"
+            "!**/*.coffee"
+            "!**/*.less"
           ]
-          dest: 'dist/client'
+          dest: "dist/client"
         ]
 
     nodemon:
       dev:
-        script: 'server.js'
+        script: "server.js"
         options:
-          nodeArgs: ['--debug']
+          nodeArgs: ["--debug"]
           cwd: "dist/server"
 
     concurrent:
-      tasks: ['nodemon', 'watch']
+      tasks: ["nodemon", "watch"]
       options:
         logConcurrentOutput: true
 
