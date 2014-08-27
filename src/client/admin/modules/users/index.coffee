@@ -18,13 +18,6 @@ angular.module("admin-users", [])
 .controller("AdminUsersCtrl",
 ["$scope", "$http", "$rootScope", "messenger", "progress",
   ($scope, $http, $rootScope, messenger, progress) ->
-    getUserList = ->
-      progress.start()
-      $http.get("#{MEANING.ApiAddress}/users")
-      .success (data) ->
-        $scope.users = data
-        progress.complete()
-
     $scope.create = ->
       $scope.modalTitle = "Create"
       $scope.iconDialog = true
@@ -46,9 +39,8 @@ angular.module("admin-users", [])
             "meaning-token": $.cookie("meaning-token")
         )
         .success (data) ->
-          $scope.users.splice($scope.users.indexOf(user), 1)
           messenger.success "Delete user successfully!"
-          progress.complete()
+          $scope.getUserList(1)
         .error (err) ->
           progress.complete()
 
@@ -88,7 +80,7 @@ angular.module("admin-users", [])
 
           messenger.success "Update user successfully!"
           $scope.close()
-          getUserList()
+          $scope.getUserList($scope.currentPage)
         .error (err) ->
           progress.complete()
       #Create
@@ -115,9 +107,18 @@ angular.module("admin-users", [])
         .success (data) ->
           messenger.success "Create user successfully!"
           $scope.close()
-          getUserList()
+          $scope.getUserList(1)
         .error (err) ->
           progress.complete()
 
-    getUserList()
+    $scope.getUserList = (page) ->
+      progress.start()
+      $scope.currentPage = page
+      $http.get("#{MEANING.ApiAddress}/users?pageIndex=#{page - 1}")
+      .success (data) ->
+        $scope.users = data.list
+        $scope.totalCount = data.totalCount
+        progress.complete()
+
+    $scope.getUserList(1)
 ])

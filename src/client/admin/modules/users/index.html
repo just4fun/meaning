@@ -50,6 +50,9 @@
         </tbody>
     </table>
     <div class="well well-sm" ng-hide="users">No users yet.</div>
+    <div class="text-center">
+        <pagination on-select-page="getUserList(page)" total-items="totalCount" page="currentPage" max-size="5" boundary-links="true" rotate="false"></pagination>
+    </div>
     <a href="javascript:void(0);" ng-click="create();" ng-disabled="loading" class="pull-left btn btn-primary btn-sm">New User</a>
 </div>
 

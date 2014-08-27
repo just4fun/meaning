@@ -51,13 +51,34 @@ exports.getById = (req, res, next, userId) ->
       next()
 
 exports.list = (req, res, next) ->
-  User.find()
-  .sort("-CreateDate")
-  .exec (err, users) ->
+  pageIndex = Math.max(0, req.param("pageIndex"))
+  perPage = 10
+
+  async.parallel
+    totalCount: (callback) ->
+      User.count().exec (err, count) ->
+        if err
+          callback "Count users failed: #{err}"
+        else
+          callback null, count
+    list: (callback) ->
+      User.find()
+      .sort("-CreateDate")
+      .skip(pageIndex * perPage)
+      .limit(perPage)
+      .exec (err, users) ->
+        if err
+          callback "Show user list failed: #{err}"
+        else
+          callback null, users
+  , (err, results) ->
     if err
-      next new Error "Show user list failed: #{err}"
+      next new Error err
     else
-      res.jsonp users
+      res.jsonp {
+        list: results.list
+        totalCount: results.totalCount
+      }
 
 exports.create = (req, res, next) ->
   req.body.Password = md5(req.body.Password)
