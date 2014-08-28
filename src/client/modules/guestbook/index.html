@@ -1,0 +1,125 @@
+<style>
+    body {
+        background-color: #eee;
+    }
+    .navbar-inverse .navbar-brand,
+    .navbar-inverse .navbar-brand:hover,
+    .navbar-inverse .navbar-brand:focus ,
+    .navbar-inverse .navbar-nav > .active > a,
+    .navbar-inverse .navbar-nav > .active > a:hover,
+    .navbar-inverse .navbar-nav > .active > a:focus,
+    .navbar-inverse .navbar-nav > li > a:hover,
+    .navbar-inverse .navbar-nav > li > a:focus {
+        color: #428bca;
+    }
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        background-color: #eee;
+    }
+    hr {
+        border-top: 1px solid #f5f5f5;
+    }
+
+    .comment-logo {
+        margin: 0 auto;
+    }
+    .comment-tip {
+        margin: 15px 0;
+        text-align: center;
+    }
+    #comment-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .comment-author {
+        width: 65px;
+        word-break: break-all;
+        word-wrap: break-word;
+        margin: 10px 0;
+    }
+    .comment-left-area {
+        text-align: center;
+        margin: 4px 10px 0 0;
+    }
+    .comment-right-area {
+        overflow: hidden;
+        zoom: 1;
+    }
+</style>
+
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">Guestbook</li>
+</ul>
+
+<div>
+    <div>
+        <img src="/img/freedom.jpg" class="img-responsive comment-logo"/>
+    </div>
+    <p class="comment-tip">
+        <i>Give me liberty, or give me death.</i>
+    </p>
+    <ul class="nav nav-tabs" style="margin-bottom: 30px;">
+        <li class="active">
+            <a href="javascript: void(0);">Comments({{comments.length}})</a>
+        </li>
+    </ul>
+    <div class="col-md-offset-2 col-md-8">
+        <ul id="comment-list">
+            <li ng-repeat="comment in comments">
+                <div class="pull-left comment-left-area">
+                    <img src="/img/avatar.png" width="50px"/>
+                    <p class="comment-author">
+                        {{ comment.Author }}
+                    </p>
+                </div>
+                <div class="comment-right-area">
+                    <div class="pull-left comment-date" style="margin-bottom: 10px;">
+                        {{ comment.CreateDate | date:'yyyy-MM-dd HH:mm' }}
+                    </div>
+                    <div class="pull-right">
+                        #{{ $index + 1 }}
+                    </div>
+                    <div class="clearfix"></div>
+                    <p ng-bind-html="comment.Content | convertToHtmlLine">
+                        {{ comment.Content }}
+                    </p>
+                </div>
+                <div class="clearfix"></div>
+                <hr ng-hide="$index == comments.length - 1"/>
+            </li>
+        </ul>
+        <p ng-hide="comments.length > 0">
+            No comments yet.
+        </p>
+
+        <hr />
+
+        <form name="form" ng-submit="publish()">
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <div>
+                    <input class="form-control" type="text" placeholder="Your name..." ng-model="entity.Author" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <div>
+                    <input class="form-control" type="text" placeholder="Your email..." ng-model="entity.Email" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Comment</label>
+                <div>
+                    <textarea class="form-control" placeholder="Your comment..." ng-model="entity.Content"
+                            style="resize: none; height: 200px;" required></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" ng-disabled="loading || form.$invalid">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="clearfix"></div>
+</div>
