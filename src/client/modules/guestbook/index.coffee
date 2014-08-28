@@ -20,6 +20,20 @@ angular.module("guestbook", [])
       .error (err) ->
         progress.complete()
 
+    $scope.del = (comment) ->
+      messenger.confirm ->
+        progress.start()
+        $http.delete("#{MEANING.ApiAddress}/comment/#{comment._id}",
+          headers:
+            "meaning-token": $.cookie("meaning-token")
+            "login-user": $.cookie("CurrentUser")
+        )
+        .success (data) ->
+          messenger.success "Delete comment successfully!"
+          $scope.comments.splice($scope.comments.indexOf(comment), 1)
+        .error (err) ->
+          progress.complete()
+
     getCommentList = () ->
       progress.start()
       $http.get("#{MEANING.ApiAddress}/comments").success (data) ->
