@@ -15,7 +15,6 @@ body {
 ::-webkit-selection {background: @selection-color;}
 
 
-
 #main-container {
   min-height:100%;
   height: auto !important;
@@ -34,6 +33,12 @@ footer {
   bottom: 0;
   height: 40px;
   width: 100%;
+}
+
+@media (max-width: 400px) {
+  footer {
+    font-size: 12px;
+  }
 }
 
 /* breadcrumb */
@@ -78,11 +83,6 @@ footer {
 
 /* loading */
 
-.loading {
-  padding:5px 5px 0px 20px;
-  background:url(../img/ajax-loader.gif) 0px 3px no-repeat;
-}
-
 .loadingbox {
   text-align: center;
   height: 24px;
@@ -99,4 +99,15 @@ footer {
   border: 1px solid #f0c36d;
   border-radius: 5px;
   z-index: 10000;
+}
+
+/* specified */
+
+.break {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.line-height-200 {
+  line-height: 200%;
 }
