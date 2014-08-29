@@ -12,13 +12,18 @@ angular.module("guestbook", [])
 ["$scope", "$http", "progress", "messenger",
   ($scope, $http, progress, messenger) ->
     $scope.publish = () ->
+      $scope.submitted = true
+      return if $scope.form.$invalid
+
       $http.post("#{MEANING.ApiAddress}/comment", $scope.entity)
       .success (data) ->
         messenger.success "Publish comment successfully!"
         getCommentList()
         $scope.entity = {}
+        $scope.submitted = false
       .error (err) ->
         progress.complete()
+        $scope.submitted = false
 
     $scope.del = (comment) ->
       messenger.confirm ->
@@ -31,6 +36,7 @@ angular.module("guestbook", [])
         .success (data) ->
           messenger.success "Delete comment successfully!"
           $scope.comments.splice($scope.comments.indexOf(comment), 1)
+          progress.complete()
         .error (err) ->
           progress.complete()
 
