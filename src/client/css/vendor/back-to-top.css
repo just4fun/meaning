@@ -30,10 +30,16 @@
     height: 250px;
     margin: -125px 0 0;
     overflow: hidden;
-    left: 90%;
+    right: 0;
     padding: 0;
     position: fixed;
     top: 90%;
     width: 149px;
     z-index: 11;
+}
+
+@media (max-width: 768px) {
+    #scrollTop {
+        display: none!important;
+    }
 }
