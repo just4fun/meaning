@@ -9,9 +9,21 @@ angular.module("guestbook", [])
   ])
 
 .controller("GuestbookCtrl",
-["$scope", "$http", "progress", "messenger",
-  ($scope, $http, progress, messenger) ->
+["$scope", "$http", "$rootScope", "progress", "messenger",
+  ($scope, $http, $rootScope, progress, messenger) ->
     $scope.publish = () ->
+      # if user is logged in
+      loginUser = $rootScope._loginUser
+      if loginUser
+        $scope.entity = $scope.entity || {}
+        $scope.entity.Author = loginUser.UserName
+        $scope.entity.Email = loginUser.Email
+        # change the validity state
+        # $setValidity(validationErrorKey, isValid);
+        $scope.form.author.$setValidity("required", true);
+        $scope.form.email.$setValidity("required", true);
+
+
       $scope.submitted = true
       return if $scope.form.$invalid
 
@@ -39,6 +51,11 @@ angular.module("guestbook", [])
           progress.complete()
         .error (err) ->
           progress.complete()
+
+    $scope.logout = ->
+      $.removeCookie("CurrentUser", { path: "/" })
+      $.removeCookie("meaning-token", { path: "/" })
+      $rootScope._loginUser = undefined
 
     getCommentList = () ->
       progress.start()
