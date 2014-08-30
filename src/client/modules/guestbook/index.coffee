@@ -11,19 +11,18 @@ angular.module("guestbook", [])
 .controller("GuestbookCtrl",
 ["$scope", "$http", "$rootScope", "progress", "messenger",
   ($scope, $http, $rootScope, progress, messenger) ->
+    #init comment author info
+    loginUser = $rootScope._loginUser
+    commentAuthor = angular.fromJson($.cookie("comment-author"))
+    $scope.entity = {}
+    if loginUser
+      $scope.entity.Author = loginUser.UserName
+      $scope.entity.Email = loginUser.Email
+    else if commentAuthor
+      $scope.entity.Author = commentAuthor.Author
+      $scope.entity.Email = commentAuthor.Email
+
     $scope.publish = () ->
-      # if user is logged in
-      loginUser = $rootScope._loginUser
-      if loginUser
-        $scope.entity = $scope.entity || {}
-        $scope.entity.Author = loginUser.UserName
-        $scope.entity.Email = loginUser.Email
-        # change the validity state
-        # $setValidity(validationErrorKey, isValid);
-        $scope.form.author.$setValidity("required", true);
-        $scope.form.email.$setValidity("required", true);
-
-
       $scope.submitted = true
       return if $scope.form.$invalid
 
@@ -31,7 +30,13 @@ angular.module("guestbook", [])
       .success (data) ->
         messenger.success "Publish comment successfully!"
         getCommentList()
-        $scope.entity = {}
+        #save author info in cookie
+        if !loginUser
+          $.cookie("comment-author", angular.toJson({
+            Author: $scope.entity.Author
+            Email: $scope.entity.Email
+          }), {expires: 180, path: "/"})
+        $scope.entity.Content = ""
         $scope.submitted = false
       .error (err) ->
         progress.complete()
@@ -53,9 +58,19 @@ angular.module("guestbook", [])
           progress.complete()
 
     $scope.logout = ->
-      $.removeCookie("CurrentUser", { path: "/" })
-      $.removeCookie("meaning-token", { path: "/" })
-      $rootScope._loginUser = undefined
+      messenger.confirm ->
+        $.removeCookie("CurrentUser", { path: "/" })
+        $.removeCookie("meaning-token", { path: "/" })
+        $rootScope._loginUser = undefined
+        #read comment author info from cookie
+        commentAuthor = angular.fromJson($.cookie("comment-author"))
+        if commentAuthor
+          $scope.entity.Author = commentAuthor.Author
+          $scope.entity.Email = commentAuthor.Email
+          $scope.entity.Content = ""
+        else
+          $scope.entity = {}
+        $scope.$apply()
 
     getCommentList = () ->
       progress.start()
