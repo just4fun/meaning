@@ -41,7 +41,7 @@
     }
     .comment-left-area {
         text-align: center;
-        margin: 4px 10px 0 0;
+        margin: 2px 10px 0 0;
     }
     .comment-right-area {
         overflow: hidden;
@@ -82,7 +82,7 @@
         <ul id="comment-list">
             <li ng-repeat="comment in comments">
                 <div class="pull-left comment-left-area">
-                    <img src="/img/avatar.png" width="50px"/>
+                    <img ng-src="{{ comment.Email | gravatar }}" width="50px"/>
                     <p class="comment-author">
                         {{ comment.Author }}
                     </p>
