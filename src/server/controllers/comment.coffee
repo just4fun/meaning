@@ -6,6 +6,9 @@ async = require "async"
 exports.get = (req, res) ->
   res.jsonp req.comment
 
+exports.getList = (req, res) ->
+  res.jsonp req.comments
+
 exports.getById = (req, res, next, commentId) ->
   Comment.findOne({_id: commentId})
   .exec (err, comment) ->
@@ -24,6 +27,26 @@ exports.list = (req, res, next) ->
   .exec (err, comments) ->
     if err
       next new Error "Show comment list failed: #{err}"
+    else
+      res.jsonp comments
+
+exports.getListByQuery = (req, res, next, query) ->
+  filter = {}
+  if query is "guestbook"
+    filter = {
+      Post: {
+        $exists: false
+      }
+    }
+  else
+    filter = {
+      Post: query
+    }
+  Comment.find(filter)
+  .sort("CreateDate")
+  .exec (err, comments) ->
+    if err
+      next new Error "Show comment list by query#{query} failed: #{err}"
     else
       res.jsonp comments
 

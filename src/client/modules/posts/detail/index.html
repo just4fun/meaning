@@ -22,6 +22,14 @@
     .navbar-inverse .navbar-nav > li > a:focus {
         color: #428bca;
     }
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        background-color: #eee;
+    }
+    hr {
+        border-top: 1px solid #f5f5f5;
+        margin-top: 0;
+    }
 
     .hljs {
         background-color: #f5f5f5;
@@ -48,8 +56,12 @@
                     <a href="#!/posts/author/{{post.Author.UserName}}">{{post.Author.UserName}}</a>
                 </li>
                 <li>
+                    <i class="icon-comments"></i>
+                    {{ comments.length }} Comments
+                </li>
+                <li>
                     <i class="icon-eye-open"></i>
-                    {{post.Views}}
+                    {{ post.Views }} Views
                 </li>
                 <li ng-show="post.Category">
                     <i class="icon-bookmark"></i>
@@ -72,8 +84,90 @@
     </div>
     <div class="clearfix"></div>
 </div>
-
 <p class="post-content" ng-bind-html="post.Content"></p>
+<ul class="nav nav-tabs" id="comment-top" style="margin-top: 30px;">
+    <li class="active">
+        <a href="javascript: void(0);">Comments ({{comments.length}})</a>
+    </li>
+</ul>
+<div class="col-md-offset-2 col-md-8">
+    <ul id="comment-list">
+        <li ng-repeat="comment in comments">
+            <div class="pull-left comment-left-area">
+                <img ng-src="{{ comment.Email | gravatar }}" width="50px"/>
+                <p class="comment-author">
+                    {{ comment.Author }}
+                </p>
+            </div>
+            <div class="comment-right-area">
+                <div class="pull-left comment-date">
+                    {{ comment.CreateDate | date:'yyyy-MM-dd HH:mm' }}
+                </div>
+                <div class="pull-right">
+                    <span class="del-comment" ng-show="_loginUser.Role == 'Admin'" ng-click="del(comment)">&times;</span>
+                    <span>#{{ $index + 1 }}</span>
+                </div>
+                <div class="clearfix"></div>
+                <p ng-bind-html="comment.Content | convertToHtmlLine">
+                    {{ comment.Content }}
+                </p>
+            </div>
+            <div class="clearfix"></div>
+            <hr ng-hide="$index == comments.length - 1"/>
+        </li>
+    </ul>
+    <p ng-hide="comments.length > 0">
+        No comments yet.
+    </p>
+
+    <hr />
+
+    <form name="form" novalidate ng-submit="publish()">
+        <p ng-show="_loginUser">
+            Logged in as <i>{{ _loginUser.UserName }}</i>.
+            <a href="javascript: void(0);" ng-click="logout()">Log out?</a>
+        </p>
+
+        <div ng-hide="_loginUser">
+            <div class="form-group">
+                <div>
+                    <input class="form-control" name="author" type="text" placeholder="Your name..." ng-model="entity.Author"
+                            ng-minlength="2" ng-maxlength="10" required>
+                    <div class="label label-danger label-invalid" ng-show="form.author.$invalid && submitted">
+                        <span ng-show="form.author.$error.required">Author is required.</span>
+                        <span ng-show="form.author.$error.minlength">Author is required to be at least 2 characters.</span>
+                        <span ng-show="form.author.$error.maxlength">Author can't be longer than 10 characters.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input class="form-control" name="email" type="email" placeholder="Your email..." ng-model="entity.Email"
+                            ng-minlength="5" ng-maxlength="40" required>
+                    <div class="label label-danger label-invalid" ng-show="form.email.$invalid && submitted">
+                        <span ng-show="form.email.$error.required">Email is required.</span>
+                        <span ng-show="form.email.$error.email">Email is invalid.</span>
+                        <span ng-show="form.email.$error.minlength">Email is required to be at least 5 characters.</span>
+                        <span ng-show="form.email.$error.maxlength">Email can't be longer than 40 characters.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <textarea class="form-control" name="content" placeholder="Your comment..." ng-model="entity.Content"
+                        style="resize: none; height: 200px;" required></textarea>
+                <div class="label label-danger label-invalid" ng-show="form.content.$invalid && submitted">
+                    <span ng-show="form.content.$error.required">Content is required.</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" ng-disabled="loading">Submit</button>
+        </div>
+    </form>
+</div>
+<div class="clearfix"></div>
 
 <script>
     setTimeout(function () {

@@ -74,7 +74,7 @@ angular.module("guestbook", [])
 
     getCommentList = () ->
       progress.start()
-      $http.get("#{MEANING.ApiAddress}/comments").success (data) ->
+      $http.get("#{MEANING.ApiAddress}/comments/guestbook").success (data) ->
         $scope.comments = data
         progress.complete()
 

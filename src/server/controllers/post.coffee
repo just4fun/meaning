@@ -3,6 +3,7 @@ Post = mongoose.model "Post"
 User = mongoose.model "User"
 Tag = mongoose.model "Tag"
 Category = mongoose.model "Category"
+Comment = mongoose.model "Comment"
 _ = require "lodash"
 async = require "async"
 
@@ -241,7 +242,14 @@ exports.delete = (req, res, next) ->
           callback "Remove post tags failed: #{err}"
         else
           callback null
-    #then delete post
+    #then delete comments
+    (callback) ->
+      Comment.remove({Post: post._id}).exec (err) ->
+        if err
+          callback "Remove post comments failed: #{err}"
+        else
+          callback null
+    #at last, delete post
     (callback) ->
       Post.remove({_id: post._id}).exec (err) ->
         if err
