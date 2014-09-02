@@ -1,5 +1,6 @@
 mongoose = require "mongoose"
 Comment = mongoose.model "Comment"
+Post = mongoose.model "Post"
 _ = require "lodash"
 async = require "async"
 
@@ -52,11 +53,29 @@ exports.getListByQuery = (req, res, next, query) ->
 
 exports.create = (req, res, next) ->
   comment = new Comment(req.body)
-  comment.save (err) ->
-    if err
-      next new Error "Create comment(#{comment.Content}) failed: #{err}"
-    else
-      res.jsonp comment
+
+  saveComment = () ->
+    comment.save (err) ->
+      if err
+        next new Error "Create comment(#{comment.Content}) failed: #{err}"
+      else
+        res.jsonp comment
+
+  #check AllowComments if comment is related to a post
+  if comment.Post
+    Post.findOne({_id: comment.Post})
+    .exec (err, post) ->
+      if err
+        next new Error "Find post(#{comment.Post}) via comment(#{comment._id}) failed: #{err}"
+      else if !post
+        res.statusCode = 404
+        res.end()
+      else if post.AllowComments
+        saveComment()
+      else
+        next new Error "This post is not allowed to publish comment."
+  else
+    saveComment()
 
 exports.update = (req, res, next) ->
   comment = req.comment

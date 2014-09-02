@@ -12,6 +12,9 @@ PostSchema = new Schema
   Status:
     type: String
     enum: ["Published", "Draft", "Trash"]
+  AllowComments:
+    type: Boolean
+    default: true
 
   CreateDate:
     type: Date

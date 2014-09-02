@@ -116,13 +116,11 @@
             <hr ng-hide="$index == comments.length - 1"/>
         </li>
     </ul>
-    <p ng-hide="comments.length > 0">
+    <p ng-show="comments.length == 0 && post.AllowComments ">
         No comments yet.
     </p>
-
     <hr />
-
-    <form name="form" novalidate ng-submit="publish()">
+    <form name="form" novalidate ng-show="post.AllowComments" ng-submit="publish()">
         <p ng-show="_loginUser">
             Logged in as <i>{{ _loginUser.UserName }}</i>.
             <a href="javascript: void(0);" ng-click="logout()">Log out?</a>
@@ -166,6 +164,9 @@
             <button class="btn btn-primary" ng-disabled="loading">Submit</button>
         </div>
     </form>
+    <p class="text-center" ng-hide="post.AllowComments">
+        <i>Comments are closed.</i>
+    </p>
 </div>
 <div class="clearfix"></div>
 
