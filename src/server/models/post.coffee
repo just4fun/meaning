@@ -32,6 +32,13 @@ PostSchema = new Schema
     type: Schema.Types.ObjectId
     ref: "Tag"
   ]
+  #why this field isnt embedded document?
+  #because in admin console, the comments maintenance will support pagination,
+  #and the embedded document can't achieve that.
+  Comments: [
+    type: Schema.Types.ObjectId
+    ref: "Comment"
+  ]
 
 
 mongoose.model "Post", PostSchema

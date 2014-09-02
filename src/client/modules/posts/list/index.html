@@ -50,8 +50,12 @@
                 <a href="#!/posts/author/{{post.Author.UserName}}">{{post.Author.UserName}}</a>
             </li>
             <li>
+                <i class="icon-comments"></i>
+                {{ post.Comments.length }} Comments
+            </li>
+            <li>
                 <i class="icon-eye-open"></i>
-                {{post.Views}}
+                {{ post.Views }} Views
             </li>
             <li ng-show="post.Category">
                 <i class="icon-bookmark"></i>

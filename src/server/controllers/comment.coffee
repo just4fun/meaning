@@ -54,12 +54,57 @@ exports.getListByQuery = (req, res, next, query) ->
 exports.create = (req, res, next) ->
   comment = new Comment(req.body)
 
-  saveComment = () ->
+  saveGuestbookComment = () ->
     comment.save (err) ->
       if err
         next new Error "Create comment(#{comment.Content}) failed: #{err}"
       else
         res.jsonp comment
+
+  savePostComment = () ->
+    postId = comment.Post
+    async.waterfall [
+      #create comment first
+      (callback) ->
+        comment.save (err) ->
+          if err
+            callback "Create comment(#{comment.Content}) failed: #{err}"
+          else
+            callback null
+      #then get post
+      (callback) ->
+        Post.findOne({_id: postId})
+        .exec (err, post) ->
+          if err
+            callback "Find post#{postId} via comment#{comment.Content} failed: #{err}"
+          else if !post
+            res.statusCode = 404
+            res.end()
+          else
+            callback null, post
+      #then get remaining comments
+      (post, callback) ->
+        Comment.find({Post: postId})
+        .sort("CreateDate")
+        .select("_id")
+        .exec (err, comments) ->
+          if err
+            callback "Get remaining comments by postId#{postId} failed: #{err}"
+          else
+            callback null, post, comments
+      #at last, save post with comments
+      (post, comments, callback) ->
+        post.Comments = comments
+        post.save (err) ->
+          if err
+            callback "Update post with comments failed: #{err}"
+          else
+            callback null
+    ], (err, result) ->
+      if err
+        next new Error err
+      else
+        res.jsonp "Delete comment successfully!"
 
   #check AllowComments if comment is related to a post
   if comment.Post
@@ -71,11 +116,11 @@ exports.create = (req, res, next) ->
         res.statusCode = 404
         res.end()
       else if post.AllowComments
-        saveComment()
+        savePostComment()
       else
         next new Error "This post is not allowed to publish comment."
   else
-    saveComment()
+    saveGuestbookComment()
 
 exports.update = (req, res, next) ->
   comment = req.comment
@@ -88,9 +133,56 @@ exports.update = (req, res, next) ->
 
 exports.delete = (req, res, next) ->
   comment = req.comment
-  Comment.remove({_id: comment._id})
-  .exec (err) ->
-    if err
-      next new Error "Delete comment(#{comment._id}) failed: #{err}"
-    else
-      res.jsonp "Delete comment successfully!"
+
+  if comment.Post
+    postId = comment.Post
+    async.waterfall [
+      #delete comment first
+      (callback) ->
+        Comment.remove({_id: comment._id})
+        .exec (err) ->
+          if err
+            callback "Delete comment(#{comment._id}) failed: #{err}"
+          else
+            callback null
+      #then get post
+      (callback) ->
+        Post.findOne({_id: postId})
+        .exec (err, post) ->
+          if err
+            callback "Find post#{postId} via comment#{comment.Content} failed: #{err}"
+          else if !post
+            res.statusCode = 404
+            res.end()
+          else
+            callback null, post
+      #then get remaining comments
+      (post, callback) ->
+        Comment.find({Post: postId})
+        .sort("CreateDate")
+        .select("_id")
+        .exec (err, comments) ->
+          if err
+            callback "Get remaining comments by postId#{postId} failed: #{err}"
+          else
+            callback null, post, comments
+      #at last, save post with comments
+      (post, comments, callback) ->
+        post.Comments = comments
+        post.save (err) ->
+          if err
+            callback "Update post with comments failed: #{err}"
+          else
+            callback null
+    ], (err, result) ->
+      if err
+        next new Error err
+      else
+        res.jsonp "Delete comment successfully!"
+  else
+    Comment.remove({_id: comment._id})
+    .exec (err) ->
+      if err
+        next new Error "Delete comment(#{comment._id}) failed: #{err}"
+      else
+        res.jsonp "Delete comment successfully!"
