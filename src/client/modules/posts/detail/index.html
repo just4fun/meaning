@@ -45,11 +45,11 @@
 <div class="page-header">
     <h1>{{post.Title}}</h1>
     <small class="pull-left" style="margin-top: 10px;">
-        <em class="text-muted">
+        <div class="text-muted">
             <ul class="list-inline line-height-200">
                 <li style="padding-left: 0;">
                     <i class="icon-time"></i>
-                    Posted on {{post.CreateDate | date:'medium'}}
+                    Posted on {{ post.CreateDate | date:'yyyy-MM-dd HH:mm'}}
                 </li>
                 <li>
                     <i class="icon-user"></i>
@@ -75,7 +75,7 @@
                     </a>
                 </li>
             </ul>
-        </em>
+        </div>
     </small>
     <div class="pull-right" ng-show="canEdit()">
         <a class="btn btn-primary" ng-href="/admin#!/posts/{{post.Url}}">
