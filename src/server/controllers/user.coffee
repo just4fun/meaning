@@ -40,6 +40,8 @@ exports.get = (req, res) ->
 
 exports.getById = (req, res, next, userId) ->
   User.findOne({_id: userId})
+  #exclude sensitive fields
+  .select("-Password -Token")
   .exec (err, user) ->
     if err
       next new Error "Find user(#{userId}) failed: #{err}"
@@ -64,6 +66,8 @@ exports.list = (req, res, next) ->
     list: (callback) ->
       User.find()
       .sort("-CreateDate")
+      #exclude sensitive fields
+      .select("-Password -Token")
       .skip(pageIndex * perPage)
       .limit(perPage)
       .exec (err, users) ->
@@ -98,6 +102,8 @@ exports.update = (req, res, next) ->
   else
     newUser.Password = md5(newUser.Password)
 
+  # _.extend({name: 'moe'}, {age: 50});
+  # => {name: 'moe', age: 50}
   user = _.extend(oldUser, newUser)
   user.save (err) ->
     if err
