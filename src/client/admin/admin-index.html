@@ -29,7 +29,7 @@
             </li>
             <li class="light-blue">
                 <a data-toggle="dropdown" href="javascript:void(0)" class="dropdown-toggle">
-                    <img class="nav-user-photo" ng-src="/img/avatar.png" width="40px">
+                    <img class="nav-user-photo" ng-src="{{ _loginUser.Email | gravatar }}" width="40px">
                     <span class="user-info">
                         <small>Welcome,</small>
                         {{ _loginUser.UserName }}
