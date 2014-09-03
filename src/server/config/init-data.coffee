@@ -96,7 +96,7 @@ module.exports = () ->
               callback "Find all tags failed: #{err}"
             else if !tags or tags.length is 0
               tag = new Tag
-                TagName : "example_tag"
+                TagName : "tag1"
                 Post : post._id
               tag.save (err) ->
                 if err
