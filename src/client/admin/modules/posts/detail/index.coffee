@@ -54,6 +54,10 @@ angular.module("admin-posts-detail", [])
   ($scope, $http, $rootScope, $window, messenger, categories, $location, progress) ->
     $scope.categories = categories
     $scope.submitText = "Publish"
+    #init post entity
+    $scope.post = {
+      AllowComments: true
+    }
 
     $scope.publish = ->
       save("Published")
