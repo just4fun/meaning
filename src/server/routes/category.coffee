@@ -1,13 +1,13 @@
 category = require "../controllers/category"
-requireLogin = require "../common/requireLogin"
-checkCategoryNameUnique = require "../common/checkCategoryNameUnique"
+requireAdmin = require "../pipe/requireAdmin"
+requireCategoryNameUnique = require "../pipe/requireCategoryNameUnique"
 
 module.exports = (app) ->
   app.get "/categories", category.list
   app.get "/category/:categoryId", category.get
 
-  app.post "/category", requireLogin(), checkCategoryNameUnique(), category.create
-  app.put "/category/:categoryId", requireLogin(), checkCategoryNameUnique(), category.update
-  app.delete "/category/:categoryId", requireLogin(), category.delete
+  app.post "/category", requireAdmin(), requireCategoryNameUnique(), category.create
+  app.put "/category/:categoryId", requireAdmin(), requireCategoryNameUnique(), category.update
+  app.delete "/category/:categoryId", requireAdmin(), category.delete
 
   app.param "categoryId", category.getById

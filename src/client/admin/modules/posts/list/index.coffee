@@ -11,6 +11,7 @@ angular.module("admin-posts-list", [])
         deferred = $q.defer()
         $http.get("#{MEANING.ApiAddress}/posts/count",
           headers:
+            "meaning-token": $.cookie("meaning-token")
             "login-user": $.cookie("CurrentUser")
         )
         .success (data) ->
@@ -26,6 +27,7 @@ angular.module("admin-posts-list", [])
         deferred = $q.defer()
         $http.get("#{MEANING.ApiAddress}/posts/count",
           headers:
+            "meaning-token": $.cookie("meaning-token")
             "login-user": $.cookie("CurrentUser")
         )
         .success (data) ->
@@ -51,8 +53,11 @@ angular.module("admin-posts-list", [])
     progress.start()
     $http.get(url,
       headers:
+        #for get /posts
+        "meaning-token": $.cookie("meaning-token")
         "login-user": $.cookie("CurrentUser")
-    ).success (data) ->
+    )
+    .success (data) ->
       for p in data
         if p.Tags and p.Tags.length > 0
           tags = []
@@ -79,6 +84,7 @@ angular.module("admin-posts-list", [])
           #change count
           $http.get("#{MEANING.ApiAddress}/posts/count",
             headers:
+              "meaning-token": $.cookie("meaning-token")
               "login-user": $.cookie("CurrentUser")
           )
           .success (data) ->

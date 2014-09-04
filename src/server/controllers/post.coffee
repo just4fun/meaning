@@ -15,16 +15,18 @@ exports.getList = (req, res) ->
   res.jsonp req.posts
 
 exports.getCount = (req, res) ->
-  getCount = (status, callback) ->
-    filter = {
-      Status: status
-    }
-    #check user role
-    if req.headers["login-user"]
-      loginUser = JSON.parse(req.headers["login-user"])
-      if loginUser and loginUser.Role isnt "Admin"
-        filter.Author = loginUser._id
+  filter = {}
 
+  #check user role
+  if req.headers["login-user"]
+    loginUser = JSON.parse(req.headers["login-user"])
+    if loginUser and loginUser.Role isnt "Admin"
+      filter.Author = loginUser._id
+  else
+    return next new Error "'login-user' header is required."
+
+  getCount = (status, callback) ->
+    filter.Status = status
     Post.count(filter).exec (err, count) ->
       if err
         callback "Get #{status} posts count failed: #{err}"
@@ -149,11 +151,15 @@ exports.getListByStatus = (req, res, next, status) ->
   filter = {
     Status: status
   }
-  #check user role
+
+  #from admin console
   if req.headers["login-user"]
     loginUser = JSON.parse(req.headers["login-user"])
     if loginUser and loginUser.Role isnt "Admin"
       filter.Author = loginUser._id
+  #from front site
+  else if status isnt "Published"
+    return next new Error "You are only allowed to view published posts."
 
   Post.find(filter)
   .populate("Author", "UserName")
@@ -169,11 +175,13 @@ exports.getListByStatus = (req, res, next, status) ->
 
 exports.list = (req, res, next) ->
   filter = {}
-  #check user role
+
   if req.headers["login-user"]
     loginUser = JSON.parse(req.headers["login-user"])
     if loginUser and loginUser.Role isnt "Admin"
       filter.Author = loginUser._id
+  else
+    return next new Error "'login-user' header is required."
 
   Post.find(filter)
   .populate("Author", "UserName")

@@ -114,7 +114,10 @@ angular.module("admin-users", [])
     $scope.getUserList = (page) ->
       progress.start()
       $scope.currentPage = page
-      $http.get("#{MEANING.ApiAddress}/users?pageIndex=#{page - 1}")
+      $http.get("#{MEANING.ApiAddress}/users?pageIndex=#{page - 1}",
+        headers:
+          "meaning-token": $.cookie("meaning-token")
+      )
       .success (data) ->
         $scope.users = data.list
         $scope.totalCount = data.totalCount

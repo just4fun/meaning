@@ -48,7 +48,6 @@ angular.module("guestbook", [])
         $http.delete("#{MEANING.ApiAddress}/comment/#{comment._id}",
           headers:
             "meaning-token": $.cookie("meaning-token")
-            "login-user": $.cookie("CurrentUser")
         )
         .success (data) ->
           messenger.success "Delete comment successfully!"

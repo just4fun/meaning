@@ -1,14 +1,14 @@
 user = require "../controllers/user"
-requireLogin = require "../common/requireLogin"
-checkUserNameUnique = require "../common/checkUserNameUnique"
+requireAdmin = require "../pipe/requireAdmin"
+requireUserNameUnique = require "../pipe/requireUserNameUnique"
 
 module.exports = (app) ->
-  app.get "/users", user.list
-  app.get "/user/:userId", user.get
+  app.get "/users", requireAdmin(), user.list
+  app.get "/user/:userId", requireAdmin(), user.get
 
   app.post "/login", user.login
-  app.post "/user", requireLogin(), checkUserNameUnique(), user.create
-  app.put "/user/:userId", requireLogin(), checkUserNameUnique(), user.update
-  app.delete "/user/:userId", requireLogin(), user.delete
+  app.post "/user", requireAdmin(), requireUserNameUnique(), user.create
+  app.put "/user/:userId", requireAdmin(), requireUserNameUnique(), user.update
+  app.delete "/user/:userId", requireAdmin(), user.delete
 
   app.param "userId", user.getById
