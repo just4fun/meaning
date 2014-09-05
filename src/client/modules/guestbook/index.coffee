@@ -1,12 +1,12 @@
 angular.module("guestbook", [])
 
 .config(["$routeProvider",
-    ($routeProvider) ->
-      $routeProvider
-      .when("/guestbook",
-        templateUrl: "/modules/guestbook/index.html"
-        controller: "GuestbookCtrl")
-  ])
+  ($routeProvider) ->
+    $routeProvider
+    .when("/guestbook",
+      templateUrl: "/modules/guestbook/index.html"
+      controller: "GuestbookCtrl")
+])
 
 .controller("GuestbookCtrl",
 ["$scope", "$http", "$rootScope", "progress", "messenger",
