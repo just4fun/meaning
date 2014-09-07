@@ -37,6 +37,9 @@
         </tbody>
     </table>
     <div class="well well-sm" ng-hide="categories">No categories yet.</div>
+    <div class="text-center">
+        <pagination on-select-page="getCategoryList(page)" total-items="totalCount" page="currentPage" max-size="5" boundary-links="true" rotate="false"></pagination>
+    </div>
     <a href="javascript:void(0);" ng-click="create();" ng-disabled="loading" class="pull-left btn btn-primary btn-sm">New Category</a>
 </div>
 

@@ -20,13 +20,34 @@ exports.getById = (req, res, next, categoryId) ->
       next()
 
 exports.list = (req, res, next) ->
-  Category.find()
-  .sort("-CreateDate")
-  .exec (err, categories) ->
+  pageIndex = Math.max(0, req.param("pageIndex"))
+  perPage = 10
+
+  async.parallel
+    totalCount: (callback) ->
+      Category.count().exec (err, count) ->
+        if err
+          callback "Count categories failed: #{err}"
+        else
+          callback null, count
+    list: (callback) ->
+      Category.find()
+      .sort("-CreateDate")
+      .skip(pageIndex * perPage)
+      .limit(perPage)
+      .exec (err, categories) ->
+        if err
+          callback "Show category list failed: #{err}"
+        else
+          callback null, categories
+  , (err, results) ->
     if err
-      next new Error "Show category list failed: #{err}"
+      next new Error err
     else
-      res.jsonp categories
+      res.jsonp {
+        list: results.list
+        totalCount: results.totalCount
+      }
 
 exports.create = (req, res, next) ->
   category = new Category(req.body)

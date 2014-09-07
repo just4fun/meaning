@@ -18,13 +18,6 @@ angular.module("admin-categories", [])
 .controller("AdminCategoriesCtrl"
 ["$scope", "$http", "$rootScope", "messenger", "progress",
   ($scope, $http, $rootScope, messenger, progress) ->
-    getCategoryList = ->
-      progress.start()
-      $http.get("#{MEANING.ApiAddress}/categories")
-      .success (data) ->
-        $scope.categories = data
-        progress.complete()
-
     $scope.create = ->
       $scope.modalTitle = "Create"
       $scope.iconDialog = true
@@ -46,8 +39,8 @@ angular.module("admin-categories", [])
             "meaning-token": $.cookie("meaning-token")
         )
         .success (data) ->
-          $scope.categories.splice($scope.categories.indexOf(category), 1)
           messenger.success "Delete category successfully!"
+          $scope.getCategoryList(1)
           progress.complete()
         .error (err) ->
           progress.complete()
@@ -66,7 +59,7 @@ angular.module("admin-categories", [])
         .success (data) ->
           messenger.success "Update category successfully!"
           $scope.close()
-          getCategoryList()
+          $scope.getCategoryList($scope.currentPage)
         .error (err) ->
           progress.complete()
       #Create
@@ -80,9 +73,21 @@ angular.module("admin-categories", [])
         .success (data) ->
           messenger.success "Create category successfully!"
           $scope.close()
-          getCategoryList()
+          $scope.getCategoryList(1)
         .error (err) ->
           progress.complete()
 
-    getCategoryList()
+    $scope.getCategoryList = (page) ->
+      progress.start()
+      $scope.currentPage = page
+      $http.get("#{MEANING.ApiAddress}/categories?pageIndex=#{page - 1}",
+        headers:
+          "meaning-token": $.cookie("meaning-token")
+      )
+      .success (data) ->
+        $scope.categories = data.list
+        $scope.totalCount = data.totalCount
+        progress.complete()
+
+    $scope.getCategoryList(1)
 ])
