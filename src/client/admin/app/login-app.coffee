@@ -23,7 +23,7 @@ angular.module("login-app", [
 
 #check login
 .run(["$window", "$rootScope", ($window, $rootScope) ->
-  $rootScope._isLogin = !!$.cookie("CurrentUser")
+  $rootScope._isLogin = $.cookie("CurrentUser") and $.cookie("meaning-token")
   if $rootScope._isLogin
     $window.location.href = "/admin"
 ])
