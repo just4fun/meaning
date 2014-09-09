@@ -12,6 +12,19 @@
     .navbar-inverse .navbar-nav > li > a:focus {
         color: #428bca;
     }
+
+    #archives {
+        background-color: #f5f5f5;
+        padding: 20px 40px 20px;
+        border-radius: 4px;
+    }
+    #archives > ul {
+        margin: 0;
+        padding: 0;
+    }
+    .post-list {
+        padding-left: 20px;
+    }
 </style>
 
 <ul class="breadcrumb">
@@ -19,11 +32,11 @@
     <li class="active">Archives</li>
 </ul>
 
-<div>
-    <ul class="col-md-8 line-height-200">
+<div id="archives" class="col-md-offset-2 col-md-8" ng-show="archives.length">
+    <ul class="line-height-200">
         <li ng-repeat="item in archives">
             {{ item.date }} ({{ item.posts.length }})
-            <ul>
+            <ul class="post-list">
                 <li ng-repeat="post in item.posts">
                     {{ post.CreateDate | date: "dd" }}
                     :
@@ -34,4 +47,5 @@
             </ul>
         </li>
     </ul>
+    <div class="clearfix"></div>
 </div>
