@@ -1,39 +1,42 @@
 <style>
-    .about {
-        position: absolute;
-        right: 40px;
-        bottom: 40px;
-        padding: 10px;
+    body {
+        background-color: #eee;
+    }
+    .navbar-inverse .navbar-brand,
+    .navbar-inverse .navbar-brand:hover,
+    .navbar-inverse .navbar-brand:focus ,
+    .navbar-inverse .navbar-nav > .active > a,
+    .navbar-inverse .navbar-nav > .active > a:hover,
+    .navbar-inverse .navbar-nav > .active > a:focus,
+    .navbar-inverse .navbar-nav > li > a:hover,
+    .navbar-inverse .navbar-nav > li > a:focus {
+        color: #428bca;
+    }
+    hr {
+        border-top: 1px solid #f5f5f5;
+        margin-top: 0;
     }
 
-    .self-info {
-        list-style: none;
-        font-size: 20px;
-        font-family: fantasy;
-        padding: 0;
-        color: black;
-        font-weight: bold;
-
+    blockquote {
+        margin: 20px 0;
     }
-    .social-media a i:hover,
-    .self-info li {
-        text-align: center;
-        -webkit-transition: 1s;
-        -moz-transition: 1s;
-        transition: 1s;
-    }
-    .self-info li:hover {
-        font-size: 30px;
-        color: #fff;
+    blockquote p {
+        font-size: 14px;
     }
 
+    .icon-3 {
+        font-size: 3em;
+    }
     .social-media a {
         text-decoration: none;
         margin-left: 8px;
         color: black;
     }
-    .icon-3 {
-        font-size: 3em;
+    .social-media a i:hover {
+        text-align: center;
+        -webkit-transition: 1s;
+        -moz-transition: 1s;
+        transition: 1s;
     }
     .icon-facebook-sign:hover {
         color: #3b5998;
@@ -41,37 +44,95 @@
     .icon-twitter:hover {
         color: #00a0d1;
     }
-    .icon-github:hover {
-        color: #fff;
-    }
     .icon-weibo:hover {
         color: red;
     }
     .icon-instagram:hover {
         color: #4E433C;
     }
-
-    body #main-container {
-        background: url(/img/marathon.jpg) no-repeat center center fixed;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        -webkit-background-size: cover;
-        background-size: cover;
-        position: relative;
-    }
 </style>
 
-<div class="about">
-<ul class="self-info">
-    <li>26</li>
-    <li>182</li>
-    <li>runner</li>
+<ul class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">About</li>
 </ul>
-<p class="social-media">
-    <a href="https://www.facebook.com/houritsunohikari" target="_blank"><i class="icon-facebook-sign icon-3"></i></a>
-    <a href="https://twitter.com/houritsu_hikari" target="_blank"><i class="icon-twitter icon-3"></i></a>
-    <a href="https://github.com/just4fun" target="_blank"><i class="icon-github icon-3"></i></a>
-    <a href="http://pinsta.me/houritsunohikari" target="_blank"><i class="icon-instagram icon-3"></i></a>
-    <a href="http://weibo.com/houritsunohikari" target="_blank"><i class="icon-weibo icon-3"></i></a>
-</p>
+
+<div>
+    <div>
+        <img src="/img/marathon_md.jpg" class="img-responsive"/>
+    </div>
+    <blockquote style="border-left: 5px solid red;">
+        我活在世上，无非想要明白些道理，遇见些有趣的事。 ——王小波
+    </blockquote>
+    <hr />
+    <h3>关于我</h3>
+    <blockquote style="border-left: 5px solid green;">
+        <p>
+            我是talent，26岁，目前是一名前端开发工程师。
+        </p>
+        <p>
+            我的业余爱好非常多，有些甚至常常让旁人感到惊讶。
+        </p>
+        <p style="margin-top: 20px;">
+            我喜欢跑步，热衷于参加各种大小马拉松比赛；
+        </p>
+        <p>
+            我喜欢阅读，特别是日本推理小说；
+        </p>
+        <p>
+            我喜欢格斗，常常混迹于各类拳馆之中；
+        </p>
+        <p>
+            我喜欢日语，自学通过了N2考试，但现在依旧是哑巴；
+        </p>
+        <p>
+            我喜欢双节棍，大学期间在社团担任了两年技术指导；
+        </p>
+        <p>
+            我喜欢表演，参与过多部自制微电影的编剧与拍摄；
+        </p>
+        <p>
+            ......
+        </p>
+    </blockquote>
+    <h3>关于本站</h3>
+    <blockquote style="border-left: 5px solid #f0ad4e;">
+        <p>
+            本站域名注册于<a href="https://www.godaddy.com/" target="_blank">GoDaddy</a>，
+            网站托管于<a href="http://aws.amazon.com/" target="_blank">AWS</a>，
+            源码放置于<a href="https://github.com/just4fun/meaning" target="_blank">Github</a>。
+        </p>
+        <p>
+            如你所见，网站的整体UI比较简陋，因为建站主要目的是为了尝试前端业界的新技术。
+        </p>
+        <p>
+            后续会持续完善网站其余功能。
+        </p>
+        <p>
+            当然也会顺便记录自己工作、生活上一些有趣的事。
+        </p>
+    </blockquote>
+    <h3>联系我</h3>
+    <blockquote class="social-media" style="border-left: 5px solid #5bc0de;">
+        <p>
+            我非常喜欢SNS，以下是比较常用的一些：
+        </p>
+        <p>
+            <a href="http://weibo.com/houritsunohikari" target="_blank"><i class="icon-weibo icon-3"></i></a>
+            <a href="http://pinsta.me/houritsunohikari" target="_blank"><i class="icon-instagram icon-3"></i></a>
+        </p>
+        <p>
+            脸书跟推特很少发状态，但时常也会上去看看：
+        </p>
+        <p>
+            <a href="https://www.facebook.com/houritsunohikari" target="_blank"><i class="icon-facebook-sign icon-3"></i></a>
+            <a href="https://twitter.com/houritsu_hikari" target="_blank"><i class="icon-twitter icon-3"></i></a>
+        </p>
+        <p>
+            你也可以直接给我发送电子邮件：
+        </p>
+        <p>
+            <i>houritsunohikari at gmail.com</i>
+        </p>
+    </blockquote>
 </div>
