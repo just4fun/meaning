@@ -9,6 +9,7 @@ angular.module("about", [])
 ])
 
 .controller("AboutCtrl",
-["$scope", "$http", ($scope, $http) ->
-
+["$scope", "$http", "$rootScope",
+  ($scope, $http, $rootScope) ->
+    $rootScope.title = "About"
 ])

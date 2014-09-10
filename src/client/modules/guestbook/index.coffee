@@ -11,6 +11,8 @@ angular.module("guestbook", [])
 .controller("GuestbookCtrl",
 ["$scope", "$http", "$rootScope", "progress", "messenger",
   ($scope, $http, $rootScope, progress, messenger) ->
+    $rootScope.title = "Guestbook"
+
     #init comment author info
     loginUser = $rootScope._loginUser
     commentAuthor = angular.fromJson($.cookie("comment-author"))

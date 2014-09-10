@@ -18,6 +18,8 @@ angular.module("admin-users", [])
 .controller("AdminUsersCtrl",
 ["$scope", "$http", "$rootScope", "messenger", "progress",
   ($scope, $http, $rootScope, messenger, progress) ->
+    $rootScope.title = "Users"
+
     $scope.create = ->
       $scope.modalTitle = "Create"
       $scope.iconDialog = true

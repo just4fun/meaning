@@ -9,6 +9,7 @@ angular.module("admin-dashboard", [])
 ])
 
 .controller("AdminDashboardCtrl",
-["$scope", "$http", ($scope, $http) ->
-
+["$scope", "$http", "$rootScope",
+  ($scope, $http, $rootScope) ->
+    $rootScope.title = "Dashboard"
 ])

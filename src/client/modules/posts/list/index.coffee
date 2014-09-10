@@ -18,22 +18,29 @@ angular.module("posts-list", [])
 ])
 
 .controller("PostsListCtrl",
-["$scope", "$http", "progress", ($scope, $http, progress) ->
-  $scope.isAllList = true
-  progress.start()
-  $http.get("#{MEANING.ApiAddress}/posts/list/Published").success (data) ->
-    $scope.posts = data
-    progress.complete()
+["$scope", "$http", "$rootScope", "progress",
+  ($scope, $http, $rootScope, progress) ->
+    $rootScope.title = "Posts"
+    $scope.isAllList = true
+
+    progress.start()
+    $http.get("#{MEANING.ApiAddress}/posts/list/Published").success (data) ->
+      $scope.posts = data
+      progress.complete()
 ])
 
 .controller("AuthorPostsListCtrl",
 ["$scope", "$http", "$rootScope", "$routeParams", "progress",
   ($scope, $http, $rootScope, $routeParams, progress) ->
+    author = $routeParams.author
+
+    $rootScope.title = "Posts of Author '#{author}'"
     $scope.isAllList = false
     $scope.filterText = "Author"
-    $scope.filter = $routeParams.author
+    $scope.filter = author
+
     progress.start()
-    $http.get("#{MEANING.ApiAddress}/posts/author/#{$routeParams.author}").success (data) ->
+    $http.get("#{MEANING.ApiAddress}/posts/author/#{author}").success (data) ->
       $scope.posts = data
       progress.complete()
 ])
@@ -41,11 +48,15 @@ angular.module("posts-list", [])
 .controller("TagPostsListCtrl",
 ["$scope", "$http", "$rootScope", "$routeParams", "progress",
   ($scope, $http, $rootScope, $routeParams, progress) ->
+    tag = $routeParams.tag
+
+    $rootScope.title = "Posts of Tag '#{tag}'"
     $scope.isAllList = false
     $scope.filterText = "Tag"
-    $scope.filter = $routeParams.tag
+    $scope.filter = tag
+
     progress.start()
-    $http.get("#{MEANING.ApiAddress}/posts/tag/#{$routeParams.tag}").success (data) ->
+    $http.get("#{MEANING.ApiAddress}/posts/tag/#{tag}").success (data) ->
       $scope.posts = data
       progress.complete()
 ])
@@ -53,11 +64,15 @@ angular.module("posts-list", [])
 .controller("CategoryPostsListCtrl",
 ["$scope", "$http", "$rootScope", "$routeParams", "progress",
   ($scope, $http, $rootScope, $routeParams, progress) ->
+    category = $routeParams.category
+
+    $rootScope.title = "Posts of Category '#{category}'"
     $scope.isAllList = false
     $scope.filterText = "Category"
-    $scope.filter = $routeParams.category
+    $scope.filter = category
+
     progress.start()
-    $http.get("#{MEANING.ApiAddress}/posts/category/#{$routeParams.category}").success (data) ->
+    $http.get("#{MEANING.ApiAddress}/posts/category/#{category}").success (data) ->
       $scope.posts = data
       progress.complete()
 ])

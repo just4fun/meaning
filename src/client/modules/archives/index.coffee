@@ -30,7 +30,8 @@ angular.module("archives", [])
 ])
 
 .controller("ArchivesCtrl",
-["$scope", "$http", "archives",
-  ($scope, $http, archives) ->
+["$scope", "$http", "$rootScope", "archives",
+  ($scope, $http, $rootScope, archives) ->
+    $rootScope.title = "Archives"
     $scope.archives = archives
 ])

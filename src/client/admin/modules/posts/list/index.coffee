@@ -40,6 +40,7 @@ angular.module("admin-posts-list", [])
 .controller("AdminPostsListCtrl",
 ["$scope", "$http", "$rootScope", "$routeParams", "progress", "postCounts", "messenger",
   ($scope, $http, $rootScope, $routeParams, progress, postCounts, messenger) ->
+    $rootScope.title = "Posts"
     $scope.postCounts = postCounts
     url = "#{MEANING.ApiAddress}/posts"
     status = $routeParams.status
@@ -67,6 +68,7 @@ angular.module("admin-posts-list", [])
         else
           p.Tags = ""
 
+      $rootScope.title = "Posts (#{status})" if status
       $scope.posts = data
       progress.complete()
 

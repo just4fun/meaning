@@ -9,6 +9,7 @@ angular.module("home", [])
 ])
 
 .controller("HomeCtrl",
-["$scope", "$http", ($scope, $http) ->
-
+["$scope", "$http", "$rootScope",
+  ($scope, $http, $rootScope) ->
+    $rootScope.title = ""
 ])

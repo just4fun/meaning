@@ -18,6 +18,8 @@ angular.module("admin-categories", [])
 .controller("AdminCategoriesCtrl"
 ["$scope", "$http", "$rootScope", "messenger", "progress",
   ($scope, $http, $rootScope, messenger, progress) ->
+    $rootScope.title = "Categories"
+
     $scope.create = ->
       $scope.modalTitle = "Create"
       $scope.iconDialog = true

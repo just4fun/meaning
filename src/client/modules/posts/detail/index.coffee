@@ -28,6 +28,7 @@ angular.module("posts-view", [])
 .controller("PostsDetailCtrl",
 ["$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "post", "messenger",
   ($scope, $http, $window, progress, $routeParams, $location, $rootScope, post, messenger) ->
+    $rootScope.title = post.Title
     $scope.post = post
 
     $scope.canEdit = () ->

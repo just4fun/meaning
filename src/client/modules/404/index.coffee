@@ -9,7 +9,7 @@ angular.module("404", [])
 ])
 
 .controller("NotFoundCtrl",
-["$scope", "$http",
-  ($scope, $http) ->
-
+["$scope", "$http", "$rootScope",
+  ($scope, $http, $rootScope) ->
+    $rootScope.title = "Not Found"
 ])

@@ -52,6 +52,7 @@ angular.module("admin-posts-detail", [])
 .controller("AdminPostsNewCtrl",
 ["$scope", "$http", "$rootScope", "$window", "messenger", "categories", "$location", "progress",
   ($scope, $http, $rootScope, $window, messenger, categories, $location, progress) ->
+    $rootScope.title = "Add New Post"
     $scope.categories = categories
     $scope.submitText = "Publish"
     #init post entity
@@ -104,6 +105,8 @@ angular.module("admin-posts-detail", [])
 .controller("AdminPostsDetailCtrl",
 ["$scope", "$http", "$rootScope", "$window", "$routeParams", "post", "messenger", "categories", "$location", "progress",
   ($scope, $http, $rootScope, $window, $routeParams, post, messenger, categories, $location, progress) ->
+    $rootScope.title = "Edit Post"
+
     #to avoid "/posts/count" route being fired
     if $routeParams.url.toLowerCase() is "count"
       $location.path "/404"
