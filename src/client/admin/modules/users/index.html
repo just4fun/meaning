@@ -23,19 +23,19 @@
         </thead>
         <tbody>
         <tr ng-repeat="item in users">
-            <td>{{item.UserName}}</td>
-            <td>{{item.Email}}</td>
+            <td>{{ item.UserName }}</td>
+            <td>{{ item.Email }}</td>
             <td>
                 <span class="label label-sm label-important" ng-show="item.Role == 'Admin'">
-                    {{item.Role}}
+                    {{ item.Role }}
                 </span>
                 <span class="label label-sm label-success" ng-show="item.Role == 'Author'">
-                    {{item.Role}}
+                    {{ item.Role }}
                 </span>
             </td>
-            <td>{{item.CreateDate | date:'yyyy-MM-dd HH:mm'}}</td>
-            <td>{{item.EditDate | date:'yyyy-MM-dd HH:mm'}}</td>
-            <td>{{item.LastLoginDate | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm' }}</td>
+            <td>{{ item.EditDate | date:'yyyy-MM-dd HH:mm' }}</td>
+            <td>{{ item.LastLoginDate | date:'yyyy-MM-dd HH:mm' }}</td>
             <td>
                 <div class="action-buttons">
                     <a class="green" href="javascript:void(0);" ng-click="edit(item)" title="edit">

@@ -1,49 +1,21 @@
 <script src="/plugin/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
 <link href="/plugin/ckeditor/plugins/codesnippet/lib/highlight/styles/github.css" rel="stylesheet" />
 <style>
-    .page-header {
-        border-bottom: 1px solid #f5f5f5;
-    }
-    .post-content {
-        padding-bottom: 20px;
-        border-bottom: 1px solid #f5f5f5;
-    }
-
-    body {
-        background-color: #eee;
-    }
-    .navbar-inverse .navbar-brand,
-    .navbar-inverse .navbar-brand:hover,
-    .navbar-inverse .navbar-brand:focus ,
-    .navbar-inverse .navbar-nav > .active > a,
-    .navbar-inverse .navbar-nav > .active > a:hover,
-    .navbar-inverse .navbar-nav > .active > a:focus,
-    .navbar-inverse .navbar-nav > li > a:hover,
-    .navbar-inverse .navbar-nav > li > a:focus {
-        color: #428bca;
-    }
     .nav-tabs > li.active > a,
-    .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus {
         background-color: #eee;
-    }
-    hr {
-        border-top: 1px solid #f5f5f5;
-        margin-top: 0;
-    }
-
-    .hljs {
-        background-color: #f5f5f5;
     }
 </style>
 
 <ul class="breadcrumb">
     <li><a href="/">Home</a></li>
     <li><a href="#!/posts">Posts</a></li>
-    <li class="active">{{post.Title}}</li>
+    <li class="active">{{ post.Title }}</li>
 </ul>
 
 <div class="page-header">
-    <h1>{{post.Title}}</h1>
+    <h1>{{ post.Title }}</h1>
     <small class="pull-left" style="margin-top: 10px;">
         <div class="text-muted">
             <ul class="list-inline line-height-200">
@@ -53,7 +25,7 @@
                 </li>
                 <li>
                     <i class="icon-user"></i>
-                    <a href="#!/posts/author/{{post.Author.UserName}}">{{post.Author.UserName}}</a>
+                    <a href="#!/posts/author/{{ post.Author.UserName }}">{{ post.Author.UserName }}</a>
                 </li>
                 <li>
                     <i class="icon-comments"></i>
@@ -65,11 +37,11 @@
                 </li>
                 <li ng-show="post.Category">
                     <i class="icon-bookmark"></i>
-                    <a href="#!/posts/category/{{post.Category.CategoryName}}">{{post.Category.CategoryName}}</a>
+                    <a href="#!/posts/category/{{ post.Category.CategoryName }}">{{ post.Category.CategoryName }}</a>
                 </li>
                 <li style="display: inline;" ng-show="post.Tags.length > 0">
                     <i class="icon-tags"></i>
-                    <a href="#!/posts/tag/{{tag.TagName}}" ng-repeat="tag in post.Tags"
+                    <a href="#!/posts/tag/{{ tag.TagName }}" ng-repeat="tag in post.Tags"
                             class="label label-default" style="margin: 0 1px; padding-top: 5px;">
                         {{ tag.TagName }}
                     </a>
@@ -78,7 +50,7 @@
         </div>
     </small>
     <div class="pull-right" ng-show="canEdit()">
-        <a class="btn btn-primary" ng-href="/admin#!/posts/{{post.Url}}">
+        <a class="btn btn-primary" ng-href="/admin#!/posts/{{ post.Url }}">
             <i class="icon-edit"></i>
         </a>
     </div>
@@ -87,7 +59,7 @@
 <p class="post-content" ng-bind-html="post.Content"></p>
 <ul class="nav nav-tabs" id="comment-top" style="margin-top: 30px;">
     <li class="active">
-        <a href="javascript: void(0);">Comments ({{comments.length}})</a>
+        <a href="javascript: void(0);">Comments ({{ comments.length }})</a>
     </li>
 </ul>
 <div class="col-md-offset-2 col-md-8">

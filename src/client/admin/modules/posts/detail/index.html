@@ -27,7 +27,7 @@
             <label class="control-label">Category</label>
             <div>
                 <!--<select class="form-control" ng-model="post.Category._id" required>
-                    <option value="{{category._id}}" ng-repeat="category in categories">{{category.CategoryName}}</option>
+                    <option value="{{ category._id }}" ng-repeat="category in categories">{{ category.CategoryName }}</option>
                 </select>-->
                 <select class="form-control" ng-model="post.Category._id" required
                         ng-options="category._id as category.CategoryName for category in categories">

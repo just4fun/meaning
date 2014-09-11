@@ -20,9 +20,9 @@
         </thead>
         <tbody>
         <tr ng-repeat="item in categories">
-            <td>{{item.CategoryName}}</td>
-            <td>{{item.CreateDate | date:'yyyy-MM-dd HH:mm'}}</td>
-            <td>{{item.EditDate | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td>{{ item.CategoryName }}</td>
+            <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm' }}</td>
+            <td>{{ item.EditDate | date:'yyyy-MM-dd HH:mm' }}</td>
             <td>
                 <div class="action-buttons">
                     <a class="green" href="javascript:void(0);" ng-click="edit(item)" title="edit">

@@ -41,33 +41,27 @@
         <tbody>
         <tr ng-repeat="item in posts">
             <td>
-                <a ng-href="#!/posts/{{item.Url.substring(item.Url.lastIndexOf('/') + 1)}}">{{item.Title}}</a>
+                <a ng-href="#!/posts/{{ item.Url.substring(item.Url.lastIndexOf('/') + 1) }}">{{ item.Title }}</a>
             </td>
-            <td>{{item.Author.UserName}}</td>
-            <td>{{item.Category.CategoryName}}</td>
-            <td>{{item.Tags}}</td>
-            <td>{{item.CreateDate | date:'yyyy-MM-dd HH:mm'}}</td>
-            <td>{{item.EditDate | date:'yyyy-MM-dd HH:mm'}}</td>
-            <td>{{item.Views}}</td>
+            <td>{{ item.Author.UserName }}</td>
+            <td>{{ item.Category.CategoryName }}</td>
+            <td>{{ item.Tags }}</td>
+            <td>{{ item.CreateDate | date:'yyyy-MM-dd HH:mm' }}</td>
+            <td>{{ item.EditDate | date:'yyyy-MM-dd HH:mm' }}</td>
+            <td>{{ item.Views }}</td>
             <td>
-                <span class="label label-sm label-success" ng-show="item.Status == 'Published'">{{item.Status}}</span>
-                <span class="label label-sm label-grey arrowed-in" ng-show="item.Status == 'Draft'">{{item.Status}}</span>
-                <span class="label label-sm label-important arrowed-in" ng-show="item.Status == 'Trash'">{{item.Status}}</span>
+                <span class="label label-sm label-success" ng-show="item.Status == 'Published'">{{ item.Status }}</span>
+                <span class="label label-sm label-grey arrowed-in" ng-show="item.Status == 'Draft'">{{ item.Status }}</span>
+                <span class="label label-sm label-important arrowed-in" ng-show="item.Status == 'Trash'">{{ item.Status }}</span>
             </td>
             <td>
                 <div class="action-buttons">
-                    <a class="blue" ng-href="/#!/posts/{{item.Url}}" ng-show="item.Status == 'Published'" title="preview">
+                    <a class="blue" ng-href="/#!/posts/{{ item.Url }}" ng-show="item.Status == 'Published'" title="preview">
                         <i class="icon-zoom-in bigger-130"></i>
                     </a>
-                    <a class="green" ng-href="#!/posts/{{item.Url.substring(item.Url.lastIndexOf('/') + 1)}}" title="edit">
+                    <a class="green" ng-href="#!/posts/{{ item.Url.substring(item.Url.lastIndexOf('/') + 1) }}" title="edit">
                         <i class="icon-pencil bigger-130"></i>
                     </a>
-                    <!--<a class="red" href="javascript:void(0);" ng-show="item.Status == 'Published'" title="move to trash">
-                        <i class="icon-trash bigger-130"></i>
-                    </a>
-                    <a class="red" href="javascript:void(0);" ng-show="item.Status == 'Trash'" title="restore">
-                        <i class="icon-reply bigger-130"></i>
-                    </a>-->
                     <a class="red" href="javascript:void(0);" ng-show="item.Status == 'Trash'"
                             ng-click="del(item)" title="delete permanently">
                         <i class="icon-remove bigger-130"></i>

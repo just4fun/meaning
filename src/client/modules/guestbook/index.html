@@ -1,33 +1,8 @@
 <style>
-    body {
-        background-color: #eee;
-    }
-    .navbar-inverse .navbar-brand,
-    .navbar-inverse .navbar-brand:hover,
-    .navbar-inverse .navbar-brand:focus ,
-    .navbar-inverse .navbar-nav > .active > a,
-    .navbar-inverse .navbar-nav > .active > a:hover,
-    .navbar-inverse .navbar-nav > .active > a:focus,
-    .navbar-inverse .navbar-nav > li > a:hover,
-    .navbar-inverse .navbar-nav > li > a:focus {
-        color: #428bca;
-    }
     .nav-tabs > li.active > a,
     .nav-tabs > li.active > a:hover,
     .nav-tabs > li.active > a:focus {
         background-color: #eee;
-    }
-    hr {
-        border-top: 1px solid #f5f5f5;
-        margin-top: 0;
-    }
-
-    .comment-logo {
-        margin: 0 auto;
-    }
-    .comment-tip {
-        margin: 15px 0;
-        text-align: center;
     }
 </style>
 
@@ -45,7 +20,7 @@
     </p>
     <ul class="nav nav-tabs" id="comment-top">
         <li class="active">
-            <a href="javascript: void(0);">Comments ({{comments.length}})</a>
+            <a href="javascript: void(0);">Comments ({{ comments.length }})</a>
         </li>
     </ul>
     <div class="col-md-offset-2 col-md-8">
