@@ -3,8 +3,11 @@ angular.module("login-app", [
 ])
 
 .controller("LoginCtrl",
-["$scope", "$http", "$window", "progress",
-  ($scope, $http, $window, progress) ->
+["$scope", "$rootScope", "$http", "$window", "progress",
+  ($scope, $rootScope, $http, $window, progress) ->
+    #site global config
+    $rootScope.MEANING = MEANING
+
     $scope.login = ->
       progress.start()
       $scope.error = ""

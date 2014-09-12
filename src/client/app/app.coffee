@@ -47,7 +47,7 @@ angular.module("app", [
     progress.complete()
 
     #hide responsive navbar when route change on handheld
-    $rootScope._isNavDisplay = false;
+    $rootScope._isNavDisplay = false
 ])
 
 .run(["$rootScope", ($rootScope) ->
@@ -57,7 +57,9 @@ angular.module("app", [
 .controller("NavCtrl",
 ["$scope", "$http", "$location", "$rootScope",
   ($scope, $http, $location, $rootScope) ->
-    $rootScope._isNavDisplay = false;
+    #site global config
+    $rootScope.MEANING = MEANING
+    $rootScope._isNavDisplay = false
 
     $scope.toggleCollapsibleMenu = ->
       $rootScope._isNavDisplay = !$rootScope._isNavDisplay

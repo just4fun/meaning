@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Log In &lsaquo; just4fun</title>
+    <title ng-bind="'Log In &lsaquo; ' + MEANING.SiteName">Loading...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <!--STYLES--><!--STYLES END-->
     <!--SCRIPTS--><!--SCRIPTS END-->
@@ -31,7 +31,7 @@
                             Login
                         </button>
                         <p>
-                            <a href="/" title="Are you lost?">← Back to just4fun</a>
+                            <a href="/" title="Are you lost?">← Back to <span ng-bind="MEANING.SiteName"></span></a>
                         </p>
                     </form>
                 </div>

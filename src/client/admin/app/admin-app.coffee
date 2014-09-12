@@ -61,6 +61,8 @@ angular.module("admin-app", [
 .controller("AdminCtrl",
 ["$scope", "$rootScope", "$http", "$window", "$location", "progress", "messenger",
   ($scope, $rootScope, $http, $window, $location, progress, messenger) ->
+    #site global config
+    $rootScope.MEANING = MEANING
     $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"))
 
     $scope.isActive = (path) ->

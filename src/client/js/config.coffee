@@ -1,3 +1,4 @@
-MEANING = MEANING || {}
-
-MEANING.ApiAddress = "http://localhost:9527"
+MEANING = {
+  SiteName: "just4fun"
+  ApiAddress: "http://localhost:9527"
+}
