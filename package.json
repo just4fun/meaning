@@ -1,6 +1,12 @@
 {
   "name": "meaning",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "author": "talent <houritsunohikari@gmail.com>",
+  "description": "A mini blogging platform inspired by MEAN.JS(MongoDB, Express, AngularJS, and Node.js)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/just4fun/meaning"
+  },
   "dependencies": {
     "express": "~3.4.8",
     "cors": "~2.2.0",
@@ -34,5 +40,6 @@
     "karma-chrome-launcher": "~0.1.3",
     "grunt-nodemon": "~0.2.1",
     "grunt-concurrent": "~0.5.0"
-  }
+  },
+  "license": "MIT"
 }
