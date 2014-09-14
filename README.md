@@ -1,6 +1,8 @@
 meaning
 =======
 
+[![Build Status](https://travis-ci.org/just4fun/meaning.png)](https://travis-ci.org/just4fun/meaning)
+
 A mini blogging platform inspired by [MEAN.JS](http://meanjs.org).   
 The name of this repo means that I'm still learning MEAN.JS and falling in love with it.  
 
