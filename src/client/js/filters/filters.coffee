@@ -7,7 +7,6 @@
 
 .filter "gravatar", ->
   (email) ->
-    return "" if !email
+    return "/img/avatar.png" unless email
     hash = md5(email)
-    pic = "http%3A%2F%2Ftalent-is.me%3A9000%2Fimg%2Favatar.png"
-    "http://www.gravatar.com/avatar/#{hash}?default=#{pic}"
+    return "http://www.gravatar.com/avatar/#{hash}?default=#{MEANING.DefaultAvatar}"
