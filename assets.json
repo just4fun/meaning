@@ -42,7 +42,6 @@
   ],
 
   "commonCss": [
-    "dist/client/css/vendor/jquery/**/*.css",
     "dist/client/css/vendor/messenger/**/*.css",
     "dist/client/css/vendor/bootstrap.css",
     "dist/client/css/vendor/font-awesome.css"
