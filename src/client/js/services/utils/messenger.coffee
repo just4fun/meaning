@@ -1,4 +1,4 @@
-angular.module("messenger", [])
+angular.module("services.utils.messenger", [])
 
 .factory "messenger", ->
   success : (msg) ->

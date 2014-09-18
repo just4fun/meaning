@@ -1,4 +1,4 @@
 angular.module("customServices", [
-  "messenger"
-  "progress"
+  "services.utils.messenger"
+  "services.utils.progress"
 ])

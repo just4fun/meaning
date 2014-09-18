@@ -4,5 +4,5 @@
   "ui.select2"
   "ngModal"
 
-  "ckEditor"
+  "directives.custom.ckEditor"
 ])

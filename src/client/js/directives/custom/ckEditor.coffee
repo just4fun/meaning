@@ -1,4 +1,4 @@
-angular.module("ckEditor", [])
+angular.module("directives.custom.ckEditor", [])
 
 .directive "ckEditor", ->
   require: "?ngModel"
