@@ -3,14 +3,6 @@ module.exports = (grunt) ->
   isdebug = grunt.option("release") isnt true
   LIVERELOAD_PORT = 35729
 
-  minJs = "dist/client/min.js"
-  minCss = "dist/client/min.css"
-  minAdminJs = "dist/client/min-admin.js"
-  minAdminCss = "dist/client/min-admin.css"
-  minLoginJs = "dist/client/min-login.js"
-  minLoginCss = "dist/client/min-login.css"
-
-
   #------------------------------------------------------------
 
   grunt.initConfig
@@ -126,24 +118,24 @@ module.exports = (grunt) ->
       }
       js:
         src: ["<%= assets.commonJs %>", "<%= assets.js %>"]
-        dest: minJs
+        dest: "dist/client/min.js"
       loginJs:
         src: ["<%= assets.commonJs %>", "<%= assets.loginJs %>"]
-        dest: minLoginJs
+        dest: "dist/client/min-login.js"
       adminJs:
         src: ["<%= assets.commonJs %>", "<%= assets.adminJs %>"]
-        dest: minAdminJs
+        dest: "dist/client/min-admin.js"
 
     cssmin:
       css:
         src: ["<%= assets.commonCss %>", "<%= assets.css %>"]
-        dest: minCss
+        dest: "dist/client/min.css"
       loginCss:
         src: ["<%= assets.commonCss %>", "<%= assets.loginCss %>"]
-        dest: minLoginCss
+        dest: "dist/client/min-login.css"
       adminCss:
         src: ["<%= assets.commonCss %>", "<%= assets.adminCss %>"]
-        dest: minAdminCss
+        dest: "dist/client/min-admin.css"
 
     scriptlinker:
       js:
@@ -154,11 +146,11 @@ module.exports = (grunt) ->
           appRoot: "dist/client/"
         files:
           "dist/client/index.html":
-            if isdebug then ["<%= assets.configJs %>", "<%= assets.commonJs %>", "<%= assets.js %>"] else ["<%= assets.configJs %>", minJs]
+            if isdebug then ["<%= assets.configJs %>", "<%= assets.commonJs %>", "<%= assets.js %>"] else ["<%= assets.configJs %>", "dist/client/*.min.js"]
           "dist/client/admin/admin-login.html":
-            if isdebug then ["<%= assets.configJs %>", "<%= assets.commonJs %>", "<%= assets.loginJs %>"] else ["<%= assets.configJs %>", minLoginJs]
+            if isdebug then ["<%= assets.configJs %>", "<%= assets.commonJs %>", "<%= assets.loginJs %>"] else ["<%= assets.configJs %>", "dist/client/*.min-login.js"]
           "dist/client/admin/admin-index.html":
-            if isdebug then ["<%= assets.configJs %>", "<%= assets.commonJs %>", "<%= assets.adminJs %>"] else ["<%= assets.configJs %>", minAdminJs]
+            if isdebug then ["<%= assets.configJs %>", "<%= assets.commonJs %>", "<%= assets.adminJs %>"] else ["<%= assets.configJs %>", "dist/client/*.min-admin.js"]
 
       css:
         options:
@@ -167,9 +159,9 @@ module.exports = (grunt) ->
           fileTmpl: "<link href='/%s' rel='stylesheet' />\r\n"
           appRoot: "dist/client/"
         files:
-          "dist/client/index.html": if isdebug then ["<%= assets.commonCss %>", "<%= assets.css %>"] else minCss
-          "dist/client/admin/admin-login.html": if isdebug then ["<%= assets.commonCss %>", "<%= assets.loginCss %>"] else minLoginCss
-          "dist/client/admin/admin-index.html": if isdebug then ["<%= assets.commonCss %>", "<%= assets.adminCss %>"] else minAdminCss
+          "dist/client/index.html": if isdebug then ["<%= assets.commonCss %>", "<%= assets.css %>"] else "dist/client/*.min.css"
+          "dist/client/admin/admin-login.html": if isdebug then ["<%= assets.commonCss %>", "<%= assets.loginCss %>"] else "dist/client/*.min-login.css"
+          "dist/client/admin/admin-index.html": if isdebug then ["<%= assets.commonCss %>", "<%= assets.adminCss %>"] else "dist/client/*.min-admin.css"
 
     clean:
       all:
@@ -206,6 +198,10 @@ module.exports = (grunt) ->
       options:
         logConcurrentOutput: true
 
+    #cache busting
+    rev:
+      files:
+        src: ["dist/client/min*.*"]
 
   #------------------------------------------------------------
 
@@ -226,6 +222,7 @@ module.exports = (grunt) ->
         "less"
         "uglify"
         "cssmin"
+        "rev"
         "scriptlinker"
         "clean:redundant"
       ]
