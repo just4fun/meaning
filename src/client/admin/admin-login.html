@@ -23,7 +23,7 @@
                     <div class="alert alert-error" ng-show="error">
                         <button type="button" class="close" ng-click="error=''">×</button>
                         <h4>Error!</h4>
-                        {{ error }}
+                        <span ng-bind="error"></span>
                     </div>
                     <form name="form" ng-submit="login()">
                         <input type="text" placeholder="Username" required ng-model="user.UserName">

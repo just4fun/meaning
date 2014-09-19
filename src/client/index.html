@@ -69,7 +69,9 @@
                             <a href="/login">Login</a>
                         </li>
                         <li ng-show="_loginUser">
-                            <a href="/admin">Hello, {{ _loginUser.UserName }}</a>
+                            <a href="/admin">
+                                <span ng-bind="'Hello, ' +  _loginUser.UserName"></span>
+                            </a>
                         </li>
                     </ul>
                 </nav>

@@ -33,7 +33,7 @@
                     <img class="nav-user-photo" ng-src="{{ _loginUser.Email | gravatar }}" width="40px">
                     <span class="user-info">
                         <small>Welcome,</small>
-                        {{ _loginUser.UserName }}
+                        <span ng-bind="_loginUser.UserName"></span>
                     </span>
                     <i class="ace-icon icon-caret-down"></i>
                 </a>
