@@ -53,8 +53,9 @@ exports.getById = (req, res, next, userId) ->
       next()
 
 exports.list = (req, res, next) ->
-  pageIndex = Math.max(0, req.param("pageIndex"))
-  perPage = 10
+  pageIndex = req.param("pageIndex")
+  perPage = if pageIndex? then 10 else 9999
+  pageIndex = Math.max(0, pageIndex)
 
   async.parallel
     totalCount: (callback) ->

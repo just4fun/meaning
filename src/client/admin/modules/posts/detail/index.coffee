@@ -53,7 +53,7 @@ angular.module("admin-posts-detail", [])
 ["$scope", "$http", "$rootScope", "$window", "messenger", "categories", "$location", "progress",
   ($scope, $http, $rootScope, $window, messenger, categories, $location, progress) ->
     $rootScope.title = "Add New Post"
-    $scope.categories = categories
+    $scope.categories = categories.list
     $scope.submitText = "Publish"
     #init post entity
     $scope.post = {
@@ -120,7 +120,7 @@ angular.module("admin-posts-detail", [])
     else
       post.Tags = ""
 
-    $scope.categories = categories
+    $scope.categories = categories.list
     $scope.post = post
     $scope.submitText = "Published"
     $scope.submitText = "Update" if post.Status is "Published"
