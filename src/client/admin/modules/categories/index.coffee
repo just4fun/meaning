@@ -36,7 +36,7 @@ angular.module("admin-categories", [])
     $scope.del = (category) ->
       messenger.confirm ->
         progress.start()
-        $http.delete("#{MEANING.ApiAddress}/category/#{category._id}",
+        $http.delete("#{MEANING.ApiAddress}/categories/#{category._id}",
           headers:
             "meaning-token": $.cookie("meaning-token")
         )
@@ -53,7 +53,7 @@ angular.module("admin-categories", [])
       if $scope.entity._id
         $scope.entity.EditUser = $rootScope._loginUser.UserName
         $scope.entity.EditDate = new Date()
-        $http.put("#{MEANING.ApiAddress}/category/#{$scope.entity._id}",
+        $http.put("#{MEANING.ApiAddress}/categories/#{$scope.entity._id}",
           $scope.entity,
           headers:
             "meaning-token": $.cookie("meaning-token")
@@ -67,7 +67,7 @@ angular.module("admin-categories", [])
       #Create
       else
         $scope.entity.CreateUser = $rootScope._loginUser.UserName
-        $http.post("#{MEANING.ApiAddress}/category",
+        $http.post("#{MEANING.ApiAddress}/categories",
           $scope.entity,
           headers:
             "meaning-token": $.cookie("meaning-token")

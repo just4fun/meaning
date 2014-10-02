@@ -4,10 +4,10 @@ requireCategoryNameUnique = require "../pipe/requireCategoryNameUnique"
 
 module.exports = (app) ->
   app.get "/categories", category.list
-  app.get "/category/:categoryId", category.get
+  app.get "/categories/:categoryId", category.get
 
-  app.post "/category", requireAdmin(), requireCategoryNameUnique(), category.create
-  app.put "/category/:categoryId", requireAdmin(), requireCategoryNameUnique(), category.update
-  app.delete "/category/:categoryId", requireAdmin(), category.delete
+  app.post "/categories", requireAdmin(), requireCategoryNameUnique(), category.create
+  app.put "/categories/:categoryId", requireAdmin(), requireCategoryNameUnique(), category.update
+  app.delete "/categories/:categoryId", requireAdmin(), category.delete
 
   app.param "categoryId", category.getById

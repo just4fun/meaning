@@ -12,7 +12,7 @@ angular.module("posts-list", [])
     .when("/posts/tag/:tag",
       templateUrl: "/modules/posts/list/index.html"
       controller: "TagPostsListCtrl")
-    .when("/posts/category/:category",
+    .when("/posts/categories/:category",
       templateUrl: "/modules/posts/list/index.html"
       controller: "CategoryPostsListCtrl")
 ])
@@ -72,7 +72,7 @@ angular.module("posts-list", [])
     $scope.filter = category
 
     progress.start()
-    $http.get("#{MEANING.ApiAddress}/posts/category/#{category}").success (data) ->
+    $http.get("#{MEANING.ApiAddress}/posts/categories/#{category}").success (data) ->
       $scope.posts = data
       progress.complete()
 ])

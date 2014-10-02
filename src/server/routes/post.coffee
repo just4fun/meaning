@@ -13,7 +13,7 @@ module.exports = (app) ->
   app.get "/posts/:url", post.get
   app.get "/posts/author/:author", post.getList
   app.get "/posts/tag/:tag", post.getList
-  app.get "/posts/category/:category", post.getList
+  app.get "/posts/categories/:category", post.getList
   app.get "/posts/list/:status", post.getList
 
   app.post "/posts", requireLogin(), requireUrlUnique(), post.create
