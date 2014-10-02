@@ -77,7 +77,7 @@ angular.module("posts-view", [])
     $scope.del = (comment) ->
       messenger.confirm ->
         progress.start()
-        $http.delete("#{MEANING.ApiAddress}/comment/#{comment._id}",
+        $http.delete("#{MEANING.ApiAddress}/comments/#{comment._id}",
           headers:
             "meaning-token": $.cookie("meaning-token")
         )
@@ -107,7 +107,7 @@ angular.module("posts-view", [])
 
     getCommentList = () ->
       progress.start()
-      $http.get("#{MEANING.ApiAddress}/comments/#{post._id}").success (data) ->
+      $http.get("#{MEANING.ApiAddress}/comments/query/#{post._id}").success (data) ->
         $scope.comments = data
         progress.complete()
 

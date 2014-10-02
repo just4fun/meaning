@@ -36,7 +36,7 @@ angular.module("admin-users", [])
     $scope.del = (user) ->
       messenger.confirm ->
         progress.start()
-        $http.delete("#{MEANING.ApiAddress}/user/#{user._id}",
+        $http.delete("#{MEANING.ApiAddress}/users/#{user._id}",
           headers:
             "meaning-token": $.cookie("meaning-token")
         )
@@ -63,7 +63,7 @@ angular.module("admin-users", [])
         delete $scope.entity.RePassword
 
         progress.start()
-        $http.put("#{MEANING.ApiAddress}/user/#{$scope.entity._id}",
+        $http.put("#{MEANING.ApiAddress}/users/#{$scope.entity._id}",
           $scope.entity,
           headers:
             "meaning-token": $.cookie("meaning-token")

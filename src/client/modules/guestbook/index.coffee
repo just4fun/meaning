@@ -47,7 +47,7 @@ angular.module("guestbook", [])
     $scope.del = (comment) ->
       messenger.confirm ->
         progress.start()
-        $http.delete("#{MEANING.ApiAddress}/comment/#{comment._id}",
+        $http.delete("#{MEANING.ApiAddress}/comments/#{comment._id}",
           headers:
             "meaning-token": $.cookie("meaning-token")
         )
@@ -75,7 +75,7 @@ angular.module("guestbook", [])
 
     getCommentList = () ->
       progress.start()
-      $http.get("#{MEANING.ApiAddress}/comments/guestbook").success (data) ->
+      $http.get("#{MEANING.ApiAddress}/comments/query/guestbook").success (data) ->
         $scope.comments = data
         progress.complete()
 
