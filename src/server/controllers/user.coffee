@@ -39,9 +39,14 @@ exports.get = (req, res) ->
   res.jsonp req.user
 
 exports.getById = (req, res, next, userId) ->
+  #for user update
+  excludeFields = ""
+  if req.method isnt "PUT"
+    excludeFields = "-Password -Token"
+
   User.findOne({_id: userId})
   #exclude sensitive fields
-  .select("-Password -Token")
+  .select(excludeFields)
   .exec (err, user) ->
     if err
       next new Error "Find user(#{userId}) failed: #{err}"
