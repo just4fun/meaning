@@ -14,7 +14,7 @@ module.exports = ->
           next new Error "Find user via token(#{token}) failed: #{err}"
         else if !user
           next new Error "Token is incorrect."
-        else if req.post.Author._id.toString() isnt user._id.toString() and user.Role isnt "Admin"
+        else if req.user._id.toString() isnt user._id.toString() and user.Role isnt "Admin"
           next new Error "You are not allowed to do this."
         else
           next()
