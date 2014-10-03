@@ -101,7 +101,7 @@ angular.module("admin-users", [])
         delete $scope.entity.RePassword
 
         progress.start()
-        $http.post("#{MEANING.ApiAddress}/user",
+        $http.post("#{MEANING.ApiAddress}/users",
           $scope.entity,
           headers:
             "meaning-token": $.cookie("meaning-token")
