@@ -203,6 +203,7 @@ module.exports = (grunt) ->
       files:
         src: ["dist/client/min*.*"]
 
+    #for debugging node.js
     "node-inspector":
       custom:
         options:
@@ -213,6 +214,20 @@ module.exports = (grunt) ->
           "no-preload": true,
           "stack-trace-limit": 50,
           "hidden": ["node_modules"]
+
+    jshint:
+      all:
+        options:
+          jshintrc: true
+          #reporter: require("jshint-stylish")
+        src: [
+          "dist/client/**/*.js"
+          "!dist/client/js/directives/vendor/**/*.js"
+          "!dist/client/js/vendor/**/*.js"
+          "!dist/client/plugin/**/*.js"
+
+          "dist/server/**/*.js"
+        ]
 
   #------------------------------------------------------------
 
@@ -237,6 +252,10 @@ module.exports = (grunt) ->
         "scriptlinker"
         "clean:redundant"
       ]
+
+  grunt.registerTask "lint", [
+    "jshint"
+  ]
 
   grunt.registerTask "build-server", [
     "clean:server"
