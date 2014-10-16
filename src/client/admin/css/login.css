@@ -12,12 +12,12 @@
     color: red;
 }
 
-#login-block {
+.login-block {
     padding-top: 50px;
     padding-bottom: 25px;
 }
 
-#login-block h3 {
+.login-block h3 {
     color: #fff;
     text-align: center;
     font-size: 1.5em;
@@ -113,14 +113,14 @@
 }
 
 @media only screen and (max-width: 479px) {
-    #login-block {
+    .login-block {
         padding-top: 10px;
         padding-bottom: 25px;
     }
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-    #login-block {
+    .login-block {
         margin: 0 auto;
         width: 420px;
     }

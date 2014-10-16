@@ -218,6 +218,7 @@ module.exports = (grunt) ->
     jshint:
       all:
         options:
+          force: true
           jshintrc: true
           #reporter: require("jshint-stylish")
         src: [
@@ -227,6 +228,16 @@ module.exports = (grunt) ->
           "!dist/client/plugin/**/*.js"
 
           "dist/server/**/*.js"
+        ]
+
+    csslint:
+      all:
+        options:
+          csslintrc: ".csslintrc"
+        src: [
+          "dist/client/**/*.css"
+          "!dist/client/css/vendor/**/*.css"
+          "!dist/client/plugin/**/*.css"
         ]
 
   #------------------------------------------------------------
@@ -255,6 +266,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "lint", [
     "jshint"
+    "csslint"
   ]
 
   grunt.registerTask "build-server", [
