@@ -58,7 +58,7 @@ angular.module("posts-view", [])
       $scope.submitted = true
       return if $scope.form.$invalid
 
-      $http.post("#{MEANING.ApiAddress}/comment", $scope.entity)
+      $http.post("#{MEANING.ApiAddress}/comments", $scope.entity)
       .success (data) ->
         messenger.success "Publish comment successfully!"
         getCommentList()
