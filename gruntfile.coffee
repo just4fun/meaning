@@ -74,6 +74,7 @@ module.exports = (grunt) ->
         files: [
           "dist/client/**/*"
           #except files which have no need for watching
+          "!dist/client/lib/**/*"
           "!dist/client/plugin/**/*"
         ]
 
@@ -85,7 +86,9 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "src/"
-          src: ["**/*.coffee"]
+          src: [
+            "**/*.coffee"
+          ]
           dest: "dist/"
           ext: ".js"
         ]
@@ -104,7 +107,9 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "src/client/"
-          src: ["**/*.less"]
+          src: [
+            "**/*.less"
+          ]
           dest: "dist/client"
           ext: ".css"
         ]
@@ -185,6 +190,15 @@ module.exports = (grunt) ->
           ]
           dest: "dist/client"
         ]
+      lib:
+        files: [
+          expand: true
+          cwd: "lib"
+          src: [
+            "**/*"
+          ]
+          dest: "dist/client/lib"
+        ]
 
     nodemon:
       dev:
@@ -261,7 +275,7 @@ module.exports = (grunt) ->
         "cssmin"
         "rev"
         "scriptlinker"
-        "clean:redundant"
+        #"clean:redundant"
       ]
 
   grunt.registerTask "lint", [

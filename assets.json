@@ -1,16 +1,18 @@
 {
   "commonJs": [
-    "dist/client/js/vendor/modernizr/*.js",
-    "dist/client/js/vendor/jquery/*.js",
-    "dist/client/js/vendor/jquery/lib/*.js",
-    "dist/client/js/vendor/angular/angular.js",
-    "dist/client/js/vendor/angular/lib/*.js",
-    "dist/client/js/vendor/messenger/messenger.js",
-    "dist/client/js/vendor/messenger/lib/*.js",
-    "dist/client/js/vendor/moment/moment.js",
-    "dist/client/js/vendor/moment/lib/*.js",
-    "dist/client/js/vendor/*.js",
-    "!dist/client/js/vendor/back-to-top.js",
+    "dist/client/lib/jquery/jquery.js",
+    "dist/client/lib/jquery-cookie/jquery.cookie.js",
+    "dist/client/lib/bootstrap/dist/js/bootstrap.js",
+    "dist/client/lib/messenger/build/js/messenger.js",
+    "dist/client/lib/messenger/build/js/messenger-theme-future.js",
+    "dist/client/lib/js-md5/js/md5.js",
+
+    "dist/client/lib/angular/angular.js",
+    "dist/client/lib/angular-animate/angular-animate.js",
+    "dist/client/lib/angular-cookies/angular-cookies.js",
+    "dist/client/lib/angular-resource/angular-resource.js",
+    "dist/client/lib/angular-route/angular-route.js",
+    "dist/client/lib/angular-sanitize/angular-sanitize.js",
 
     "dist/client/js/directives/**/*.js",
     "dist/client/js/filters/*.js",
@@ -19,11 +21,15 @@
   ],
 
   "js": [
-    "dist/client/js/vendor/angulartics/**/*.js",
+    "dist/client/lib/modernizr/modernizr.js",
+    "dist/client/lib/moment/moment.js",
+    "dist/client/lib/angulartics/src/angulartics.js",
+    "dist/client/lib/angulartics/src/angulartics-ga.js",
+
     "dist/client/modules/**/*.js",
     "dist/client/app/app.js",
 
-    "dist/client/js/vendor/back-to-top.js"
+    "dist/client/js/others/back-to-top.js"
   ],
 
   "adminJs": [
@@ -42,16 +48,18 @@
   ],
 
   "commonCss": [
-    "dist/client/css/vendor/messenger/**/*.css",
-    "dist/client/css/vendor/bootstrap.css",
-    "dist/client/css/vendor/font-awesome.css"
+    "dist/client/lib/bootstrap/dist/css/bootstrap.css",
+    "dist/client/lib/messenger/build/css/messenger.css",
+    "dist/client/lib/messenger/build/css/messenger-theme-future.css",
+
+    "dist/client/css/others/font-awesome.css"
   ],
 
   "css": [
     "dist/client/modules/**/*.css",
     "dist/client/css/main.css",
 
-    "dist/client/css/vendor/back-to-top.css"
+    "dist/client/css/others/back-to-top.css"
   ],
 
   "adminCss": [

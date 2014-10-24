@@ -1,0 +1,45 @@
+/* back to top */
+#scrollTop div {
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 149px;
+}
+#scrollTop .level-2 {
+    background: url("../../img/rocket_up.png") no-repeat scroll -149px 0 transparent;
+    display: none;
+    height: 250px;
+    opacity: 0;
+    z-index: 1;
+}
+#scrollTop .level-3 {
+    background: url("../../img/rocket_up.png") no-repeat scroll -298px 0 transparent;
+    cursor: pointer;
+    display: none;
+    height: 200px;
+    z-index: 2;
+}
+
+#scrollTop {
+    background: url("../../img/rocket_up.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: none;
+    height: 250px;
+    margin: -125px 0 0;
+    overflow: hidden;
+    right: 0;
+    padding: 0;
+    position: fixed;
+    top: 90%;
+    width: 149px;
+    z-index: 11;
+}
+
+@media (max-width: 768px) {
+    #scrollTop {
+        display: none!important;
+    }
+}

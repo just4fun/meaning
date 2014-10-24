@@ -1,0 +1,21 @@
+{
+  "name": "meaning",
+  "version": "0.2.0",
+  "description": "A mini blogging platform inspired by MEAN.JS(MongoDB, Express, AngularJS, and Node.js)",
+  "dependencies": {
+    "jquery": "2.0.3",
+    "jquery-cookie": "1.4.1",
+    "angular": "1.2.13",
+    "angular-animate": "1.2.13",
+    "angular-cookies": "1.2.13",
+    "angular-resource": "1.2.13",
+    "angular-route": "1.2.13",
+    "angular-sanitize": "1.2.13",
+    "angulartics": "0.17.0",
+    "messenger": "1.4.0",
+    "modernizr": "2.6.2",
+    "moment": "2.2.1",
+    "bootstrap": "3.0.0",
+    "js-md5": "1.0.1"
+  }
+}
