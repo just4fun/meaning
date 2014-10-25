@@ -88,14 +88,13 @@
     "dist/client/js/directives",
     "dist/client/js/filters",
     "dist/client/js/services",
-    "dist/client/js/vendor",
+    "dist/client/js/others",
 
     "!dist/client/modules",
     "dist/client/modules/**/*.js",
     "dist/client/modules/**/*.css",
 
     "!dist/client/plugin",
-    "!dist/client/shared",
 
     "!dist/client/*.*"
   ]

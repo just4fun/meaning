@@ -86,9 +86,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "src/"
-          src: [
-            "**/*.coffee"
-          ]
+          src: ["**/*.coffee"]
           dest: "dist/"
           ext: ".js"
         ]
@@ -107,9 +105,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "src/client/"
-          src: [
-            "**/*.less"
-          ]
+          src: ["**/*.less"]
           dest: "dist/client"
           ext: ".css"
         ]
@@ -275,7 +271,7 @@ module.exports = (grunt) ->
         "cssmin"
         "rev"
         "scriptlinker"
-        #"clean:redundant"
+        "clean:redundant"
       ]
 
   grunt.registerTask "lint", [
