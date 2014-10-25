@@ -38,6 +38,13 @@ angular.module("app", [
   $routeProvider.otherwise redirectTo: "/404"
 ])
 
+.run(() ->
+  #init Messenger position
+  Messenger.options = {
+    extraClasses: "messenger-fixed messenger-on-top"
+  }
+)
+
 #show loading when route change
 .run(["$rootScope", "progress", ($rootScope, progress) ->
   $rootScope.$on "$routeChangeStart", ->

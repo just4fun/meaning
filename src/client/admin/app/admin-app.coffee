@@ -36,6 +36,15 @@ angular.module("admin-app", [
   $routeProvider.otherwise redirectTo: "/404"
 ])
 
+.run(["$window", ($window) ->
+  #init basepath of ckeditor
+  $window.CKEDITOR_BASEPATH = "/plugin/ckeditor/"
+  #init Messenger position
+  Messenger.options = {
+    extraClasses: "messenger-fixed messenger-on-top"
+  }
+])
+
 #show loading when route change
 .run(["$rootScope", "progress", ($rootScope, progress) ->
   $rootScope.$on "$routeChangeStart", ->
@@ -50,11 +59,6 @@ angular.module("admin-app", [
   $rootScope._isLogin = $.cookie("CurrentUser") and $.cookie("meaning-token")
   if !$rootScope._isLogin
     $window.location.href = "/login"
-])
-
-#init basepath of ckeditor
-.run(["$window", ($window) ->
-  $window.CKEDITOR_BASEPATH = "/plugin/ckeditor/"
 ])
 
 
