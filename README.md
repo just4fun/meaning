@@ -28,6 +28,7 @@ What is more, make sure [MongoDB](http://mongodb.org/) is running on the ```defa
 $ git clone https://github.com/just4fun/meaning.git
 $ cd meaning
 $ npm install
+$ bower install
 $ grunt
 ```
 
