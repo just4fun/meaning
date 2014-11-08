@@ -107,7 +107,7 @@ angular.module("posts-view", [])
 
     getCommentList = () ->
       progress.start()
-      $http.get("#{MEANING.ApiAddress}/comments/query/#{post._id}").success (data) ->
+      $http.get("#{MEANING.ApiAddress}/posts/#{post._id}/comments").success (data) ->
         $scope.comments = data
         progress.complete()
 

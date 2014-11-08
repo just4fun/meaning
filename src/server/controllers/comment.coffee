@@ -31,25 +31,24 @@ exports.list = (req, res, next) ->
     else
       res.jsonp comments
 
-exports.getListByQuery = (req, res, next, query) ->
-  filter = {}
-  if query is "guestbook"
-    filter = {
-      Post: {
-        $exists: false
-      }
-    }
-  else
-    filter = {
-      Post: query
-    }
-  Comment.find(filter)
+exports.getFromGuestBook = (req, res, next) ->
+  Comment.find({Post: {$exists: false}})
   .sort("CreateDate")
   .exec (err, comments) ->
     if err
-      next new Error "Show comment list by query#{query} failed: #{err}"
+      next new Error "Show comment list from guestbook failed: #{err}"
     else
       res.jsonp comments
+
+exports.getListByPost = (req, res, next, postId) ->
+  Comment.find({Post: postId})
+  .sort("CreateDate")
+  .exec (err, comments) ->
+    if err
+      next new Error "Show comment list by postId(#{postId}) failed: #{err}"
+    else
+      req.comments = comments
+      next()
 
 exports.create = (req, res, next) ->
   comment = new Comment(req.body)
