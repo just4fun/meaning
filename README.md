@@ -6,7 +6,8 @@ meaning
 A mini blogging platform inspired by [MEAN.JS](http://meanjs.org).   
 The name of this repo means that I'm still learning MEAN.JS and falling in love with it.  
 
-###[Live Demo](http://talent-is.me)
+###~~[Live Demo](http://talent-is.me)~~
+um, sorry, the server has expired.
 
 ## Prerequisites
 I think you should have some basic knowledge about [MongoDB](http://mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/), and [Node.js](http://nodejs.org/) in advance.    
