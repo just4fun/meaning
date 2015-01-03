@@ -6,8 +6,7 @@ meaning
 A mini blogging platform inspired by [MEAN.JS](http://meanjs.org).   
 The name of this repo means that I'm still learning MEAN.JS and falling in love with it.  
 
-###~~[Live Demo](http://talent-is.me)~~
-um, sorry, the server has expired.
+###[Live Demo](http://talent-is.me)
 
 ## Prerequisites
 I think you should have some basic knowledge about [MongoDB](http://mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/), and [Node.js](http://nodejs.org/) in advance.    
@@ -22,7 +21,7 @@ Make sure you have installed [Node.js](http://nodejs.org/) and [npm](https://www
 ```
 $ sudo npm install -g grunt-cli
 ```
-What is more, make sure [MongoDB](http://mongodb.org/) is running on the ```default port 27017```.
+What is more, make sure [MongoDB](http://mongodb.org/) is running on the `default port 27017`.
 
 ## Installation
 ```
@@ -37,7 +36,7 @@ $ grunt
 ```
 $ grunt
 ```
-```Default command```, which will build application without minification and uglificaion, then run it.
+`Default command`, which will build application without minification and uglificaion, then run it.
 ```
 $ grunt -release
 ```
@@ -58,17 +57,24 @@ Only build server code.
 $ grunt run
 ```
 Run application immediately.   
-This command is always executed after ```$ grunt build (-release)```
+This command is always executed after `$ grunt build (-release)`
 
+## Host
+You should rewrite `/login` and `/admin` in web server when you want to host meaning.    
+For example, if you use [nginx](http://wiki.nginx.org/Main), you should add these two lines into your nginx config file.
+```
+rewrite ^/admin/?$ /admin/admin-index.html break;
+rewrite ^/login/?$ /admin/admin-login.html break;
+```
 
 ## Default User
-Account: ```admin```    
-Password: ```12345```
+Account: `admin`    
+Password: `12345`
 
 ## More
 This mini site only has basic posting function now, and there are bugs inevitably, I will improve it during the time I spend on learning MEAN.JS.
 
-```Just for fun```
+`Just for fun`
 
 ## License
 [The MIT License](http://opensource.org/licenses/MIT)
