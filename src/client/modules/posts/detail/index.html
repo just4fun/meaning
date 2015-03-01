@@ -93,7 +93,7 @@
     </p>
     <hr />
     <div ng-show="post.AllowComments">
-        <comment-form author="entity" session-user="_loginUser" on-publish="publish()" />
+        <comment-form author="entity" session-user="_loginUser" post-id="{{post._id}}" on-publish="publish()" />
     </div>
     <p class="text-center" ng-hide="post.AllowComments">
         <i>Comments are closed.</i>

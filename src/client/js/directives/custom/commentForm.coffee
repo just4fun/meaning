@@ -7,9 +7,11 @@ angular.module("directives.custom.commentForm", [])
     scope:
       author: "="
       sessionUser: "="
-      post: "@"
+      postId: "@"
       onPublish: "&"
     link: (scope, elm, attr) ->
+
+
       scope.publish = ->
         scope.submitted = true
         return if scope.form.$invalid
@@ -25,7 +27,7 @@ angular.module("directives.custom.commentForm", [])
             scope.author.Author = commentAuthor.Author
             scope.author.Email = commentAuthor.Email
             scope.author.Content = ""
-          else if post? then scope.author = {Post: post._id} else scope.author = {}
+          else if scope.postId? then scope.author = {Post: scope.postId} else scope.author = {}
           scope.$apply()
 
     templateUrl: "/js/directives/template/commentForm.html"
