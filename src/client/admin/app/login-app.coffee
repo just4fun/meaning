@@ -3,25 +3,18 @@ angular.module("login-app", [
 ])
 
 .controller("LoginCtrl",
-["$scope", "$rootScope", "$http", "$window", "progress",
-  ($scope, $rootScope, $http, $window, progress) ->
+["$scope", "$rootScope", "$http", "$window", "authorize",
+  ($scope, $rootScope, $http, $window, authorize) ->
     #site global config
     $rootScope.MEANING = MEANING
 
     $scope.login = ->
-      progress.start()
-      $scope.error = ""
-      $http.post("#{MEANING.ApiAddress}/login", $scope.user)
-        .success (user, status, headers, config)->
-          progress.complete()
-          $.cookie("CurrentUser", angular.toJson(user), {expires: 180, path: "/"})
-          $.cookie("meaning-token", headers("meaning-token"), {expires: 180, path: "/"})
-          $window.location.href = "/admin"
-        .error (error) ->
-          debugger
-          progress.complete()
-          $scope.user.Password = ""
-          $scope.error = error.Message
+      authorize.login($scope.user)
+      .then ->
+        $window.location.href = "/admin"
+      , (error) ->
+        $scope.user.Password = ""
+        $scope.error = error
 ])
 
 #check login
