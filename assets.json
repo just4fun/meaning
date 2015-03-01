@@ -87,7 +87,9 @@
     "!dist/client/img",
 
     "!dist/client/js",
-    "dist/client/js/directives",
+    "dist/client/js/directives/custom",
+    "dist/client/js/directives/vendor",
+    "dist/client/js/directives/*.*",
     "dist/client/js/filters",
     "dist/client/js/services",
     "dist/client/js/others",
