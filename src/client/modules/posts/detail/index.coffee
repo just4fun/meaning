@@ -26,8 +26,8 @@ angular.module("posts-view", [])
 ])
 
 .controller("PostsDetailCtrl",
-["$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "post", "messenger",
-  ($scope, $http, $window, progress, $routeParams, $location, $rootScope, post, messenger) ->
+["$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "post", "messenger", "authorize",
+  ($scope, $http, $window, progress, $routeParams, $location, $rootScope, post, messenger, authorize) ->
     $rootScope.title = post.Title
     $scope.post = post
 
@@ -90,9 +90,7 @@ angular.module("posts-view", [])
 
     $scope.logout = ->
       messenger.confirm ->
-        $.removeCookie("CurrentUser", { path: "/" })
-        $.removeCookie("meaning-token", { path: "/" })
-        $rootScope._loginUser = undefined
+        authorize.logout()
         #read comment author info from cookie
         commentAuthor = angular.fromJson($.cookie("comment-author"))
         if commentAuthor

@@ -1,8 +1,8 @@
 angular.module("services.utils.authorize", [])
 
 .service("authorize",
-["$http", "$q", "progress",
-  ($http, $q, progress) ->
+["$http", "$q", "$rootScope", "progress",
+  ($http, $q, $rootScope, progress) ->
 
     @login = (user) ->
       deferred = $q.defer()
@@ -17,6 +17,11 @@ angular.module("services.utils.authorize", [])
         progress.complete()
         deferred.reject err.Message
       deferred.promise
+
+    @logout = ->
+      $.removeCookie("CurrentUser", { path: "/" })
+      $.removeCookie("meaning-token", { path: "/" })
+      $rootScope._loginUser = undefined
 
     return
 ])

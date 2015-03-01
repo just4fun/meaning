@@ -63,8 +63,8 @@ angular.module("admin-app", [
 
 
 .controller("AdminCtrl",
-["$scope", "$rootScope", "$http", "$window", "$location", "progress", "messenger",
-  ($scope, $rootScope, $http, $window, $location, progress, messenger) ->
+["$scope", "$rootScope", "$http", "$window", "$location", "progress", "messenger", "authorize",
+  ($scope, $rootScope, $http, $window, $location, progress, messenger, authorize) ->
     #site global config
     $rootScope.MEANING = MEANING
     $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"))
@@ -77,9 +77,7 @@ angular.module("admin-app", [
       $location.path().indexOf("/posts/") > -1
 
     $scope.logout = ->
-      $.removeCookie("CurrentUser", { path: "/" })
-      $.removeCookie("meaning-token", { path: "/" })
-      $rootScope._loginUser = undefined
+      authorize.logout()
       $window.location.href = "/login"
 
     #------------change profile------------

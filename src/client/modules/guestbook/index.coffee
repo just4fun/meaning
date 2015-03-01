@@ -9,8 +9,8 @@ angular.module("guestbook", [])
 ])
 
 .controller("GuestbookCtrl",
-["$scope", "$http", "$rootScope", "progress", "messenger",
-  ($scope, $http, $rootScope, progress, messenger) ->
+["$scope", "$http", "$rootScope", "progress", "messenger", "authorize",
+  ($scope, $http, $rootScope, progress, messenger, authorize) ->
     $rootScope.title = "Guestbook"
 
     #init comment author info
@@ -60,9 +60,7 @@ angular.module("guestbook", [])
 
     $scope.logout = ->
       messenger.confirm ->
-        $.removeCookie("CurrentUser", { path: "/" })
-        $.removeCookie("meaning-token", { path: "/" })
-        $rootScope._loginUser = undefined
+        authorize.logout()
         #read comment author info from cookie
         commentAuthor = angular.fromJson($.cookie("comment-author"))
         if commentAuthor
