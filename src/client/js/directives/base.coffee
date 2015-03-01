@@ -6,4 +6,5 @@
 
   "directives.custom.ckEditor"
   "directives.custom.commentForm"
+  "directives.custom.highlight"
 ])

@@ -25,6 +25,7 @@
     "dist/client/lib/moment/moment.js",
     "dist/client/lib/angulartics/src/angulartics.js",
     "dist/client/lib/angulartics/src/angulartics-ga.js",
+    "dist/client/lib/highlightjs/highlight.pack.js",
 
     "dist/client/modules/**/*.js",
     "dist/client/app/app.js",
@@ -58,6 +59,7 @@
   "css": [
     "dist/client/modules/**/*.css",
     "dist/client/css/main.css",
+    "dist/client/lib/highlightjs/styles/github.css",
 
     "dist/client/css/others/back-to-top.css"
   ],

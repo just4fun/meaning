@@ -1,5 +1,3 @@
-<script src="/plugin/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
-<link href="/plugin/ckeditor/plugins/codesnippet/lib/highlight/styles/github.css" rel="stylesheet" />
 <style>
     .nav-tabs > li.active > a,
     .nav-tabs > li.active > a:hover,
@@ -56,7 +54,7 @@
     </div>
     <div class="clearfix"></div>
 </div>
-<p class="post-content" ng-bind-html="post.Content"></p>
+<p class="post-content" ng-bind-html="post.Content" highlight></p>
 <ul class="nav nav-tabs" id="comment-top" style="margin-top: 30px;">
     <li class="active">
         <a href="javascript: void(0);">Comments ({{ comments.length }})</a>
