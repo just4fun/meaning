@@ -92,50 +92,9 @@
         No comments yet.
     </p>
     <hr />
-    <form name="form" novalidate ng-show="post.AllowComments" ng-submit="publish()">
-        <p ng-show="_loginUser">
-            Logged in as <i>{{ _loginUser.UserName }}</i>.
-            <a href="javascript: void(0);" ng-click="logout()">Log out?</a>
-        </p>
-
-        <div ng-hide="_loginUser">
-            <div class="form-group">
-                <div>
-                    <input class="form-control" name="author" type="text" placeholder="Your name..." ng-model="entity.Author"
-                            ng-minlength="2" ng-maxlength="10" required>
-                    <div class="label label-danger label-invalid" ng-show="form.author.$invalid && submitted">
-                        <span ng-show="form.author.$error.required">Author is required.</span>
-                        <span ng-show="form.author.$error.minlength">Author is required to be at least 2 characters.</span>
-                        <span ng-show="form.author.$error.maxlength">Author can't be longer than 10 characters.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div>
-                    <input class="form-control" name="email" type="email" placeholder="Your email..." ng-model="entity.Email"
-                            ng-minlength="5" ng-maxlength="40" required>
-                    <div class="label label-danger label-invalid" ng-show="form.email.$invalid && submitted">
-                        <span ng-show="form.email.$error.required">Email is required.</span>
-                        <span ng-show="form.email.$error.email">Email is invalid.</span>
-                        <span ng-show="form.email.$error.minlength">Email is required to be at least 5 characters.</span>
-                        <span ng-show="form.email.$error.maxlength">Email can't be longer than 40 characters.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div>
-                <textarea class="form-control" name="content" placeholder="Your comment..." ng-model="entity.Content"
-                        style="resize: none; height: 200px;" required></textarea>
-                <div class="label label-danger label-invalid" ng-show="form.content.$invalid && submitted">
-                    <span ng-show="form.content.$error.required">Content is required.</span>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary" ng-disabled="loading">Submit</button>
-        </div>
-    </form>
+    <div ng-show="post.AllowComments">
+        <comment-form author="entity" session-user="_loginUser" on-publish="publish()" />
+    </div>
     <p class="text-center" ng-hide="post.AllowComments">
         <i>Comments are closed.</i>
     </p>

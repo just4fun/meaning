@@ -5,4 +5,5 @@
   "ngModal"
 
   "directives.custom.ckEditor"
+  "directives.custom.commentForm"
 ])

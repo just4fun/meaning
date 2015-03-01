@@ -25,9 +25,6 @@ angular.module("guestbook", [])
       $scope.entity.Email = commentAuthor.Email
 
     $scope.publish = () ->
-      $scope.submitted = true
-      return if $scope.form.$invalid
-
       $http.post("#{MEANING.ApiAddress}/comments", $scope.entity)
       .success (data) ->
         messenger.success "Publish comment successfully!"
@@ -39,10 +36,8 @@ angular.module("guestbook", [])
             Email: $scope.entity.Email
           }), {expires: 180, path: "/"})
         $scope.entity.Content = ""
-        $scope.submitted = false
       .error (err) ->
         progress.complete()
-        $scope.submitted = false
 
     $scope.del = (comment) ->
       messenger.confirm ->
@@ -57,19 +52,6 @@ angular.module("guestbook", [])
           progress.complete()
         .error (err) ->
           progress.complete()
-
-    $scope.logout = ->
-      messenger.confirm ->
-        authorize.logout()
-        #read comment author info from cookie
-        commentAuthor = angular.fromJson($.cookie("comment-author"))
-        if commentAuthor
-          $scope.entity.Author = commentAuthor.Author
-          $scope.entity.Email = commentAuthor.Email
-          $scope.entity.Content = ""
-        else
-          $scope.entity = {}
-        $scope.$apply()
 
     getCommentList = () ->
       progress.start()
