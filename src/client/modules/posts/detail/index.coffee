@@ -58,7 +58,7 @@ angular.module("posts-view", [])
       $http.post("#{MEANING.ApiAddress}/comments", $scope.entity)
       .success (data) ->
         messenger.success "Publish comment successfully!"
-        getCommentList()
+        $scope.comments.push data
         #save author info in cookie
         if !loginUser
           $.cookie("comment-author", angular.toJson({

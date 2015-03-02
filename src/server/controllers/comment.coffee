@@ -103,7 +103,7 @@ exports.create = (req, res, next) ->
       if err
         next new Error err
       else
-        res.jsonp "Delete comment successfully!"
+        res.jsonp comment
 
   #check AllowComments if comment is related to a post
   if comment.Post
