@@ -273,3 +273,45 @@ blockquote {
 .line-height-200 {
   line-height: 200%;
 }
+
+/* angular animation */
+
+.repeated-item.ng-enter, .repeated-item.ng-move {
+  -webkit-transition: 0.5s linear all;
+  -moz-transition: 0.5s linear all;
+  -o-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+  opacity: 0;
+}
+
+.repeated-item.ng-enter.ng-enter-active,
+.repeated-item.ng-move.ng-move-active {
+  opacity: 1;
+}
+
+.repeated-item.ng-leave {
+  -webkit-animation: 0.5s lazy_show;
+  -moz-animation: 0.5s lazy_show;
+  -o-animation: 0.5s lazy_show;
+  animation: 0.5s lazy_show;
+}
+
+@keyframes lazy_show {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@-webkit-keyframes lazy_show {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@-moz-keyframes lazy_show {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@-o-keyframes lazy_show {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

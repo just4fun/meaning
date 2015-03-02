@@ -14,7 +14,7 @@
             {{ filterText }}: {{ filter }} ({{ posts.length }} posts)
         </h3>
     </div>
-    <div ng-repeat="post in posts">
+    <div ng-repeat="post in posts" class="repeated-item">
         <h3>
             <a ng-href="/#!/posts/{{ post.Url }}" >
                 {{ post.Title }}
