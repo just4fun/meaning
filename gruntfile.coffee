@@ -116,6 +116,8 @@ module.exports = (grunt) ->
         mangle: true
         #minify
         beautify: false
+
+        sourceMap: true
       }
       js:
         src: ["<%= assets.commonJs %>", "<%= assets.js %>"]
@@ -211,7 +213,10 @@ module.exports = (grunt) ->
     #cache busting
     rev:
       files:
-        src: ["dist/client/min*.*"]
+        src: [
+          "dist/client/min*.*"
+          "!dist/client/*.map"
+        ]
 
     #for debugging node.js
     "node-inspector":
