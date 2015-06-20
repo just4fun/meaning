@@ -18,19 +18,19 @@ angular.module("app", [
 ])
 
 .config(["$httpProvider", ($httpProvider) ->
-  $httpProvider.responseInterceptors.push ["$rootScope", "$q", "messenger", "$location",
+  $httpProvider.interceptors.push ["$rootScope", "$q", "messenger", "$location",
     ($rootScope, $q, messenger, $location) ->
-      success = (response) ->
-        response
-      error = (response) ->
-        debugger
-        if response.status is 404
-          $location.path "/404"
-        else if response.data and response.data.Message
-          messenger.error response.data.Message
-        $q.reject(response)
-      (promise) ->
-        promise.then success, error
+      {
+        response: (res) ->
+          res
+
+        responseError: (res) ->
+          if res.status is 404
+            $location.path "/404"
+          else if res.data and res.data.Message
+            messenger.error res.data.Message
+          $q.reject res
+      }
   ]
 ])
 
