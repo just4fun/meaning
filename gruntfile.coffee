@@ -99,6 +99,14 @@ module.exports = (grunt) ->
           dest: "dist/server"
           ext: ".js"
         ]
+      currentLocation:
+        files: [
+          expand: true
+          cwd: "src/"
+          src: ["**/*.coffee"]
+          dest: "src/"
+          ext: ".js"
+        ]
 
     less:
       compile:
@@ -175,6 +183,9 @@ module.exports = (grunt) ->
 
       redundant:
         src: "<%= assets.redundant %>"
+
+      coffee:
+        src: "server/**/*.coffee"
 
     copy:
       all:
