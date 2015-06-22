@@ -15,81 +15,94 @@ angular.module("admin-categories", []).config([
     });
   }
 ]).controller("AdminCategoriesCtrl", [
-  "$scope", "$http", "$rootScope", "messenger", "progress", function($scope, $http, $rootScope, messenger, progress) {
+  "$scope", "$http", "$rootScope", "messenger", "progress",
+  function($scope, $http, $rootScope, messenger, progress) {
     $rootScope.title = "Categories";
+
     $scope.create = function() {
       $scope.modalTitle = "Create";
-      return $scope.iconDialog = true;
+      $scope.iconDialog = true;
     };
+
     $scope.close = function() {
       $scope.iconDialog = false;
-      return $scope.entity = null;
+      $scope.entity = null;
     };
+
     $scope.edit = function(category) {
       $scope.entity = angular.copy(category);
       $scope.modalTitle = "Update";
-      return $scope.iconDialog = true;
+      $scope.iconDialog = true;
     };
+
     $scope.del = function(category) {
       return messenger.confirm(function() {
         progress.start();
-        return $http["delete"]("" + MEANING.ApiAddress + "/categories/" + category._id, {
+        $http["delete"]("" + MEANING.ApiAddress + "/categories/" + category._id, {
           headers: {
             "meaning-token": $.cookie("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Delete category successfully!");
           $scope.getCategoryList(1);
-          return progress.complete();
+          progress.complete();
         }).error(function(err) {
-          return progress.complete();
+          progress.complete();
         });
       });
     };
+
     $scope.save = function() {
       progress.start();
+
+      // Update
       if ($scope.entity._id) {
         $scope.entity.EditUser = $rootScope._loginUser.UserName;
         $scope.entity.EditDate = new Date();
-        return $http.put("" + MEANING.ApiAddress + "/categories/" + $scope.entity._id, $scope.entity, {
+        $http.put("" + MEANING.ApiAddress + "/categories/" + $scope.entity._id, $scope.entity, {
           headers: {
             "meaning-token": $.cookie("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Update category successfully!");
           $scope.close();
-          return $scope.getCategoryList($scope.currentPage);
+          $scope.getCategoryList($scope.currentPage);
         }).error(function(err) {
-          return progress.complete();
+          progress.complete();
         });
-      } else {
+      }
+
+      // Create
+      else {
         $scope.entity.CreateUser = $rootScope._loginUser.UserName;
-        return $http.post("" + MEANING.ApiAddress + "/categories", $scope.entity, {
+        $http.post("" + MEANING.ApiAddress + "/categories", $scope.entity, {
           headers: {
             "meaning-token": $.cookie("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Create category successfully!");
           $scope.close();
-          return $scope.getCategoryList(1);
+          $scope.getCategoryList(1);
         }).error(function(err) {
-          return progress.complete();
+          progress.complete();
         });
       }
     };
+
     $scope.getCategoryList = function(page) {
       progress.start();
       $scope.currentPage = page;
-      return $http.get("" + MEANING.ApiAddress + "/categories?pageIndex=" + (page - 1), {
+      $http.get("" + MEANING.ApiAddress + "/categories?pageIndex=" + (page - 1), {
         headers: {
           "meaning-token": $.cookie("meaning-token")
         }
       }).success(function(data) {
         $scope.categories = data.list;
         $scope.totalCount = data.totalCount;
-        return progress.complete();
+        progress.complete();
       });
     };
-    return $scope.getCategoryList(1);
+
+    $scope.getCategoryList(1);
   }
 ]);

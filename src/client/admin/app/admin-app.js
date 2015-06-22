@@ -1,10 +1,21 @@
-angular.module("admin-app", ["ngRoute", "ngSanitize", "ngAnimate", "ngCookies", "customDirectives", "customFilters", "customServices", "admin-modules"]).config([
+angular.module("admin-app", [
+  "ngRoute",
+  "ngSanitize",
+  "ngAnimate",
+  "ngCookies",
+
+  "customDirectives",
+  "customFilters",
+  "customServices",
+
+  "admin-modules"
+]).config([
   "$locationProvider", function($locationProvider) {
-    return $locationProvider.html5Mode(false).hashPrefix("!");
+    $locationProvider.html5Mode(false).hashPrefix("!");
   }
 ]).config([
   "$httpProvider", function($httpProvider) {
-    return $httpProvider.interceptors.push([
+    $httpProvider.interceptors.push([
       "$rootScope", "$q", "messenger", "$location", function($rootScope, $q, messenger, $location) {
         return {
           response: function(res) {
@@ -24,51 +35,66 @@ angular.module("admin-app", ["ngRoute", "ngSanitize", "ngAnimate", "ngCookies", 
   }
 ]).config([
   "$routeProvider", function($routeProvider) {
-    return $routeProvider.otherwise({
+    $routeProvider.otherwise({
       redirectTo: "/404"
     });
   }
 ]).run([
   "$window", function($window) {
+    // init basepath of ckeditor
     $window.CKEDITOR_BASEPATH = "/plugin/ckeditor/";
-    return Messenger.options = {
+
+    // init Messenger position
+    Messenger.options = {
       extraClasses: "messenger-fixed messenger-on-top"
     };
   }
 ]).run([
   "$rootScope", "progress", function($rootScope, progress) {
+    // show loading when route change
     $rootScope.$on("$routeChangeStart", function() {
-      return progress.start();
+      progress.start();
     });
-    return $rootScope.$on("$routeChangeSuccess", function() {
-      return progress.complete();
+
+    $rootScope.$on("$routeChangeSuccess", function() {
+      progress.complete();
     });
   }
 ]).run([
   "$window", "$rootScope", function($window, $rootScope) {
+    // check login
     $rootScope._isLogin = $.cookie("CurrentUser") && $.cookie("meaning-token");
     if (!$rootScope._isLogin) {
-      return $window.location.href = "/login";
+      $window.location.href = "/login";
     }
   }
 ]).controller("AdminCtrl", [
-  "$scope", "$rootScope", "$http", "$window", "$location", "progress", "messenger", "authorize", function($scope, $rootScope, $http, $window, $location, progress, messenger, authorize) {
+  "$scope", "$rootScope", "$http", "$window", "$location", "progress", "messenger", "authorize",
+  function($scope, $rootScope, $http, $window, $location, progress, messenger, authorize) {
+    // site global config
     $rootScope.MEANING = MEANING;
     $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"));
+
     $scope.isActive = function(path) {
       return path === $location.path();
     };
+
     $scope.isPostActive = function() {
       return $location.path() === "/posts" || $location.path().indexOf("/posts/") > -1;
     };
+
     $scope.logout = function() {
       authorize.logout();
-      return $window.location.href = "/login";
+      $window.location.href = "/login";
     };
+
+    // ------------change profile------------
+
     $scope.changeProfile = function() {
       $scope.entity = angular.copy($rootScope._loginUser);
-      return $scope.profileDialog = true;
+      $scope.profileDialog = true;
     };
+
     $scope.save = function() {
       if ($scope.entity.NewPassword && !$scope.entity.RePassword) {
         messenger.error("Please confirm Password.");
@@ -78,35 +104,41 @@ angular.module("admin-app", ["ngRoute", "ngSanitize", "ngAnimate", "ngCookies", 
         messenger.error("The RePassword mismatch Password.");
         return;
       }
+
       $scope.entity.EditUser = $rootScope._loginUser.UserName;
       $scope.entity.EditDate = new Date();
       $scope.entity.Password = $scope.entity.NewPassword;
       delete $scope.entity.RePassword;
+
       progress.start();
       return $http.put("" + MEANING.ApiAddress + "/users/" + $scope.entity._id, $scope.entity, {
         headers: {
           "meaning-token": $.cookie("meaning-token")
         }
       }).success(function(data) {
-        var user;
         progress.complete();
-        user = angular.fromJson($.cookie("CurrentUser"));
+        // update cookie
+        var user = angular.fromJson($.cookie("CurrentUser"));
         user.UserName = $scope.entity.UserName;
         user.Email = $scope.entity.Email;
         $.cookie("CurrentUser", angular.toJson(user), {
           expires: 180,
           path: "/"
         });
+
+        // update global variable
         $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"));
+
         messenger.success("Change profile successfully!");
-        return $scope.close();
+        $scope.close();
       }).error(function(err) {
         return progress.complete();
       });
     };
-    return $scope.close = function() {
+
+    $scope.close = function() {
       $scope.profileDialog = false;
-      return $scope.entity = null;
+      $scope.entity = null;
     };
   }
 ]);

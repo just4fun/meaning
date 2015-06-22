@@ -1,21 +1,14 @@
-var app, config, initApp, initData, mongoose, port;
+var config = require("./config/config");
+var initApp = require("./config/init-app");
+var initData = require("./config/init-data");
+var mongoose = require("mongoose");
 
-config = require("./config/config");
-
-initApp = require("./config/init-app");
-
-initData = require("./config/init-data");
-
-mongoose = require("mongoose");
-
-app = initApp(__dirname);
+var app = initApp(__dirname);
 
 mongoose.connect(config.mongodbAddress);
-
 initData();
 
-port = config.defaultPort || 9527;
-
+var port = config.defaultPort || 9527;
 app.listen(port, function() {
-  return console.log("Listening on port " + port);
+  console.log("Listening on port " + port);
 });

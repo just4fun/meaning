@@ -1,17 +1,20 @@
 angular.module("guestbook", []).config([
   "$routeProvider", function($routeProvider) {
-    return $routeProvider.when("/guestbook", {
+    $routeProvider.when("/guestbook", {
       templateUrl: "/modules/guestbook/index.html",
       controller: "GuestbookCtrl"
     });
   }
 ]).controller("GuestbookCtrl", [
-  "$scope", "$http", "$rootScope", "progress", "messenger", "authorize", function($scope, $http, $rootScope, progress, messenger, authorize) {
-    var commentAuthor, getCommentList, loginUser;
+  "$scope", "$http", "$rootScope", "progress", "messenger", "authorize",
+  function($scope, $http, $rootScope, progress, messenger, authorize) {
     $rootScope.title = "Guestbook";
-    loginUser = $rootScope._loginUser;
-    commentAuthor = angular.fromJson($.cookie("comment-author"));
+
+    // init comment author info
+    var loginUser = $rootScope._loginUser;
+    var commentAuthor = angular.fromJson($.cookie("comment-author"));
     $scope.entity = {};
+
     if (loginUser) {
       $scope.entity.Author = loginUser.UserName;
       $scope.entity.Email = loginUser.Email;
@@ -19,10 +22,13 @@ angular.module("guestbook", []).config([
       $scope.entity.Author = commentAuthor.Author;
       $scope.entity.Email = commentAuthor.Email;
     }
+
     $scope.publish = function() {
-      return $http.post("" + MEANING.ApiAddress + "/comments", $scope.entity).success(function(data) {
+      $http.post("" + MEANING.ApiAddress + "/comments", $scope.entity).success(function(data) {
         messenger.success("Publish comment successfully!");
         $scope.comments.push(data);
+
+        // save author info in cookie
         if (!loginUser) {
           $.cookie("comment-author", angular.toJson({
             Author: $scope.entity.Author,
@@ -32,34 +38,36 @@ angular.module("guestbook", []).config([
             path: "/"
           });
         }
-        return $scope.entity.Content = "";
+        $scope.entity.Content = "";
       }).error(function(err) {
-        return progress.complete();
+        progress.complete();
       });
     };
+
     $scope.del = function(comment) {
-      return messenger.confirm(function() {
+      messenger.confirm(function() {
         progress.start();
-        return $http["delete"]("" + MEANING.ApiAddress + "/comments/" + comment._id, {
+        $http["delete"]("" + MEANING.ApiAddress + "/comments/" + comment._id, {
           headers: {
             "meaning-token": $.cookie("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Delete comment successfully!");
           $scope.comments.splice($scope.comments.indexOf(comment), 1);
-          return progress.complete();
+          progress.complete();
         }).error(function(err) {
-          return progress.complete();
+          progress.complete();
         });
       });
     };
-    getCommentList = function() {
+
+    var getCommentList = function() {
       progress.start();
-      return $http.get("" + MEANING.ApiAddress + "/comments/guestbook").success(function(data) {
+      $http.get("" + MEANING.ApiAddress + "/comments/guestbook").success(function(data) {
         $scope.comments = data;
-        return progress.complete();
+        progress.complete();
       });
     };
-    return getCommentList();
+    getCommentList();
   }
 ]);

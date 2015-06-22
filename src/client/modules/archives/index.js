@@ -8,8 +8,7 @@ angular.module("archives", []).config([
       resolve: {
         archives: [
           "$q", "$http", function($q, $http) {
-            var deferred;
-            deferred = $q.defer();
+            var deferred = $q.defer();
             $http.get("" + MEANING.ApiAddress + "/posts/list/Published").success(function(data) {
               var date, dict, key, post, result, value, _i, _len;
               dict = [];
@@ -21,6 +20,7 @@ angular.module("archives", []).config([
                 }
                 dict[date].push(post);
               }
+
               result = [];
               for (key in dict) {
                 if (!__hasProp.call(dict, key)) continue;
@@ -30,6 +30,7 @@ angular.module("archives", []).config([
                   posts: value
                 });
               }
+
               return deferred.resolve(result);
             });
             return deferred.promise;
@@ -39,8 +40,9 @@ angular.module("archives", []).config([
     });
   }
 ]).controller("ArchivesCtrl", [
-  "$scope", "$http", "$rootScope", "archives", function($scope, $http, $rootScope, archives) {
+  "$scope", "$http", "$rootScope", "archives",
+  function($scope, $http, $rootScope, archives) {
     $rootScope.title = "Archives";
-    return $scope.archives = archives;
+    $scope.archives = archives;
   }
 ]);

@@ -2,12 +2,14 @@ angular.module("directives.custom.commentForm", []).directive("commentForm", [
   "messenger", "authorize", function(messenger, authorize) {
     return {
       restrict: "AE",
+
       scope: {
         author: "=",
         sessionUser: "=",
         postId: "@",
         onPublish: "&"
       },
+
       link: function(scope, elm, attr) {
         scope.publish = function() {
           scope.submitted = true;
@@ -15,29 +17,30 @@ angular.module("directives.custom.commentForm", []).directive("commentForm", [
             return;
           }
           scope.submitted = false;
-          return scope.onPublish();
+          scope.onPublish();
         };
-        return scope.logout = function() {
-          return messenger.confirm(function() {
-            var commentAuthor;
+
+        scope.logout = function() {
+          messenger.confirm(function() {
             authorize.logout();
-            commentAuthor = angular.fromJson($.cookie("comment-author"));
-            return scope.$apply(function() {
+            var commentAuthor = angular.fromJson($.cookie("comment-author"));
+            scope.$apply(function() {
               if (commentAuthor) {
                 scope.author.Author = commentAuthor.Author;
                 scope.author.Email = commentAuthor.Email;
-                return scope.author.Content = "";
+                scope.author.Content = "";
               } else if (scope.postId != null) {
-                return scope.author = {
+                scope.author = {
                   Post: scope.postId
                 };
               } else {
-                return scope.author = {};
+                scope.author = {};
               }
             });
           });
         };
       },
+
       templateUrl: "/js/directives/template/commentForm.html"
     };
   }

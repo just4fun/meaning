@@ -1,21 +1,24 @@
 angular.module("services.utils.messenger", []).factory("messenger", function() {
   return {
+
     success: function(msg) {
-      return Messenger().post({
+      Messenger().post({
         message: msg,
         type: "success",
         showCloseButton: true
       });
     },
+
     error: function(msg) {
-      return Messenger().post({
+      Messenger().post({
         message: msg,
         type: "error",
         showCloseButton: true
       });
     },
+
     confirm: function(callback, msg) {
-      return msg = Messenger().post({
+      msg = Messenger().post({
         message: msg || "Do you want to continue?",
         showCloseButton: true,
         actions: {

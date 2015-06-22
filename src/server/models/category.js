@@ -1,10 +1,7 @@
-var CategorySchema, Schema, mongoose;
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 
-mongoose = require("mongoose");
-
-Schema = mongoose.Schema;
-
-CategorySchema = new Schema({
+var CategorySchema = new Schema({
   CategoryName: String,
   Description: String,
   CreateDate: {

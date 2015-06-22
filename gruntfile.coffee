@@ -37,19 +37,10 @@ module.exports = (grunt) ->
           "src/client/**/*"
           #except files which have no need for watching
           "!src/client/plugin/**/*"
-          "!src/client/**/*.coffee"
           "!src/client/**/*.less"
         ]
         tasks: [
           "newer:copy"
-          "scriptlinker"
-        ]
-      coffee:
-        files: [
-          "src/client/**/*.coffee"
-        ]
-        tasks: [
-          "newer:coffee"
           "scriptlinker"
         ]
       less:
@@ -60,13 +51,6 @@ module.exports = (grunt) ->
           "newer:less"
           "scriptlinker"
         ]
-      server:
-        files: [
-          "src/server/**/*.coffee"
-        ]
-        tasks:[
-          "newer:coffee:server"
-        ]
       livereload:
         options:
           livereload: LIVERELOAD_PORT
@@ -76,36 +60,6 @@ module.exports = (grunt) ->
           #except files which have no need for watching
           "!dist/client/lib/**/*"
           "!dist/client/plugin/**/*"
-        ]
-
-    coffee:
-      options:
-        #don't generate js wrapper
-        bare: true
-      all:
-        files: [
-          expand: true
-          cwd: "src/"
-          src: ["**/*.coffee"]
-          dest: "dist/"
-          ext: ".js"
-        ]
-      #only compile server coffee files
-      server:
-        files: [
-          expand: true
-          cwd: "src/server"
-          src: ["**/*.coffee"]
-          dest: "dist/server"
-          ext: ".js"
-        ]
-      currentLocation:
-        files: [
-          expand: true
-          cwd: "src/"
-          src: ["**/*.coffee"]
-          dest: "src/"
-          ext: ".js"
         ]
 
     less:
@@ -184,20 +138,16 @@ module.exports = (grunt) ->
       redundant:
         src: "<%= assets.redundant %>"
 
-      coffee:
-        src: "server/**/*.coffee"
-
     copy:
       all:
         files: [
           expand: true
-          cwd: "src/client/"
+          cwd: "src/"
           src: [
             "**/*"
-            "!**/*.coffee"
             "!**/*.less"
           ]
-          dest: "dist/client"
+          dest: "dist/"
         ]
       lib:
         files: [
@@ -273,7 +223,6 @@ module.exports = (grunt) ->
       grunt.task.run [
         "clean:all"
         "copy"
-        "coffee:all"
         "less"
         "scriptlinker"
       ]
@@ -281,7 +230,6 @@ module.exports = (grunt) ->
       grunt.task.run [
         "clean:all"
         "copy"
-        "coffee:all"
         "less"
         "uglify"
         "cssmin"
@@ -293,11 +241,6 @@ module.exports = (grunt) ->
   grunt.registerTask "lint", [
     "jshint"
     "csslint"
-  ]
-
-  grunt.registerTask "build-server", [
-    "clean:server"
-    "coffee:server"
   ]
 
   grunt.registerTask "run", [

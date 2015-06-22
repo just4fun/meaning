@@ -7,11 +7,10 @@ angular.module("customFilters", []).filter("convertToHtmlLine", function() {
   };
 }).filter("gravatar", function() {
   return function(email) {
-    var hash;
     if (!email) {
       return "/img/avatar.png";
     }
-    hash = md5(email);
+    var hash = md5(email);
     return "http://www.gravatar.com/avatar/" + hash + "?default=" + MEANING.DefaultAvatar;
   };
 });

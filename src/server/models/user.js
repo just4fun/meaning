@@ -1,10 +1,7 @@
-var Schema, UserSchema, mongoose;
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 
-mongoose = require("mongoose");
-
-Schema = mongoose.Schema;
-
-UserSchema = new Schema({
+var UserSchema = new Schema({
   UserName: String,
   Email: String,
   Password: String,
@@ -14,6 +11,7 @@ UserSchema = new Schema({
   },
   Token: String,
   LastLoginDate: Date,
+
   CreateDate: {
     type: Date,
     "default": Date.now

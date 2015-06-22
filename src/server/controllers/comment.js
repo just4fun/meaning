@@ -1,238 +1,254 @@
-var Comment, Post, async, mongoose, _;
-
-mongoose = require("mongoose");
-
-Comment = mongoose.model("Comment");
-
-Post = mongoose.model("Post");
-
-_ = require("lodash");
-
-async = require("async");
+var mongoose = require("mongoose");
+var Comment = mongoose.model("Comment");
+var Post = mongoose.model("Post");
+var _ = require("lodash");
+var async = require("async");
 
 exports.get = function(req, res) {
-  return res.jsonp(req.comment);
+  res.jsonp(req.comment);
 };
 
 exports.getList = function(req, res) {
-  return res.jsonp(req.comments);
+  res.jsonp(req.comments);
 };
 
 exports.getById = function(req, res, next, commentId) {
-  return Comment.findOne({
+  Comment.findOne({
     _id: commentId
   }).exec(function(err, comment) {
     if (err) {
-      return next(new Error("Find comment(" + commentId + ") failed: " + err));
+      next(new Error("Find comment(" + commentId + ") failed: " + err));
     } else if (!comment) {
       res.statusCode = 404;
-      return res.end();
+      res.end();
     } else {
       req.comment = comment;
-      return next();
+      next();
     }
   });
 };
 
 exports.list = function(req, res, next) {
-  return Comment.find().sort("CreateDate").exec(function(err, comments) {
+  Comment.find().sort("CreateDate").exec(function(err, comments) {
     if (err) {
-      return next(new Error("Show comment list failed: " + err));
+      next(new Error("Show comment list failed: " + err));
     } else {
-      return res.jsonp(comments);
+      res.jsonp(comments);
     }
   });
 };
 
 exports.getFromGuestBook = function(req, res, next) {
-  return Comment.find({
+  Comment.find({
     Post: {
       $exists: false
     }
   }).sort("CreateDate").exec(function(err, comments) {
     if (err) {
-      return next(new Error("Show comment list from guestbook failed: " + err));
+      next(new Error("Show comment list from guestbook failed: " + err));
     } else {
-      return res.jsonp(comments);
+      res.jsonp(comments);
     }
   });
 };
 
 exports.getListByPost = function(req, res, next, postId) {
-  return Comment.find({
+  Comment.find({
     Post: postId
   }).sort("CreateDate").exec(function(err, comments) {
     if (err) {
-      return next(new Error("Show comment list by postId(" + postId + ") failed: " + err));
+      next(new Error("Show comment list by postId(" + postId + ") failed: " + err));
     } else {
       req.comments = comments;
-      return next();
+      next();
     }
   });
 };
 
 exports.create = function(req, res, next) {
-  var comment, saveGuestbookComment, savePostComment;
-  comment = new Comment(req.body);
-  saveGuestbookComment = function() {
-    return comment.save(function(err) {
+  var comment = new Comment(req.body);
+  var saveGuestbookComment = function() {
+    comment.save(function(err) {
       if (err) {
-        return next(new Error("Create comment(" + comment.Content + ") failed: " + err));
+        next(new Error("Create comment(" + comment.Content + ") failed: " + err));
       } else {
-        return res.jsonp(comment);
+        res.jsonp(comment);
       }
     });
   };
-  savePostComment = function() {
-    var postId;
-    postId = comment.Post;
-    return async.waterfall([
+  var savePostComment = function() {
+    var postId = comment.Post;
+
+    async.waterfall([
+
+      // create comment first
       function(callback) {
-        return comment.save(function(err) {
+        comment.save(function(err) {
           if (err) {
-            return callback("Create comment(" + comment.Content + ") failed: " + err);
+            callback("Create comment(" + comment.Content + ") failed: " + err);
           } else {
-            return callback(null);
+            callback(null);
           }
         });
-      }, function(callback) {
-        return Post.findOne({
+      },
+
+      // then get post
+      function(callback) {
+        Post.findOne({
           _id: postId
         }).exec(function(err, post) {
           if (err) {
-            return callback("Find post" + postId + " via comment" + comment.Content + " failed: " + err);
+            callback("Find post" + postId + " via comment" + comment.Content + " failed: " + err);
           } else if (!post) {
             res.statusCode = 404;
-            return res.end();
+            res.end();
           } else {
-            return callback(null, post);
+            callback(null, post);
           }
         });
-      }, function(post, callback) {
-        return Comment.find({
+      },
+
+      // then get remaining comments
+      function(post, callback) {
+        Comment.find({
           Post: postId
         }).sort("CreateDate").select("_id").exec(function(err, comments) {
           if (err) {
-            return callback("Get remaining comments by postId" + postId + " failed: " + err);
+            callback("Get remaining comments by postId" + postId + " failed: " + err);
           } else {
-            return callback(null, post, comments);
+            callback(null, post, comments);
           }
         });
-      }, function(post, comments, callback) {
+      },
+
+      // at last, save post with comments
+      function(post, comments, callback) {
         post.Comments = comments;
-        return post.save(function(err) {
+        post.save(function(err) {
           if (err) {
-            return callback("Update post with comments failed: " + err);
+            callback("Update post with comments failed: " + err);
           } else {
-            return callback(null);
+            callback(null);
           }
         });
       }
     ], function(err, result) {
       if (err) {
-        return next(new Error(err));
+        next(new Error(err));
       } else {
-        return res.jsonp(comment);
+        res.jsonp(comment);
       }
     });
   };
+
+  // check AllowComments if comment is related to a post
   if (comment.Post) {
-    return Post.findOne({
+    Post.findOne({
       _id: comment.Post
     }).exec(function(err, post) {
       if (err) {
-        return next(new Error("Find post(" + comment.Post + ") via comment(" + comment._id + ") failed: " + err));
+        next(new Error("Find post(" + comment.Post + ") via comment(" + comment._id + ") failed: " + err));
       } else if (!post) {
         res.statusCode = 404;
-        return res.end();
+        res.end();
       } else if (post.AllowComments) {
-        return savePostComment();
+        savePostComment();
       } else {
-        return next(new Error("This post is not allowed to publish comment."));
+        next(new Error("This post is not allowed to publish comment."));
       }
     });
   } else {
-    return saveGuestbookComment();
+    saveGuestbookComment();
   }
 };
 
 exports.update = function(req, res, next) {
-  var comment;
-  comment = req.comment;
+  var comment = req.comment;
   comment = _.extend(comment, req.body);
-  return comment.save(function(err) {
+  comment.save(function(err) {
     if (err) {
-      return next(new Error("Update comment(" + comment._id + ") failed: " + err));
+      next(new Error("Update comment(" + comment._id + ") failed: " + err));
     } else {
-      return res.jsonp(comment);
+      res.jsonp(comment);
     }
   });
 };
 
 exports["delete"] = function(req, res, next) {
-  var comment, postId;
-  comment = req.comment;
+  var comment = req.comment;
+
   if (comment.Post) {
-    postId = comment.Post;
-    return async.waterfall([
+    var postId = comment.Post;
+    async.waterfall([
+
+      // delete comment first
       function(callback) {
-        return Comment.remove({
+        Comment.remove({
           _id: comment._id
         }).exec(function(err) {
           if (err) {
-            return callback("Delete comment(" + comment._id + ") failed: " + err);
+            callback("Delete comment(" + comment._id + ") failed: " + err);
           } else {
-            return callback(null);
+            callback(null);
           }
         });
-      }, function(callback) {
-        return Post.findOne({
+      },
+
+      // then get post
+      function(callback) {
+        Post.findOne({
           _id: postId
         }).exec(function(err, post) {
           if (err) {
-            return callback("Find post" + postId + " via comment" + comment.Content + " failed: " + err);
+            callback("Find post" + postId + " via comment" + comment.Content + " failed: " + err);
           } else if (!post) {
             res.statusCode = 404;
-            return res.end();
+            res.end();
           } else {
-            return callback(null, post);
+            callback(null, post);
           }
         });
-      }, function(post, callback) {
-        return Comment.find({
+      },
+
+      // then get remaining comments
+      function(post, callback) {
+        Comment.find({
           Post: postId
         }).sort("CreateDate").select("_id").exec(function(err, comments) {
           if (err) {
-            return callback("Get remaining comments by postId" + postId + " failed: " + err);
+            callback("Get remaining comments by postId" + postId + " failed: " + err);
           } else {
-            return callback(null, post, comments);
+            callback(null, post, comments);
           }
         });
-      }, function(post, comments, callback) {
+      },
+
+      // at last, save post with comments
+      function(post, comments, callback) {
         post.Comments = comments;
-        return post.save(function(err) {
+        post.save(function(err) {
           if (err) {
-            return callback("Update post with comments failed: " + err);
+            callback("Update post with comments failed: " + err);
           } else {
-            return callback(null);
+            callback(null);
           }
         });
       }
     ], function(err, result) {
       if (err) {
-        return next(new Error(err));
+        next(new Error(err));
       } else {
-        return res.jsonp("Delete comment successfully!");
+        res.jsonp("Delete comment successfully!");
       }
     });
   } else {
-    return Comment.remove({
+    Comment.remove({
       _id: comment._id
     }).exec(function(err) {
       if (err) {
-        return next(new Error("Delete comment(" + comment._id + ") failed: " + err));
+        next(new Error("Delete comment(" + comment._id + ") failed: " + err));
       } else {
-        return res.jsonp("Delete comment successfully!");
+        res.jsonp("Delete comment successfully!");
       }
     });
   }

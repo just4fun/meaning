@@ -1,1 +1,9 @@
-angular.module("customModules", ["home", "posts-list", "posts-view", "archives", "guestbook", "about", "404"]);
+angular.module("customModules", [
+  "home",
+  "posts-list",
+  "posts-view",
+  "archives",
+  "guestbook",
+  "about",
+
+  "404"]);

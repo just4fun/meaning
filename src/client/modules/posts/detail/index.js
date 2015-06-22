@@ -1,21 +1,25 @@
 angular.module("posts-view", []).config([
   "$routeProvider", function($routeProvider) {
-    return $routeProvider.when("/posts/:year/:month/:day/:url", {
+    $routeProvider.when("/posts/:year/:month/:day/:url", {
       templateUrl: "/modules/posts/detail/index.html",
       controller: "PostsDetailCtrl",
       resolve: {
         post: [
-          "$q", "$http", "$route", "$location", "$rootScope", function($q, $http, $route, $location, $rootScope) {
-            var deferred, url;
-            url = $route.current.params.url;
+          "$q", "$http", "$route", "$location", "$rootScope",
+          function($q, $http, $route, $location, $rootScope) {
+            var url = $route.current.params.url;
+
+            // to avoid "/posts/count" route being fired
             if (url.toLowerCase() === "count") {
               $location.path("/404");
               return;
             }
-            deferred = $q.defer();
+
+            var deferred = $q.defer();
             $http.get("" + MEANING.ApiAddress + "/posts/" + url).success(function(data) {
               return deferred.resolve(data);
             });
+
             return deferred.promise;
           }
         ]
@@ -23,10 +27,11 @@ angular.module("posts-view", []).config([
     });
   }
 ]).controller("PostsDetailCtrl", [
-  "$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "post", "messenger", "authorize", function($scope, $http, $window, progress, $routeParams, $location, $rootScope, post, messenger, authorize) {
-    var commentAuthor, getCommentList, loginUser;
+  "$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "post", "messenger", "authorize",
+  function($scope, $http, $window, progress, $routeParams, $location, $rootScope, post, messenger, authorize) {
     $rootScope.title = post.Title;
     $scope.post = post;
+
     $scope.canEdit = function() {
       var currentUser;
       currentUser = $rootScope._loginUser;
@@ -38,11 +43,14 @@ angular.module("posts-view", []).config([
       }
       return true;
     };
-    loginUser = $rootScope._loginUser;
-    commentAuthor = angular.fromJson($.cookie("comment-author"));
+
+    // init comment author info
+    var loginUser = $rootScope._loginUser;
+    var commentAuthor = angular.fromJson($.cookie("comment-author"));
     $scope.entity = {
       Post: post._id
     };
+
     if (loginUser) {
       $scope.entity.Author = loginUser.UserName;
       $scope.entity.Email = loginUser.Email;
@@ -50,10 +58,13 @@ angular.module("posts-view", []).config([
       $scope.entity.Author = commentAuthor.Author;
       $scope.entity.Email = commentAuthor.Email;
     }
+
     $scope.publish = function() {
-      return $http.post("" + MEANING.ApiAddress + "/comments", $scope.entity).success(function(data) {
+      $http.post("" + MEANING.ApiAddress + "/comments", $scope.entity).success(function(data) {
         messenger.success("Publish comment successfully!");
         $scope.comments.push(data);
+
+        // save author info in cookie
         if (!loginUser) {
           $.cookie("comment-author", angular.toJson({
             Author: $scope.entity.Author,
@@ -63,13 +74,15 @@ angular.module("posts-view", []).config([
             path: "/"
           });
         }
-        return $scope.entity.Content = "";
+
+        $scope.entity.Content = "";
       }).error(function(err) {
-        return progress.complete();
+        progress.complete();
       });
     };
+
     $scope.del = function(comment) {
-      return messenger.confirm(function() {
+      messenger.confirm(function() {
         progress.start();
         return $http["delete"]("" + MEANING.ApiAddress + "/comments/" + comment._id, {
           headers: {
@@ -78,19 +91,21 @@ angular.module("posts-view", []).config([
         }).success(function(data) {
           messenger.success("Delete comment successfully!");
           $scope.comments.splice($scope.comments.indexOf(comment), 1);
-          return progress.complete();
+          progress.complete();
         }).error(function(err) {
-          return progress.complete();
+          progress.complete();
         });
       });
     };
-    getCommentList = function() {
+
+    var getCommentList = function() {
       progress.start();
-      return $http.get("" + MEANING.ApiAddress + "/posts/" + post._id + "/comments").success(function(data) {
+      $http.get("" + MEANING.ApiAddress + "/posts/" + post._id + "/comments").success(function(data) {
         $scope.comments = data;
-        return progress.complete();
+        progress.complete();
       });
     };
-    return getCommentList();
+
+    getCommentList();
   }
 ]);
