@@ -215,36 +215,6 @@ module.exports = function(grunt) {
           "hidden": ["node_modules"]
         }
       }
-    },
-
-    jshint: {
-      all: {
-        options: {
-          force: true,
-          jshintrc: true
-          //reporter: require("jshint-stylish")
-        },
-        src: [
-          "dist/client/**/*.js",
-          "!dist/client/js/directives/vendor/**/*.js",
-          "!dist/client/js/vendor/**/*.js",
-          "!dist/client/plugin/**/*.js",
-          "dist/server/**/*.js"
-        ]
-      }
-    },
-
-    csslint: {
-      all: {
-        options: {
-          csslintrc: ".csslintrc"
-        },
-        src: [
-          "dist/client/**/*.css",
-          "!dist/client/css/vendor/**/*.css",
-          "!dist/client/plugin/**/*.css"
-        ]
-      }
     }
   });
 
@@ -255,7 +225,6 @@ module.exports = function(grunt) {
       return grunt.task.run(["clean:all", "copy", "less", "uglify", "cssmin", "rev", "scriptlinker", "clean:redundant"]);
     }
   });
-  grunt.registerTask("lint", ["jshint", "csslint"]);
   grunt.registerTask("run", ["connect", "open", "concurrent"]);
   grunt.registerTask("default", ["build", "run"]);
 };
