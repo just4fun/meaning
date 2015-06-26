@@ -82,8 +82,7 @@ module.exports = function(grunt) {
         // uglify
         mangle: true,
         // minify
-        beautify: false,
-        sourceMap: true
+        beautify: false
       },
       js: {
         src: ["<%= assets.commonJs %>", "<%= assets.js %>"],
@@ -198,7 +197,7 @@ module.exports = function(grunt) {
     // cache busting
     rev: {
       files: {
-        src: ["dist/client/min*.*", "!dist/client/*.map"]
+        src: ["dist/client/min*.*"]
       }
     },
 
