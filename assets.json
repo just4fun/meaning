@@ -22,7 +22,6 @@
 
   "js": [
     "dist/client/lib/modernizr/modernizr.js",
-    "dist/client/lib/moment/moment.js",
     "dist/client/lib/angulartics/src/angulartics.js",
     "dist/client/lib/angulartics/src/angulartics-ga.js",
     "dist/client/lib/highlightjs/highlight.pack.js",
