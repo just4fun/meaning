@@ -7,14 +7,15 @@ angular.module("archives", []).config([
       controller: "ArchivesCtrl",
       resolve: {
         archives: [
-          "$q", "$http", function($q, $http) {
+          "$q", "$http", "month", function($q, $http, month) {
             var deferred = $q.defer();
             $http.get("" + MEANING.ApiAddress + "/posts/list/Published").success(function(data) {
               var date, dict, key, post, result, value, _i, _len;
               dict = [];
               for (_i = 0, _len = data.length; _i < _len; _i++) {
                 post = data[_i];
-                date = moment(post.CreateDate).format("MMM YYYY");
+                date = new Date(post.CreateDate);
+                date = month.getShortName(date.getMonth()) + " " + date.getFullYear();
                 if (!dict[date]) {
                   dict[date] = [];
                 }

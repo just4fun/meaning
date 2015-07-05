@@ -22,7 +22,6 @@
 
   "js": [
     "dist/client/lib/modernizr/modernizr.js",
-    "dist/client/lib/moment/moment.js",
     "dist/client/lib/angulartics/src/angulartics.js",
     "dist/client/lib/angulartics/src/angulartics-ga.js",
     "dist/client/lib/highlightjs/highlight.pack.js",
@@ -77,19 +76,25 @@
     "dist/client/*",
 
     "!dist/client/admin",
+    "dist/client/admin/app",
     "dist/client/admin/css",
     "!dist/client/admin/modules",
+    "dist/client/admin/modules/**/*.js",
     "dist/client/admin/modules/**/*.css",
-
-    "!dist/client/app",
-    "!dist/client/lib",
 
     "!dist/client/font",
     "!dist/client/img",
 
     "!dist/client/js",
+    "dist/client/js/directives/custom",
+    "dist/client/js/directives/vendor",
+    "dist/client/js/directives/*.*",
+    "dist/client/js/filters",
+    "dist/client/js/services",
+    "dist/client/js/others",
 
     "!dist/client/modules",
+    "dist/client/modules/**/*.js",
     "dist/client/modules/**/*.css",
 
     "!dist/client/plugin",
