@@ -1,16 +1,16 @@
 angular.module("services.utils.authorize", []).service("authorize", [
-  "$http", "$q", "$rootScope", "progress",
-  function($http, $q, $rootScope, progress) {
+  "$http", "$q", "$rootScope", "$cookies", "progress",
+  function($http, $q, $rootScope, $cookies, progress) {
 
     this.login = function(user) {
       var deferred = $q.defer();
       progress.start();
       $http.post("" + MEANING.ApiAddress + "/login", user).success(function(user, status, headers, config) {
-        $.cookie("CurrentUser", angular.toJson(user), {
+        $cookies.put("CurrentUser", angular.toJson(user), {
           expires: 180,
           path: "/"
         });
-        $.cookie("meaning-token", headers("meaning-token"), {
+        $cookies.put("meaning-token", headers("meaning-token"), {
           expires: 180,
           path: "/"
         });

@@ -16,9 +16,9 @@ angular.module("login-app", [
     };
   }
 ]).run([
-  "$window", "$rootScope", function($window, $rootScope) {
+  "$window", "$rootScope", "$cookies", function($window, $rootScope, $cookies) {
     // check login
-    $rootScope._isLogin = $.cookie("CurrentUser") && $.cookie("meaning-token");
+    $rootScope._isLogin = $cookies.get("CurrentUser") && $cookies.get("meaning-token");
     if ($rootScope._isLogin) {
       $window.location.href = "/admin";
     }

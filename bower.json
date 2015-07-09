@@ -3,8 +3,6 @@
   "version": "0.2.0",
   "description": "A mini blogging platform inspired by MEAN.JS(MongoDB, Express, AngularJS, and Node.js)",
   "dependencies": {
-    "jquery": "2.0.3",
-    "jquery-cookie": "1.4.1",
     "angular": "1.4.1",
     "angular-animate": "1.4.1",
     "angular-cookies": "1.4.1",

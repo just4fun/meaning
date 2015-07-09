@@ -51,8 +51,8 @@ angular.module("admin-posts-detail", []).config([
     });
   }
 ]).controller("AdminPostsNewCtrl", [
-  "$scope", "$http", "$rootScope", "$window", "messenger", "categories", "$location", "progress",
-  function($scope, $http, $rootScope, $window, messenger, categories, $location, progress) {
+  "$scope", "$http", "$rootScope", "$window", "$cookies", "messenger", "categories", "$location", "progress",
+  function($scope, $http, $rootScope, $window, $cookies, messenger, categories, $location, progress) {
     // Create
     $rootScope.title = "Add New Post";
     $scope.categories = categories.list;
@@ -92,7 +92,7 @@ angular.module("admin-posts-detail", []).config([
       progress.start();
       $http.post("" + MEANING.ApiAddress + "/posts", tempPost, {
         headers: {
-          "meaning-token": $.cookie("meaning-token")
+          "meaning-token": $cookies.get("meaning-token")
         }
       }).success(function(data) {
         progress.complete();
@@ -113,8 +113,8 @@ angular.module("admin-posts-detail", []).config([
     };
   }
 ]).controller("AdminPostsDetailCtrl", [
-  "$scope", "$http", "$rootScope", "$window", "$routeParams", "post", "messenger", "categories", "$location", "progress",
-  function($scope, $http, $rootScope, $window, $routeParams, post, messenger, categories, $location, progress) {
+  "$scope", "$http", "$rootScope", "$window", "$routeParams", "$cookies", "post", "messenger", "categories", "$location", "progress",
+  function($scope, $http, $rootScope, $window, $routeParams, $cookies, post, messenger, categories, $location, progress) {
     // Update
     var save, t, tags, _i, _len, _ref;
     $rootScope.title = "Edit Post";
@@ -187,7 +187,7 @@ angular.module("admin-posts-detail", []).config([
       progress.start();
       $http.put("" + MEANING.ApiAddress + "/posts/" + $routeParams.url, tempPost, {
         headers: {
-          "meaning-token": $.cookie("meaning-token"),
+          "meaning-token": $cookies.get("meaning-token"),
 
           // without below param, the getByUrl() in node.js will return 404
           "from-admin-console": true

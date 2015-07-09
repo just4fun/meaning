@@ -1,5 +1,5 @@
 angular.module("directives.custom.commentForm", []).directive("commentForm", [
-  "messenger", "authorize", function(messenger, authorize) {
+  "messenger", "authorize", "$cookies", function(messenger, authorize, $cookies) {
     return {
       restrict: "AE",
 
@@ -23,7 +23,7 @@ angular.module("directives.custom.commentForm", []).directive("commentForm", [
         scope.logout = function() {
           messenger.confirm(function() {
             authorize.logout();
-            var commentAuthor = angular.fromJson($.cookie("comment-author"));
+            var commentAuthor = angular.fromJson($cookies.get("comment-author"));
             scope.$apply(function() {
               if (commentAuthor) {
                 scope.author.Author = commentAuthor.Author;

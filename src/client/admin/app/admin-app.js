@@ -61,19 +61,19 @@ angular.module("admin-app", [
     });
   }
 ]).run([
-  "$window", "$rootScope", function($window, $rootScope) {
+  "$window", "$rootScope", "$cookies", function($window, $rootScope, $cookies) {
     // check login
-    $rootScope._isLogin = $.cookie("CurrentUser") && $.cookie("meaning-token");
+    $rootScope._isLogin = $cookies.get("CurrentUser") && $cookies.get("meaning-token");
     if (!$rootScope._isLogin) {
       $window.location.href = "/login";
     }
   }
 ]).controller("AdminCtrl", [
-  "$scope", "$rootScope", "$http", "$window", "$location", "progress", "messenger", "authorize",
-  function($scope, $rootScope, $http, $window, $location, progress, messenger, authorize) {
+  "$scope", "$rootScope", "$http", "$window", "$location", "$cookies", "progress", "messenger", "authorize",
+  function($scope, $rootScope, $http, $window, $location, $cookies, progress, messenger, authorize) {
     // site global config
     $rootScope.MEANING = MEANING;
-    $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"));
+    $rootScope._loginUser = angular.fromJson($cookies.get("CurrentUser"));
 
     $scope.isActive = function(path) {
       return path === $location.path();
@@ -113,21 +113,21 @@ angular.module("admin-app", [
       progress.start();
       return $http.put("" + MEANING.ApiAddress + "/users/" + $scope.entity._id, $scope.entity, {
         headers: {
-          "meaning-token": $.cookie("meaning-token")
+          "meaning-token": $cookies.get("meaning-token")
         }
       }).success(function(data) {
         progress.complete();
         // update cookie
-        var user = angular.fromJson($.cookie("CurrentUser"));
+        var user = angular.fromJson($cookies.get("CurrentUser"));
         user.UserName = $scope.entity.UserName;
         user.Email = $scope.entity.Email;
-        $.cookie("CurrentUser", angular.toJson(user), {
+        $cookies.put("CurrentUser", angular.toJson(user), {
           expires: 180,
           path: "/"
         });
 
         // update global variable
-        $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"));
+        $rootScope._loginUser = angular.fromJson($cookies.get("CurrentUser"));
 
         messenger.success("Change profile successfully!");
         $scope.close();

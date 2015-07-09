@@ -64,8 +64,8 @@ angular.module("app", [
     });
   }
 ]).run([
-  "$rootScope", function($rootScope) {
-    $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"));
+  "$rootScope", "$cookies", function($rootScope, $cookies) {
+    $rootScope._loginUser = angular.fromJson($cookies.get("CurrentUser"));
   }
 ]).controller("NavCtrl", [
   "$scope", "$http", "$location", "$rootScope",
