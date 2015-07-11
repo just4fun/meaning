@@ -24,8 +24,8 @@ angular.module("services.utils.authorize", []).service("authorize", [
     };
 
     this.logout = function() {
-      $.removeCookie("CurrentUser", { path: "/" });
-      $.removeCookie("meaning-token", { path: "/" });
+      $cookies.remove("CurrentUser", { path: "/" });
+      $cookies.remove("meaning-token", { path: "/" });
       $rootScope._loginUser = undefined;
     };
   }

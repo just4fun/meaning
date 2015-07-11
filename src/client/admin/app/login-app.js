@@ -1,4 +1,5 @@
 angular.module("login-app", [
+  "ngCookies",
   "customServices"
 ]).controller("LoginCtrl", [
   "$scope", "$rootScope", "$http", "$window", "authorize",
