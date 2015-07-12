@@ -1,11 +1,11 @@
 angular.module("admin-posts-list", []).config([
-  "$routeProvider", "$cookies", function($routeProvider, $cookies) {
+  "$routeProvider", function($routeProvider) {
     $routeProvider.when("/posts", {
       templateUrl: "/admin/modules/posts/list/index.html",
       controller: "AdminPostsListCtrl",
       resolve: {
         postCounts: [
-          "$q", "$http", function($q, $http) {
+          "$q", "$http", "$cookies", function($q, $http, $cookies) {
             var deferred = $q.defer();
             $http.get("" + MEANING.ApiAddress + "/posts/count", {
               headers: {
@@ -24,7 +24,7 @@ angular.module("admin-posts-list", []).config([
       controller: "AdminPostsListCtrl",
       resolve: {
         postCounts: [
-          "$q", "$http", function($q, $http) {
+          "$q", "$http", "$cookies", function($q, $http, $cookies) {
             var deferred = $q.defer();
             $http.get("" + MEANING.ApiAddress + "/posts/count", {
               headers: {

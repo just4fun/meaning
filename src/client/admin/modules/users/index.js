@@ -16,8 +16,8 @@ angular.module("admin-users", []).config([
     });
   }
 ]).controller("AdminUsersCtrl", [
-  "$scope", "$http", "$rootScope", "$cookies", "messenger", "progress",
-  function($scope, $http, $rootScope, $cookies, messenger, progress) {
+  "$scope", "$http", "$rootScope", "$cookies", "messenger", "progress", "date",
+  function($scope, $http, $rootScope, $cookies, messenger, progress, date) {
     $rootScope.title = "Users";
 
     $scope.create = function() {
@@ -85,7 +85,7 @@ angular.module("admin-users", []).config([
              * user.Role = $scope.entity.Role
              */
             $cookies.put("CurrentUser", angular.toJson(user), {
-              expires: 180,
+              expires: date.getDate(180),
               path: "/"
             });
             // update global variable

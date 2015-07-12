@@ -6,8 +6,8 @@ angular.module("guestbook", []).config([
     });
   }
 ]).controller("GuestbookCtrl", [
-  "$scope", "$http", "$rootScope", "$cookies", "progress", "messenger",
-  function($scope, $http, $rootScope, $cookies, progress, messenger) {
+  "$scope", "$http", "$rootScope", "$cookies", "progress", "messenger", "date",
+  function($scope, $http, $rootScope, $cookies, progress, messenger, date) {
     $rootScope.title = "Guestbook";
 
     // init comment author info
@@ -34,7 +34,7 @@ angular.module("guestbook", []).config([
             Author: $scope.entity.Author,
             Email: $scope.entity.Email
           }), {
-            expires: 180,
+            expires: date.getDate(180),
             path: "/"
           });
         }

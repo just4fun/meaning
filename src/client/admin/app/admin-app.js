@@ -69,8 +69,8 @@ angular.module("admin-app", [
     }
   }
 ]).controller("AdminCtrl", [
-  "$scope", "$rootScope", "$http", "$window", "$location", "$cookies", "progress", "messenger", "authorize",
-  function($scope, $rootScope, $http, $window, $location, $cookies, progress, messenger, authorize) {
+  "$scope", "$rootScope", "$http", "$window", "$location", "$cookies", "progress", "messenger", "authorize", "date",
+  function($scope, $rootScope, $http, $window, $location, $cookies, progress, messenger, authorize, date) {
     // site global config
     $rootScope.MEANING = MEANING;
     $rootScope._loginUser = angular.fromJson($cookies.get("CurrentUser"));
@@ -122,7 +122,7 @@ angular.module("admin-app", [
         user.UserName = $scope.entity.UserName;
         user.Email = $scope.entity.Email;
         $cookies.put("CurrentUser", angular.toJson(user), {
-          expires: 180,
+          expires: date.getDate(180),
           path: "/"
         });
 

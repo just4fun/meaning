@@ -27,8 +27,8 @@ angular.module("posts-view", []).config([
     });
   }
 ]).controller("PostsDetailCtrl", [
-  "$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "$cookies", "post", "messenger",
-  function($scope, $http, $window, progress, $routeParams, $location, $rootScope, $cookies, post, messenger) {
+  "$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "$cookies", "post", "messenger", "date",
+  function($scope, $http, $window, progress, $routeParams, $location, $rootScope, $cookies, post, messenger, date) {
     $rootScope.title = post.Title;
     $scope.post = post;
 
@@ -70,7 +70,7 @@ angular.module("posts-view", []).config([
             Author: $scope.entity.Author,
             Email: $scope.entity.Email
           }), {
-            expires: 180,
+            expires: date.getDate(180),
             path: "/"
           });
         }
