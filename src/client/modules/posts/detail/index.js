@@ -27,8 +27,8 @@ angular.module("posts-view", []).config([
     });
   }
 ]).controller("PostsDetailCtrl", [
-  "$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "post", "messenger", "authorize",
-  function($scope, $http, $window, progress, $routeParams, $location, $rootScope, post, messenger, authorize) {
+  "$scope", "$http", "$window", "progress", "$routeParams", "$location", "$rootScope", "$cookies", "post", "messenger", "date",
+  function($scope, $http, $window, progress, $routeParams, $location, $rootScope, $cookies, post, messenger, date) {
     $rootScope.title = post.Title;
     $scope.post = post;
 
@@ -46,7 +46,7 @@ angular.module("posts-view", []).config([
 
     // init comment author info
     var loginUser = $rootScope._loginUser;
-    var commentAuthor = angular.fromJson($.cookie("comment-author"));
+    var commentAuthor = angular.fromJson($cookies.get("comment-author"));
     $scope.entity = {
       Post: post._id
     };
@@ -66,11 +66,11 @@ angular.module("posts-view", []).config([
 
         // save author info in cookie
         if (!loginUser) {
-          $.cookie("comment-author", angular.toJson({
+          $cookies.put("comment-author", angular.toJson({
             Author: $scope.entity.Author,
             Email: $scope.entity.Email
           }), {
-            expires: 180,
+            expires: date.getDate(180),
             path: "/"
           });
         }
@@ -86,7 +86,7 @@ angular.module("posts-view", []).config([
         progress.start();
         return $http["delete"]("" + MEANING.ApiAddress + "/comments/" + comment._id, {
           headers: {
-            "meaning-token": $.cookie("meaning-token")
+            "meaning-token": $cookies.get("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Delete comment successfully!");

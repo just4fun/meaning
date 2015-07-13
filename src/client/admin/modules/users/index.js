@@ -16,8 +16,8 @@ angular.module("admin-users", []).config([
     });
   }
 ]).controller("AdminUsersCtrl", [
-  "$scope", "$http", "$rootScope", "messenger", "progress",
-  function($scope, $http, $rootScope, messenger, progress) {
+  "$scope", "$http", "$rootScope", "$cookies", "messenger", "progress", "date",
+  function($scope, $http, $rootScope, $cookies, messenger, progress, date) {
     $rootScope.title = "Users";
 
     $scope.create = function() {
@@ -41,7 +41,7 @@ angular.module("admin-users", []).config([
         progress.start();
         $http["delete"]("" + MEANING.ApiAddress + "/users/" + user._id, {
           headers: {
-            "meaning-token": $.cookie("meaning-token")
+            "meaning-token": $cookies.get("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Delete user successfully!");
@@ -72,24 +72,24 @@ angular.module("admin-users", []).config([
         progress.start();
         return $http.put("" + MEANING.ApiAddress + "/users/" + $scope.entity._id, $scope.entity, {
           headers: {
-            "meaning-token": $.cookie("meaning-token")
+            "meaning-token": $cookies.get("meaning-token")
           }
         }).success(function(data) {
           // update cookie and global variable
           if ($scope.entity._id === $rootScope._loginUser._id) {
-            var user = angular.fromJson($.cookie("CurrentUser"));
+            var user = angular.fromJson($cookies.get("CurrentUser"));
             user.UserName = $scope.entity.UserName;
             user.Email = $scope.entity.Email;
             /**
              * if update role here, a user from admin to author will own no right immediately
              * user.Role = $scope.entity.Role
              */
-            $.cookie("CurrentUser", angular.toJson(user), {
-              expires: 180,
+            $cookies.put("CurrentUser", angular.toJson(user), {
+              expires: date.getDate(180),
               path: "/"
             });
             // update global variable
-            $rootScope._loginUser = angular.fromJson($.cookie("CurrentUser"));
+            $rootScope._loginUser = angular.fromJson($cookies.get("CurrentUser"));
           }
 
           messenger.success("Update user successfully!");
@@ -121,7 +121,7 @@ angular.module("admin-users", []).config([
         progress.start();
         $http.post("" + MEANING.ApiAddress + "/users", $scope.entity, {
           headers: {
-            "meaning-token": $.cookie("meaning-token")
+            "meaning-token": $cookies.get("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Create user successfully!");
@@ -138,7 +138,7 @@ angular.module("admin-users", []).config([
       $scope.currentPage = page;
       $http.get("" + MEANING.ApiAddress + "/users?pageIndex=" + (page - 1), {
         headers: {
-          "meaning-token": $.cookie("meaning-token")
+          "meaning-token": $cookies.get("meaning-token")
         }
       }).success(function(data) {
         $scope.users = data.list;

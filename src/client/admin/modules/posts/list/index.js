@@ -5,12 +5,12 @@ angular.module("admin-posts-list", []).config([
       controller: "AdminPostsListCtrl",
       resolve: {
         postCounts: [
-          "$q", "$http", function($q, $http) {
+          "$q", "$http", "$cookies", function($q, $http, $cookies) {
             var deferred = $q.defer();
             $http.get("" + MEANING.ApiAddress + "/posts/count", {
               headers: {
-                "meaning-token": $.cookie("meaning-token"),
-                "login-user": $.cookie("CurrentUser")
+                "meaning-token": $cookies.get("meaning-token"),
+                "login-user": $cookies.get("CurrentUser")
               }
             }).success(function(data) {
               return deferred.resolve(data);
@@ -24,12 +24,12 @@ angular.module("admin-posts-list", []).config([
       controller: "AdminPostsListCtrl",
       resolve: {
         postCounts: [
-          "$q", "$http", function($q, $http) {
+          "$q", "$http", "$cookies", function($q, $http, $cookies) {
             var deferred = $q.defer();
             $http.get("" + MEANING.ApiAddress + "/posts/count", {
               headers: {
-                "meaning-token": $.cookie("meaning-token"),
-                "login-user": $.cookie("CurrentUser")
+                "meaning-token": $cookies.get("meaning-token"),
+                "login-user": $cookies.get("CurrentUser")
               }
             }).success(function(data) {
               return deferred.resolve(data);
@@ -41,8 +41,8 @@ angular.module("admin-posts-list", []).config([
     });
   }
 ]).controller("AdminPostsListCtrl", [
-  "$scope", "$http", "$rootScope", "$routeParams", "progress", "postCounts", "messenger",
-  function($scope, $http, $rootScope, $routeParams, progress, postCounts, messenger) {
+  "$scope", "$http", "$rootScope", "$routeParams", "$cookies", "progress", "postCounts", "messenger",
+  function($scope, $http, $rootScope, $routeParams, $cookies, progress, postCounts, messenger) {
     $rootScope.title = "Posts";
     $scope.postCounts = postCounts;
     var url = "" + MEANING.ApiAddress + "/posts";
@@ -60,8 +60,8 @@ angular.module("admin-posts-list", []).config([
     $http.get(url, {
       headers: {
         // for get /posts
-        "meaning-token": $.cookie("meaning-token"),
-        "login-user": $.cookie("CurrentUser")
+        "meaning-token": $cookies.get("meaning-token"),
+        "login-user": $cookies.get("CurrentUser")
       }
     }).success(function(data) {
       var p, t, tags, _i, _j, _len, _len1, _ref;
@@ -93,7 +93,7 @@ angular.module("admin-posts-list", []).config([
         url = post.Url.substring(post.Url.lastIndexOf("/") + 1);
         $http["delete"]("" + MEANING.ApiAddress + "/posts/" + url, {
           headers: {
-            "meaning-token": $.cookie("meaning-token"),
+            "meaning-token": $cookies.get("meaning-token"),
             "from-admin-console": true
           }
         }).success(function(data) {
@@ -101,8 +101,8 @@ angular.module("admin-posts-list", []).config([
           // change count
           $http.get("" + MEANING.ApiAddress + "/posts/count", {
             headers: {
-              "meaning-token": $.cookie("meaning-token"),
-              "login-user": $.cookie("CurrentUser")
+              "meaning-token": $cookies.get("meaning-token"),
+              "login-user": $cookies.get("CurrentUser")
             }
           }).success(function(data) {
             $scope.postCounts = data;

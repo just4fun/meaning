@@ -1,7 +1,6 @@
 {
   "commonJs": [
-    "dist/client/lib/jquery/jquery.js",
-    "dist/client/lib/jquery-cookie/jquery.cookie.js",
+    "dist/client/lib/jquery/dist/jquery.js",
     "dist/client/lib/bootstrap/dist/js/bootstrap.js",
     "dist/client/lib/messenger/build/js/messenger.js",
     "dist/client/lib/messenger/build/js/messenger-theme-future.js",

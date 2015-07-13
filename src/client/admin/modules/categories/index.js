@@ -15,8 +15,8 @@ angular.module("admin-categories", []).config([
     });
   }
 ]).controller("AdminCategoriesCtrl", [
-  "$scope", "$http", "$rootScope", "messenger", "progress",
-  function($scope, $http, $rootScope, messenger, progress) {
+  "$scope", "$http", "$rootScope", "$cookies", "messenger", "progress",
+  function($scope, $http, $rootScope, $cookies, messenger, progress) {
     $rootScope.title = "Categories";
 
     $scope.create = function() {
@@ -40,7 +40,7 @@ angular.module("admin-categories", []).config([
         progress.start();
         $http["delete"]("" + MEANING.ApiAddress + "/categories/" + category._id, {
           headers: {
-            "meaning-token": $.cookie("meaning-token")
+            "meaning-token": $cookies.get("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Delete category successfully!");
@@ -61,7 +61,7 @@ angular.module("admin-categories", []).config([
         $scope.entity.EditDate = new Date();
         $http.put("" + MEANING.ApiAddress + "/categories/" + $scope.entity._id, $scope.entity, {
           headers: {
-            "meaning-token": $.cookie("meaning-token")
+            "meaning-token": $cookies.get("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Update category successfully!");
@@ -77,7 +77,7 @@ angular.module("admin-categories", []).config([
         $scope.entity.CreateUser = $rootScope._loginUser.UserName;
         $http.post("" + MEANING.ApiAddress + "/categories", $scope.entity, {
           headers: {
-            "meaning-token": $.cookie("meaning-token")
+            "meaning-token": $cookies.get("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Create category successfully!");
@@ -94,7 +94,7 @@ angular.module("admin-categories", []).config([
       $scope.currentPage = page;
       $http.get("" + MEANING.ApiAddress + "/categories?pageIndex=" + (page - 1), {
         headers: {
-          "meaning-token": $.cookie("meaning-token")
+          "meaning-token": $cookies.get("meaning-token")
         }
       }).success(function(data) {
         $scope.categories = data.list;

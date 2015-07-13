@@ -6,13 +6,13 @@ angular.module("guestbook", []).config([
     });
   }
 ]).controller("GuestbookCtrl", [
-  "$scope", "$http", "$rootScope", "progress", "messenger", "authorize",
-  function($scope, $http, $rootScope, progress, messenger, authorize) {
+  "$scope", "$http", "$rootScope", "$cookies", "progress", "messenger", "date",
+  function($scope, $http, $rootScope, $cookies, progress, messenger, date) {
     $rootScope.title = "Guestbook";
 
     // init comment author info
     var loginUser = $rootScope._loginUser;
-    var commentAuthor = angular.fromJson($.cookie("comment-author"));
+    var commentAuthor = angular.fromJson($cookies.get("comment-author"));
     $scope.entity = {};
 
     if (loginUser) {
@@ -30,11 +30,11 @@ angular.module("guestbook", []).config([
 
         // save author info in cookie
         if (!loginUser) {
-          $.cookie("comment-author", angular.toJson({
+          $cookies.put("comment-author", angular.toJson({
             Author: $scope.entity.Author,
             Email: $scope.entity.Email
           }), {
-            expires: 180,
+            expires: date.getDate(180),
             path: "/"
           });
         }
@@ -49,7 +49,7 @@ angular.module("guestbook", []).config([
         progress.start();
         $http["delete"]("" + MEANING.ApiAddress + "/comments/" + comment._id, {
           headers: {
-            "meaning-token": $.cookie("meaning-token")
+            "meaning-token": $cookies.get("meaning-token")
           }
         }).success(function(data) {
           messenger.success("Delete comment successfully!");
