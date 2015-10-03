@@ -1,10 +1,8 @@
 meaning
 =======
 
-[![Build Status](https://travis-ci.org/just4fun/meaning.png)](https://travis-ci.org/just4fun/meaning)
-
 A mini blogging platform inspired by [MEAN.JS](http://meanjs.org).   
-The name of this repo means that I'm still learning MEAN.JS and falling in love with it.  
+~~The name of this repo means that I'm still learning MEAN.JS and falling in love with it.~~(see [here](https://github.com/just4fun/meaning#updated-in-2015))
 
 ###[Live Demo](http://talent-is.me)
 
@@ -75,6 +73,9 @@ Password: `12345`
 This mini site only has basic posting function now, and there are bugs inevitably, I will improve it during the time I spend on learning MEAN.JS.
 
 `Just for fun`
+
+## Updated in 2015
+Since there are so many amazing stuff appeared in frontend community this year, and Angular has been developed to 2.0 which is an entirely new framework. Therefore, I won't want to add new features or refactor existed functionalities to this repo except updating the ugly UI layout. Thanks to [MEAN.JS](http://meanjs.org), I learned lots of things from it.
 
 ## License
 [The MIT License](http://opensource.org/licenses/MIT)
