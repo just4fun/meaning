@@ -70,7 +70,7 @@ Account: `admin`
 Password: `12345`
 
 ## More
-This mini site only has basic posting function now, and there are bugs inevitably, ~~I will improve it during the time I spend on learning MEAN.JS.~~(see [here](https://github.com/just4fun/meaning#updated-in-2015))
+This mini site only has basic posting function now, and there are bugs inevitably~~, I will improve it during the time I spend on learning MEAN.JS~~.(see [here](https://github.com/just4fun/meaning#updated-in-2015))
 
 `Just for fun`
 
