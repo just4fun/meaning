@@ -12,7 +12,7 @@ You can go through their official websites directly, or view [MEAN.IO Repo](http
 
 **Tips**: *The [history](http://blog.meanjs.org/post/76726660228/forking-out-of-an-open-source-conflict) of [MEAN.IO](http://mean.io) and [MEAN.JS](http://meanjs.org).*
 
-I also use [CoffeeScript](http://coffeescript.org/) and [LESS](http://lesscss.org/) as the front-end precompiler.
+I also use ~~[CoffeeScript](http://coffeescript.org/) and~~ [LESS](http://lesscss.org/) as the front-end precompiler.
 
 And the crucial tool to run MEAN.JS application is [Grunt](http://gruntjs.com/), which will automate your development process.
 Make sure you have installed [Node.js](http://nodejs.org/) and [npm](https://www.npmjs.org/), then install grunt globally via npm:
