@@ -2,9 +2,9 @@ meaning
 =======
 
 A mini blogging platform inspired by [MEAN.JS](http://meanjs.org).   
-~~The name of this repo means that I'm still learning MEAN.JS and falling in love with it.~~(see [here](https://github.com/just4fun/meaning#updated-in-2015))
+~~The name of this repo means that I'm still learning MEAN.JS and falling in love with it.~~(see [here](#updated-in-2015))
 
-###[Live Demo](http://talent-is.me)
+###~~[Live Demo](http://talent-is.me)~~
 
 ## Prerequisites
 I think you should have some basic knowledge about [MongoDB](http://mongodb.org/), [Express](http://expressjs.com/), [AngularJS](https://angularjs.org/), and [Node.js](http://nodejs.org/) in advance.    
@@ -70,7 +70,7 @@ Account: `admin`
 Password: `12345`
 
 ## More
-This mini site only has basic posting function now, and there are bugs inevitably~~, I will improve it during the time I spend on learning MEAN.JS~~.(see [here](https://github.com/just4fun/meaning#updated-in-2015))
+This mini site only has basic posting function now, and there are bugs inevitably~~, I will improve it during the time I spend on learning MEAN.JS~~.(see [here](#updated-in-2015))
 
 `Just for fun`
 
